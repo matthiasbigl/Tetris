@@ -9,10 +9,10 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <GridPane alignment="CENTER" BorderPane.alignment="CENTER">
+          
         <columnConstraints>
           <ColumnConstraints halignment="CENTER" minWidth="10.0" prefWidth="20.0" />
           <ColumnConstraints halignment="CENTER" minWidth="10.0" prefWidth="20.0" />
@@ -77,4 +77,56 @@
          </padding>
       </VBox>
    </right>
+   <left>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Spielanleitung:">
+               <font>
+                  <Font name="Comic Sans MS" size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Drehen:">
+               <font>
+                  <Font name="Comic Sans MS" size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="q -&gt; links drehen">
+               <font>
+                  <Font name="Comic Sans MS" size="10.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="w -&gt; 180° drehen">
+               <font>
+                  <Font name="Comic Sans MS" size="10.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="e -&gt; recht drehen">
+               <font>
+                  <Font name="Comic Sans MS" size="10.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Text>
+         </children>
+         <padding>
+            <Insets top="80.0" />
+         </padding>
+         <BorderPane.margin>
+            <Insets left="10.0" />
+         </BorderPane.margin>
+      </VBox>
+   </left>
 </BorderPane>
