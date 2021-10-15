@@ -1,5 +1,8 @@
 package at.htlhl;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 public class Brick {
 
     /*
@@ -13,7 +16,14 @@ public class Brick {
 
     public Brick() {
 
+        Random ran = new Random();
+        int x = ran.nextInt(6 + 1);
+
+        String[]bricks=new String["orangeRicky","blueRicky","clevelandZ","rhodeIslandZ","hero","teewee","smashBoy"];
+
     }
+
+
 
     private void orangeRicky() {
         this.brickMatrix = new int[]{   0, 0, 0, 0,
