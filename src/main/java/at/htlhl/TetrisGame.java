@@ -9,11 +9,13 @@ public class TetrisGame
     public static final int GRID_HEIGHT = 20;
     
     // Fields *****************************************************************
+    private final TetrisController controller;
     private final Cell[][] grid;
     
     // Constructors ***********************************************************
-    public TetrisGame()
+    public TetrisGame(TetrisController controller)
     {
+        this.controller = controller;
         this.grid = new Cell[GRID_HEIGHT][GRID_WIDTH];
         initGridMatrix();
     }

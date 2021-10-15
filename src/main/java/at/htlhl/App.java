@@ -19,6 +19,8 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader loader = new FXMLLoader(App.class.getResource("test.fxml"));
         loader.load();
+        TetrisController controller = loader.getController();
+        TetrisGame game = new TetrisGame(controller);
     }
 
     public static void main(String[] args) {
