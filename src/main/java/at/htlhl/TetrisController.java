@@ -1,5 +1,6 @@
 package at.htlhl;
 
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -24,11 +25,7 @@ public class TetrisController
     {
         Pane pane = new Pane();
 
-        String hexColor = "#ffffff00";
-        if(cell != null)
-            hexColor = cell.getColor().getHex();
-
-        pane.setStyle("-fx-background-color:" + hexColor + ";");
+        pane.setStyle("-fx-background-color:" + cell.getColor().getHex() + ";");
         return pane;
     }
 
