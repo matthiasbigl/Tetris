@@ -1,6 +1,5 @@
 package at.htlhl;
 
-import javafx.scene.paint.Color;
 
 public class TetrisGame
 {
@@ -17,12 +16,14 @@ public class TetrisGame
     {
         this.controller = controller;
         this.grid = new Cell[GRID_HEIGHT][GRID_WIDTH];
+
+        // Init the Grid Matrix
         initGridMatrix();
     }
     
     // Logic ******************************************************************
     /**
-     * Fill the Grid Matrix with invisible Cells
+     * Fill the Grid Matrix with Cell objects
      */
     private void initGridMatrix()
     {
@@ -33,5 +34,32 @@ public class TetrisGame
                 grid[y][x] = new Cell();
             }
         }
+
+        updateGridMatrix();
+    }
+
+    /**
+     * Updates the Controller grid
+     */
+    private void updateGridMatrix()
+    {
+        controller.updateGridMatrix(grid);
+    }
+
+    /**
+     * Randomizes the grid matrix
+     * For testing purposes
+     */
+    void randomizeMatrix()
+    {
+        for (int y = 0; y < GRID_HEIGHT; y++)
+        {
+            for (int x = 0; x < GRID_WIDTH; x++)
+            {
+                grid[y][x].setColor(Color.randomColor(false));
+            }
+        }
+
+        updateGridMatrix();
     }
 }

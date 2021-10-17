@@ -1,18 +1,22 @@
 package at.htlhl;
 
-import javafx.scene.paint.Color;
 
 public class Cell
 {
     // Fields *****************************************************************
-    private final Color color;
+    private Color color;
     private boolean isVisible;
-    
+
     // Constructors ***********************************************************
-    public Cell(final Color color)
+    public Cell(final Color color, boolean isVisible)
     {
         this.color = color;
-        this.isVisible = false;
+        this.isVisible = isVisible;
+    }
+
+    public Cell(final Color color)
+    {
+        this(color, false);
     }
     
     /**
@@ -20,9 +24,9 @@ public class Cell
       */
     public Cell()
     {
-        this(Color.WHITE);
+        this(Color.TRANSPARENT);
     }
-    
+
     // Logic ******************************************************************
     public void setVisible(boolean visible)
     {
@@ -32,5 +36,13 @@ public class Cell
     public boolean isVisible()
     {
         return isVisible;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public Color getColor() {
+        return color;
     }
 }
