@@ -1,10 +1,18 @@
 package at.htlhl;
 
-
+/**
+ * Represents a tile in the Tetris grid
+ */
 public class Cell
 {
     // Fields *****************************************************************
+    /**
+     * {@link Color} of the tile
+     */
     private Color color;
+    /**
+     * Whether the tile is visible (= has collision)
+     */
     private boolean isVisible;
 
     // Constructors ***********************************************************
