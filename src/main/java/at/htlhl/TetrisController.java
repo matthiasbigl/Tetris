@@ -23,8 +23,8 @@ public class TetrisController
     private Pane createPane(final Cell cell)
     {
         Pane pane = new Pane();
-
-        pane.setStyle("-fx-background-color:" + cell.getColor().getHex() + ";");
+    
+        pane.setStyle("-fx-background-color:" + cell.getColor().toHex() + ";");
         return pane;
     }
 

@@ -20,6 +20,7 @@ public class TetrisGame
 
         // Init the Grid Matrix
         initGridMatrix();
+        tick();
     }
     
     // Logic ******************************************************************
@@ -45,6 +46,19 @@ public class TetrisGame
     private void placeNewBlock()
     {
         Block newBlock = Block.randomBlock();
+        final Cell[][] cellMatrix = newBlock.toCellMatrix();
+    
+        final int startY = 4 - cellMatrix.length;
+        final int startX = GRID_WIDTH / 2 - 2;
+        for (int y = 0; y < cellMatrix.length; y++)
+        {
+            for (int x = 0; x < cellMatrix[y].length; x++)
+            {
+                grid[startY + y][startX + x] = cellMatrix[y][x];
+            }
+        }
+        
+        updateGridMatrix();
     }
     
     /**
@@ -55,7 +69,7 @@ public class TetrisGame
      */
     private boolean moveBlock()
     {
-        return false;
+        return true;
     }
     
     private void deleteFullLines()
