@@ -19,11 +19,41 @@ public class Brick {
         Random ran = new Random();
         int x = ran.nextInt(6 + 1);
 
-        String[]bricks=new String["orangeRicky","blueRicky","clevelandZ","rhodeIslandZ","hero","teewee","smashBoy"];
+        String[] bricks = new String[]{
+                "orangeRicky","blueRicky",
+                "clevelandZ","rhodeIslandZ",
+                "hero","teewee","smashBoy"};
 
+        switch (bricks[x]) {
+            case "orangeRicky":
+                orangeRicky();
+                break;
+            case "blueRicky":
+                orangeRicky();
+                break;
+            case "clevelandZ":
+                orangeRicky();
+                break;
+            case "rhodeIslandZ":
+                orangeRicky();
+                break;
+            case "hero":
+                orangeRicky();
+                break;
+            case "teewee":
+                orangeRicky();
+                break;
+            case "smashBoy":
+                orangeRicky();
+                break;
+            default:
+                return;
+        }
     }
 
-
+    public int[] get() {
+        return brickMatrix;
+    }
 
     private void orangeRicky() {
         this.brickMatrix = new int[]{   0, 0, 0, 0,
