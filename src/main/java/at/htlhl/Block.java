@@ -1,5 +1,7 @@
 package at.htlhl;
 
+import java.util.stream.Stream;
+
 /**
  * Represents a Tetris block
  */
@@ -53,6 +55,28 @@ public enum Block
     public boolean[][] getBlockMatrix()
     {
         return blockMatrix;
+    }
+    
+    public Color getColor()
+    {
+        return blockColor;
+    }
+    
+    public Cell[][] toCellMatrix()
+    {
+        final boolean[][] blockMatrix = getBlockMatrix();
+        final Cell[][] cellMatrix = new Cell[blockMatrix.length][];
+        
+        for (int y = 0; y < blockMatrix.length; y++)
+        {
+            cellMatrix[y] = new Cell[blockMatrix[y].length];
+            for (int x = 0; x < blockMatrix[y].length; x++)
+            {
+                cellMatrix[y][x] = new Cell(getColor(), blockMatrix[y][x]);
+            }
+        }
+        
+        return cellMatrix;
     }
     
     public static Block randomBlock()

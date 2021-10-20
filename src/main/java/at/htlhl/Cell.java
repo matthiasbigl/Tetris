@@ -51,6 +51,6 @@ public class Cell
     }
 
     public Color getColor() {
-        return color;
+        return isVisible() ? color : Color.TRANSPARENT;
     }
 }
