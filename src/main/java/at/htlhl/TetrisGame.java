@@ -10,6 +10,7 @@ public class TetrisGame
     // Fields *****************************************************************
     private final TetrisController controller;
     private final Cell[][] grid;
+    private Brick fallingBrick;
     
     // Constructors ***********************************************************
     public TetrisGame(TetrisController controller)
@@ -22,6 +23,38 @@ public class TetrisGame
     }
     
     // Logic ******************************************************************
+    private void tick()
+    {
+        processUserInput();
+        // Don't call this every tick
+        // if(...)
+        {
+            moveBrick();
+            deleteFullLines();
+        }
+    }
+    
+    private void processUserInput()
+    {
+    
+    }
+    
+    /**
+     * Moves the falling {@link Brick} down one cell.<br>
+     * If it collides with anything, it will be placed in the grid
+     *
+     * @return Whether the {@link Brick} was placed in the grid
+     */
+    private boolean moveBrick()
+    {
+        return false;
+    }
+    
+    private void deleteFullLines()
+    {
+    
+    }
+    
     /**
      * Fill the Grid Matrix with Cell objects
      */

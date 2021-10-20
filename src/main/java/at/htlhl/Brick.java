@@ -3,28 +3,23 @@ package at.htlhl;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Brick {
-
-    /*
-            * * * *
-            * * * *
-            * * * *
-            * * * *
-     */
-
+public class Brick
+{
+    // Fields *****************************************************************
     int[] brickMatrix;
 
-    public Brick() {
-
-        Random ran = new Random();
-        int x = ran.nextInt(6 + 1);
+    // Constructors ***********************************************************
+    public Brick()
+    {
+        Random rand = new Random();
+        int randIndex = rand.nextInt(6 + 1);
 
         String[] bricks = new String[]{
                 "orangeRicky","blueRicky",
                 "clevelandZ","rhodeIslandZ",
                 "hero","teewee","smashBoy"};
 
-        switch (bricks[x]) {
+        switch (bricks[randIndex]) {
             case "orangeRicky":
                 orangeRicky();
                 break;
