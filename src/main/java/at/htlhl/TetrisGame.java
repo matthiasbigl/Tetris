@@ -9,7 +9,7 @@ public class TetrisGame
     
     // Fields *****************************************************************
     private final TetrisController controller;
-    private final Cell[][] grid;
+    public static Cell[][] grid;
     
     // Constructors ***********************************************************
     public TetrisGame(TetrisController controller)
@@ -19,6 +19,8 @@ public class TetrisGame
 
         // Init the Grid Matrix
         initGridMatrix();
+
+        new Fall().fall(this.controller);
     }
     
     // Logic ******************************************************************
