@@ -10,7 +10,7 @@ public class TetrisGame
     // Fields *****************************************************************
     private final TetrisController controller;
     private final Cell[][] grid;
-    private Brick fallingBrick;
+    private Block fallingBlock;
     
     // Constructors ***********************************************************
     public TetrisGame(TetrisController controller)
@@ -29,12 +29,20 @@ public class TetrisGame
         // Don't call this every tick
         // if(...)
         {
-            moveBrick();
+            if(moveBlock())
+            {
+                placeNewBlock();
+            }
             deleteFullLines();
         }
     }
     
     private void processUserInput()
+    {
+    
+    }
+    
+    private void placeNewBlock()
     {
     
     }
@@ -45,7 +53,7 @@ public class TetrisGame
      *
      * @return Whether the {@link Brick} was placed in the grid
      */
-    private boolean moveBrick()
+    private boolean moveBlock()
     {
         return false;
     }

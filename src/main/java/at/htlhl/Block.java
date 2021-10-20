@@ -47,9 +47,14 @@ public enum Block
         this.blockMatrix = blockMatrix;
     }
     
-    // Accessors **************************************************************
+    // Logic ******************************************************************
     public boolean[][] getBlockMatrix()
     {
         return blockMatrix;
+    }
+    
+    public static Block randomBlock()
+    {
+        return Block.values()[(int) (Math.random() * Block.values().length)];
     }
 }
