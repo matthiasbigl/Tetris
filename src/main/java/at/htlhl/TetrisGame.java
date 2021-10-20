@@ -44,7 +44,7 @@ public class TetrisGame
     
     private void placeNewBlock()
     {
-    
+        Block newBlock = Block.randomBlock();
     }
     
     /**

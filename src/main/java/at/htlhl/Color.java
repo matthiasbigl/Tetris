@@ -6,6 +6,13 @@ public class Color
 {
 	// Constants **************************************************************
 	public static final Color TRANSPARENT = new Color(0D, 0D, 0D, 0D);
+	public static final Color ORANGE = new Color(.8D, .4D, .1D);
+	public static final Color BLUE = new Color(0D, 0D, 1D);
+	public static final Color RED = new Color(1D, 0D, 0D);
+	public static final Color GREEN = new Color(0D, 1D, 0D);
+	public static final Color LIGHT_BLUE = new Color(.1D, 0.5D, .85D);
+	public static final Color PURPLE = new Color(.8D, 0.15D, .85D);
+	public static final Color YELLOW = new Color(0D, 1D, 1D);
 
 	// Fields *****************************************************************
 	private final double red;
