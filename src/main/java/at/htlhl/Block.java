@@ -18,8 +18,8 @@ public enum Block
         {false, true, true, false}
     }),
     RIGHT_Z(Color.RED, new boolean[][] {
-        {false, true, true, false},
-        {true, true, false, false}
+        {false, false, true, true},
+        {false, true, true, false}
     }),
     LEFT_Z(Color.GREEN, new boolean[][] {
         {false, true, true, false},
@@ -32,8 +32,8 @@ public enum Block
         {false, true, false, false}
     }),
     STAIRS(Color.PURPLE, new boolean[][] {
-        {false, true, false, false},
-        {true, true, true, false}
+        {false, false, true, false},
+        {false, true, true, true}
     }),
     BRICK(Color.YELLOW, new boolean[][] {
         {false, true, true, false},
