@@ -65,9 +65,9 @@ public class Color
 		return (int) (alpha * 255);
 	}
 
-	public String getHex()
+	public String toHex()
 	{
-		return String.format("#%02x%02x%02x%02x", getRed(), getBlue(), getGreen(), getAlpha());
+		return String.format("#%02x%02x%02x%02x", getRed(), getGreen(), getBlue(), getAlpha());
 	}
 
 	// Logic ******************************************************************
@@ -108,7 +108,18 @@ public class Color
 			throw new IllegalArgumentException("value for blue must be in range [0-1] (" + blue + ")");
 		}
 	}
-
+	
+	@Override
+	public String toString()
+	{
+		return "Color{" +
+				"red=" + red +
+				", green=" + green +
+				", blue=" + blue +
+				", alpha=" + alpha +
+				'}';
+	}
+	
 	// Static *****************************************************************
 	public static Color randomColor(boolean randomizeAlpha)
 	{
