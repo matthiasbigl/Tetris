@@ -90,7 +90,7 @@ public class TetrisGame
             }
         }
 
-        updateGridMatrix();
+        controller.initGridMatrix(grid);
     }
 
     /**
