@@ -42,12 +42,12 @@ public class TetrisController
             this.tetrisGrid[y] = new Pane[initialGrid[y].length];
             for (int x = 0; x < initialGrid[y].length; x++)
             {
-                final Pane newPane = new Pane();
-                updatePane(newPane, initialGrid[y][x]);
-                this.tetrisGrid[y][x] = newPane;
+                this.tetrisGrid[y][x] = new Pane();
                 gridPane.add(tetrisGrid[y][x], x, y);
             }
         }
+        
+        updateGridMatrix(initialGrid);
     }
 
     /**
