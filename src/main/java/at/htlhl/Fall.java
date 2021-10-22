@@ -7,8 +7,6 @@ import java.util.TimerTask;
 
 public class Fall {
 
-    private Cell[][] grid;
-
     public void fall(TetrisController controller) {
         Cell[][] grid = TetrisGame.grid;
 
@@ -18,8 +16,6 @@ public class Fall {
         grid[1][4] = new Cell(red, true);
         grid[2][4] = new Cell(red, true);
 
-        //Color cellColor = Color.randomColor(false);
-        //grid[0][0].setColor(cellColor);
         controller.updateGridMatrix(grid);
 
         Timer timer = new Timer();
@@ -31,8 +27,8 @@ public class Fall {
                     for (int x = 0; x < grid[y].length; x++) {
                         if (!grid[y][x].getColor().equals(Color.TRANSPARENT)) {
                             grid[y][x].setColor(Color.TRANSPARENT);
-                            grid[y + 1][x].setColor(red);
-                            Platform.runLater(() -> controller.updateGridMatrix(grid));
+                            grid[y + 1][x].setColor(red)q;
+                            //Platform.runLater(() -> controller.updateGridMatrix(grid));
                         }
                     }
                 }
