@@ -43,8 +43,14 @@ public class TetrisGame
     
     }
     
+    /**
+     * Generates a new random Block
+     */
     private void placeNewBlock()
     {
+        // TODO: use fallingBlock variable, don't set cells in grid
+        // TODO: Don't generate the same block twice
+        // TODO: Add nextBlock variable & logic
         Block newBlock = Block.randomBlock();
         final Cell[][] cellMatrix = newBlock.toCellMatrix();
     
