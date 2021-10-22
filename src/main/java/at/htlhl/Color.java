@@ -6,6 +6,13 @@ public class Color
 {
 	// Constants **************************************************************
 	public static final Color TRANSPARENT = new Color(0D, 0D, 0D, 0D);
+	public static final Color ORANGE = new Color(.8D, .4D, .1D);
+	public static final Color BLUE = new Color(0D, 0D, 1D);
+	public static final Color RED = new Color(1D, 0D, 0D);
+	public static final Color GREEN = new Color(0D, 1D, 0D);
+	public static final Color LIGHT_BLUE = new Color(.1D, 0.5D, .85D);
+	public static final Color PURPLE = new Color(.8D, 0.15D, .85D);
+	public static final Color YELLOW = new Color(0D, 1D, 1D);
 
 	// Fields *****************************************************************
 	private final double red;
@@ -58,9 +65,9 @@ public class Color
 		return (int) (alpha * 255);
 	}
 
-	public String getHex()
+	public String toHex()
 	{
-		return String.format("#%02x%02x%02x%02x", getRed(), getBlue(), getGreen(), getAlpha());
+		return String.format("#%02x%02x%02x%02x", getRed(), getGreen(), getBlue(), getAlpha());
 	}
 
 	// Logic ******************************************************************
@@ -101,7 +108,18 @@ public class Color
 			throw new IllegalArgumentException("value for blue must be in range [0-1] (" + blue + ")");
 		}
 	}
-
+	
+	@Override
+	public String toString()
+	{
+		return "Color{" +
+				"red=" + red +
+				", green=" + green +
+				", blue=" + blue +
+				", alpha=" + alpha +
+				'}';
+	}
+	
 	// Static *****************************************************************
 	public static Color randomColor(boolean randomizeAlpha)
 	{

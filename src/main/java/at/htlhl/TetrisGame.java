@@ -21,9 +21,70 @@ public class TetrisGame
         initGridMatrix();
 
         new Fall().fall(this.controller);
+
+        //tick();
     }
     
     // Logic ******************************************************************
+    private void tick()
+    {
+        processUserInput();
+        // Don't call this every tick
+        // if(...)
+        {
+            if(moveBlock())
+            {
+                placeNewBlock();
+            }
+            deleteFullLines();
+        }
+    }
+    
+    private void processUserInput()
+    {
+    
+    }
+    
+    /**
+     * Generates a new random Block
+     */
+    private void placeNewBlock()
+    {
+        // TODO: use fallingBlock variable, don't set cells in grid
+        // TODO: Don't generate the same block twice
+        // TODO: Add nextBlock variable & logic
+        Block newBlock = Block.randomBlock();
+        final Cell[][] cellMatrix = newBlock.toCellMatrix();
+    
+        final int startY = 4 - cellMatrix.length;
+        final int startX = GRID_WIDTH / 2 - 2;
+        for (int y = 0; y < cellMatrix.length; y++)
+        {
+            for (int x = 0; x < cellMatrix[y].length; x++)
+            {
+                grid[startY + y][startX + x] = cellMatrix[y][x];
+            }
+        }
+        
+        updateGridMatrix();
+    }
+    
+    /**
+     * Moves the falling {@link Brick} down one cell.<br>
+     * If it collides with anything, it will be placed in the grid
+     *
+     * @return Whether the {@link Brick} was placed in the grid
+     */
+    private boolean moveBlock()
+    {
+        return true;
+    }
+    
+    private void deleteFullLines()
+    {
+    
+    }
+    
     /**
      * Fill the Grid Matrix with Cell objects
      */
@@ -37,7 +98,7 @@ public class TetrisGame
             }
         }
 
-        updateGridMatrix();
+        controller.initGridMatrix(grid);
     }
 
     /**
