@@ -13,7 +13,7 @@ public class Fall {
         Color red = new Color(1, 0, 0);
         grid[0][3] = new Cell(red, true);
         grid[0][4] = new Cell(red, true);
-        grid[1][5] = new Cell(red, true);
+        grid[1][4] = new Cell(red, true);
         grid[2][4] = new Cell(red, true);
 
         controller.updateGridMatrix(grid);
