@@ -7,8 +7,6 @@ import java.util.TimerTask;
 
 public class Fall {
 
-    private Cell[][] grid;
-
     public void fall(TetrisController controller) {
         Cell[][] grid = TetrisGame.grid;
 
@@ -18,8 +16,6 @@ public class Fall {
         grid[1][4] = new Cell(red, true);
         grid[2][4] = new Cell(red, true);
 
-        //Color cellColor = Color.randomColor(false);
-        //grid[0][0].setColor(cellColor);
         controller.updateGridMatrix(grid);
 
         Timer timer = new Timer();
