@@ -51,6 +51,15 @@ public class Cell
     }
 
     public Color getColor() {
-        return color;
+        return isVisible() ? color : Color.TRANSPARENT;
+    }
+    
+    @Override
+    public String toString()
+    {
+        return "Cell{" +
+                color +
+                ", " + isVisible +
+                '}';
     }
 }
