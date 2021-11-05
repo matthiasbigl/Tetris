@@ -22,6 +22,10 @@ public class TetrisGame
 		// Init the Game
 		this.fallingBlock = Block.randomBlock();
 		this.nextBlock = Block.randomBlock();
+
+		controller.initNextGridMatrix();
+		controller.updateNextBlock(nextBlock);
+
 		initGridMatrix();
 		tick();
 	}

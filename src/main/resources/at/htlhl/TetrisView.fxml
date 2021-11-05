@@ -60,14 +60,14 @@
             <Insets />
          </BorderPane.margin>
          <children>
-            <VBox layoutX="5.0" layoutY="89.0" opacity="0.5" prefHeight="202.0" prefWidth="128.0" styleClass="bg" stylesheets="@background.css" AnchorPane.rightAnchor="5.0">
+            <VBox layoutX="5.0" layoutY="89.0" opacity="0.5" prefHeight="242.0" prefWidth="128.0" styleClass="bg" stylesheets="@background.css" AnchorPane.rightAnchor="5.0">
                <children>
                   <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Punkte:" VBox.vgrow="ALWAYS">
                      <font>
                         <Font name="Comic Sans MS" size="18.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="40.0" left="5.0" />
+                        <Insets bottom="20.0" left="5.0" />
                      </VBox.margin>
                   </Text>
                   <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Lines:" VBox.vgrow="ALWAYS">
@@ -78,6 +78,31 @@
                         <Insets left="5.0" />
                      </VBox.margin>
                   </Text>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Next Block:">
+                     <font>
+                        <Font name="Comic Sans MS" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="5.0" top="20.0" />
+                     </VBox.margin>
+                  </Text>
+                  <GridPane fx:id="nextGridPane" prefHeight="88.0" prefWidth="123.0" style="-fx-grid-lines-visible: true;" styleClass="grid" VBox.vgrow="SOMETIMES">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="ALWAYS" />
+                      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="ALWAYS" />
+                      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="ALWAYS" />
+                      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="ALWAYS" />
+                    </rowConstraints>
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="2.5" right="2.5" />
+                     </VBox.margin>
+                  </GridPane>
                </children>
                <opaqueInsets>
                   <Insets />
