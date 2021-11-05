@@ -21,6 +21,7 @@ public class TetrisGame
 		
 		// Init the Game
 		this.fallingBlock = Block.randomBlock();
+		this.nextBlock = Block.randomBlock();
 		initGridMatrix();
 		tick();
 	}
@@ -35,7 +36,7 @@ public class TetrisGame
 			if (moveBlock())
 			{
 				this.fallingBlock = nextBlock;
-				this.nextBlock = generateNewBlock();
+				this.nextBlock = generateNewBlock(nextBlock);
 			}
 			deleteFullLines();
 		}
@@ -47,11 +48,13 @@ public class TetrisGame
 	}
 	
 	/**
-	 * Generates a new Block that is different from the current Block
+	 * Generates a random Block that does not match the given one
 	 */
-	private Block generateNewBlock()
+	private Block generateNewBlock(Block excludedBlock)
 	{
-		return Block.values()[fallingBlock.ordinal() + (int) (Math.random() * (Block.values().length - 1))];
+		return Block.values()[(excludedBlock.ordinal() +
+				(int) (Math.random() * (Block.values().length - 1)))
+				% Block.values().length];
 	}
 	
 	/**
