@@ -9,9 +9,12 @@ public class TetrisController
     // Fields *****************************************************************
     @FXML
     private GridPane gridPane;
-    
+    @FXML
+    private GridPane nextGridPane;
+
     private Pane[][] tetrisGrid;
-    
+    private Pane[][] nextBlockGrid;
+
     // Constructors ***********************************************************
     public TetrisController()
     {
@@ -69,5 +72,32 @@ public class TetrisController
     public void updateGridMatrix(final Cell[][] newGrid)
     {
         updateGridMatrix(0, 0, newGrid);
+    }
+
+    public void initNextGridMatrix()
+    {
+        this.nextBlockGrid = new Pane[4][4];
+
+        for (int y = 0; y < nextBlockGrid.length; y++)
+        {
+            for (int x = 0; x < nextBlockGrid[y].length; x++)
+            {
+                this.nextBlockGrid[y][x] = new Pane();
+                nextGridPane.add(nextBlockGrid[y][x], x, y);
+            }
+        }
+    }
+
+    public void updateNextBlock(Block newBlock)
+    {
+        Cell[][] newGrid = newBlock.toCellMatrix();
+        for (int y = 0; y < newGrid.length; y++)
+        {
+            for (int x = 0; x < newGrid[y].length; x++)
+            {
+                updatePane(nextBlockGrid[y][x], newGrid[y][x]);
+                System.out.println(nextBlockGrid[y][x].getWidth());
+            }
+        }
     }
 }
