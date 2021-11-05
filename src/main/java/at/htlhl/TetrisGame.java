@@ -13,6 +13,8 @@ public class TetrisGame
 	private Block fallingBlock;
 	private Block nextBlock;
 	
+	private boolean isRunning = false;
+	
 	// Constructors ***********************************************************
 	public TetrisGame(TetrisController controller)
 	{
@@ -23,21 +25,27 @@ public class TetrisGame
 		this.fallingBlock = Block.randomBlock();
 		this.nextBlock = Block.randomBlock();
 		initGridMatrix();
-		tick();
 	}
 	
 	// Logic ******************************************************************
+	public void start()
+	{
+		this.isRunning = true;
+	}
+	
+	public void pause()
+	{
+		this.isRunning = false;
+	}
+	
 	private void tick()
 	{
 		processUserInput();
-		// Don't call this every tick
-		// if(...)
+		
+		if (moveBlock())
 		{
-			if (moveBlock())
-			{
-				this.fallingBlock = nextBlock;
-				this.nextBlock = generateNewBlock(nextBlock);
-			}
+			this.fallingBlock = nextBlock;
+			this.nextBlock = generateNewBlock(nextBlock);
 			deleteFullLines();
 		}
 	}
