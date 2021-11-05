@@ -19,7 +19,8 @@ public class TetrisGame
 		this.controller = controller;
 		this.grid = new Cell[GRID_HEIGHT][GRID_WIDTH];
 		
-		// Init the Grid Matrix
+		// Init the Game
+		this.fallingBlock = Block.randomBlock();
 		initGridMatrix();
 		tick();
 	}
@@ -33,7 +34,8 @@ public class TetrisGame
 		{
 			if (moveBlock())
 			{
-				generateNewBlock();
+				this.fallingBlock = nextBlock;
+				this.nextBlock = generateNewBlock();
 			}
 			deleteFullLines();
 		}
@@ -47,10 +49,9 @@ public class TetrisGame
 	/**
 	 * Generates a new Block that is different from the current Block
 	 */
-	private void generateNewBlock()
+	private Block generateNewBlock()
 	{
-		this.fallingBlock = nextBlock;
-		this.nextBlock = Block.values()[fallingBlock.ordinal() + (int) (Math.random() * (Block.values().length - 1))];
+		return Block.values()[fallingBlock.ordinal() + (int) (Math.random() * (Block.values().length - 1))];
 	}
 	
 	/**
