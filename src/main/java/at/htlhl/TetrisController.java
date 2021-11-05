@@ -14,7 +14,7 @@ public class TetrisController
 
     private Pane[][] tetrisGrid;
     private Pane[][] nextBlockGrid;
-
+    
     // Constructors ***********************************************************
     public TetrisController()
     {
@@ -98,5 +98,10 @@ public class TetrisController
                 updatePane(nextBlockGrid[y][x], newGrid[y][x]);
             }
         }
+    }
+    
+    public void updateGridMatrix(final Cell[][] newGrid)
+    {
+        updateGridMatrix(0, 0, newGrid);
     }
 }
