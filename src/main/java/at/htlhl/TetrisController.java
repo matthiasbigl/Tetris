@@ -96,7 +96,6 @@ public class TetrisController
             for (int x = 0; x < newGrid[y].length; x++)
             {
                 updatePane(nextBlockGrid[y][x], newGrid[y][x]);
-                System.out.println(nextBlockGrid[y][x].getWidth());
             }
         }
     }
