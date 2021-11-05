@@ -9,14 +9,14 @@ public class TetrisController
     // Fields *****************************************************************
     @FXML
     private GridPane gridPane;
-
+    
     private Pane[][] tetrisGrid;
-
+    
     // Constructors ***********************************************************
     public TetrisController()
     {
     }
-
+    
     /**
      * Updates a {@link Pane} object with the color from the given {@link Cell} object
      *
@@ -27,7 +27,7 @@ public class TetrisController
         pane.setStyle("-fx-background-color:" + cell.getColor().toHex() + ";");
         pane.setVisible(cell.isVisible());
     }
-
+    
     /**
      * Initialises the objects in the GridPane
      *
@@ -36,7 +36,7 @@ public class TetrisController
     public void initGridMatrix(final Cell[][] initialGrid)
     {
         this.tetrisGrid = new Pane[initialGrid.length][];
-
+        
         for (int y = 0; y < initialGrid.length; y++)
         {
             this.tetrisGrid[y] = new Pane[initialGrid[y].length];
@@ -49,20 +49,25 @@ public class TetrisController
         
         updateGridMatrix(initialGrid);
     }
-
+    
     /**
-     * Updates the GridPane with the given grid data
+     * Updates part of the GridPane using the given grid data
      *
      * @param newGrid The grid that should be displayed
      */
-    public void updateGridMatrix(final Cell[][] newGrid)
+    public void updateGridMatrix(int startX, int startY, final Cell[][] newGrid)
     {
-        for (int y = 0; y < newGrid.length; y++)
+        for (int y = startY; y < newGrid.length && y < tetrisGrid.length; y++)
         {
-            for (int x = 0; x < newGrid[y].length; x++)
+            for (int x = startX; x < newGrid[y].length && x < tetrisGrid[y].length; x++)
             {
                 updatePane(tetrisGrid[y][x], newGrid[y][x]);
             }
         }
+    }
+    
+    public void updateGridMatrix(final Cell[][] newGrid)
+    {
+        updateGridMatrix(0, 0, newGrid);
     }
 }
