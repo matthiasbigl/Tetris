@@ -1,7 +1,5 @@
 package at.htlhl;
 
-import java.util.stream.Stream;
-
 /**
  * Represents a Tetris block
  */
