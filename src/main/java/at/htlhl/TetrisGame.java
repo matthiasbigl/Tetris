@@ -1,6 +1,9 @@
 package at.htlhl;
 
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class TetrisGame
 {
 	// Constants **************************************************************
@@ -12,6 +15,10 @@ public class TetrisGame
 	private final Cell[][] grid;
 	private Block fallingBlock;
 	private Block nextBlock;
+	
+	private Timer tickTimer;
+	private boolean isRunning = false;
+	private boolean isPaused = true;
 	
 	// Constructors ***********************************************************
 	public TetrisGame(TetrisController controller)
@@ -27,21 +34,78 @@ public class TetrisGame
 		controller.updateNextBlock(nextBlock);
 
 		initGridMatrix();
-		tick();
 	}
 	
 	// Logic ******************************************************************
+	public void start()
+	{
+		if(isRunning())
+			return;
+		
+		this.isRunning = true;
+		unpause();
+		
+		this.tickTimer = new Timer();
+		tickTimer.scheduleAtFixedRate(new TimerTask()
+		{
+			@Override
+			public void run()
+			{
+				if(!isPaused())
+				{
+					tick();
+				}
+			}
+		}, 0, 100);
+	}
+	
+	public void stop()
+	{
+		if(!isRunning())
+			return;
+		
+		this.isRunning = false;
+		tickTimer.cancel();
+	}
+	
+	public void pause()
+	{
+		this.isPaused = true;
+	}
+	
+	public void unpause()
+	{
+		this.isPaused = false;
+	}
+	
+	/**
+	 * @return Whether the game is running
+	 */
+	public boolean isRunning()
+	{
+		return isRunning;
+	}
+	
+	/**
+	 * @return Whether the game is paused
+	 */
+	public boolean isPaused()
+	{
+		return isPaused;
+	}
+	
+	/**
+	 * Is called 10 times per second
+	 */
 	private void tick()
 	{
+		System.out.println("Tick");
 		processUserInput();
-		// Don't call this every tick
-		// if(...)
+		
+		if (moveBlock())
 		{
-			if (moveBlock())
-			{
-				this.fallingBlock = nextBlock;
-				this.nextBlock = generateNewBlock(nextBlock);
-			}
+			this.fallingBlock = nextBlock;
+			this.nextBlock = generateNewBlock(nextBlock);
 			deleteFullLines();
 		}
 	}

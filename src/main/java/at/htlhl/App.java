@@ -19,7 +19,10 @@ public class App extends Application {
         TetrisController controller = loader.getController();
 
         TetrisGame game = new TetrisGame(controller);
+        game.start();
 
+        stage.setOnCloseRequest(e -> game.stop());
+        
         stage.setScene(new Scene(root));
         stage.show();
     }
