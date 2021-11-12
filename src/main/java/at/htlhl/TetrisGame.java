@@ -1,8 +1,5 @@
 package at.htlhl;
 
-
-import java.util.Arrays;
-
 public class TetrisGame
 {
 	// Constants **************************************************************
