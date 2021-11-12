@@ -77,6 +77,11 @@ public enum Block
         return cellMatrix;
     }
     
+    public FallingBlock falling()
+    {
+        return new FallingBlock(this);
+    }
+    
     public static Block randomBlock()
     {
         return Block.values()[(int) (Math.random() * Block.values().length)];

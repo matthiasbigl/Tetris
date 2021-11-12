@@ -49,8 +49,6 @@ public class TetrisController
                 tetrisGridPane.add(tetrisGrid[y][x], x, y);
             }
         }
-        
-        updateTetrisGrid(initialGrid);
     }
     
     /**
