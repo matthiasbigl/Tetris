@@ -21,6 +21,7 @@ public class App extends Application {
         TetrisGame game = new TetrisGame(controller);
 
         stage.setScene(new Scene(root));
+        stage.setFullScreen(true);
         stage.show();
     }
 
