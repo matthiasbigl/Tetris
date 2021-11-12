@@ -103,6 +103,13 @@ public class TetrisGame
 	{
 	
 	}
+
+	private void deleteLine(int index){
+		Cell[] line = grid[index];
+		for (Cell cell : line){
+			cell.setVisible(false);
+		}
+	}
 	
 	/**
 	 * Fill the Grid Matrix with Cell objects
