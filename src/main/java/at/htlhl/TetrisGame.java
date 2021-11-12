@@ -68,6 +68,38 @@ public class TetrisGame
 	{
 	
 	}
+
+	/**
+	 * method to check if block should be placed
+	 * @param block
+	 * @param y
+	 * @param x
+	 */
+	private void blockCheck(Block block, int y, int x) {
+		boolean[][] blockMatrix = block.getBlockMatrix();
+
+		boolean place = false;
+
+		if (x+blockMatrix.length-1 == 19) {
+			place = true;
+		} else {
+			boolean[] lowestBlockLine = blockMatrix[blockMatrix.length - 1];
+			int bottomLineIndex = y + blockMatrix.length - 1;
+
+			Cell[] lineUnder = grid[bottomLineIndex + 1];
+
+			for (int i = 0; i < lowestBlockLine.length; i++)
+			{
+				if (lowestBlockLine[i])
+				{
+					if (lineUnder[x + i].isVisible())
+					{
+						place = true;
+					}
+				}
+			}
+		}
+	}
 	
 	/**
 	 * Places the given {@link Cell} matrix in the grid.<br>
