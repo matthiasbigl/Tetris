@@ -29,8 +29,10 @@ public class TetrisGame
 		// Init the Game
 		this.fallingBlock = Block.randomBlock();
 		this.nextBlock = Block.randomBlock();
-		controller.initNextGridMatrix();
-		controller.updateNextBlock(nextBlock);
+
+		controller.initPreviewGrid();
+		controller.updatePreviewGrid(nextBlock);
+
 		initGridMatrix();
 	}
 	
@@ -132,7 +134,8 @@ public class TetrisGame
 	}
 	
 	/**
-	 * Places the given {@link Cell} matrix in the grid and updates it
+	 * Places the given {@link Cell} matrix in the grid.<br>
+	 * DOES NOT update the {@link TetrisController}
 	 *
 	 * @param cellMatrix The {@link Cell}s to place in the grid
 	 * @param posX       The x position
@@ -144,11 +147,9 @@ public class TetrisGame
 		{
 			for (int x = 0; x < cellMatrix[currY].length; x++)
 			{
-				grid[posX + currY][posX + x] = cellMatrix[currY][x];
+				grid[posY + currY][posX + x] = cellMatrix[currY][x];
 			}
 		}
-		
-		updateGridMatrix();
 	}
 	
 	
@@ -203,7 +204,7 @@ public class TetrisGame
 	 */
 	private void updateGridMatrix()
 	{
-		controller.updateGridMatrix(grid);
+		controller.updateTetrisGrid(grid);
 	}
 	
 	/**
