@@ -145,4 +145,22 @@ public class TetrisGame
 		
 		updateGridMatrix();
 	}
+
+
+	/**
+	 * Simple method to check if a line in the grid is full
+	 *
+	 * @param index Index of the line to check
+	 * @return boolean if line is full
+	 */
+	private boolean lineFull(int index) {
+		Cell[] line = grid[index];
+		boolean isFull = true;
+		for (Cell cell : line) {
+			if (!cell.isVisible()) {
+				isFull = false;
+			}
+		}
+		return isFull;
+	}
 }
