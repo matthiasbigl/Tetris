@@ -75,7 +75,7 @@ public class TetrisGame
 	 * @param y
 	 * @param x
 	 */
-	private void blockCheck(Block block, int y, int x) {
+	private void placeBlockInGrid(Block block, int y, int x) {
 		boolean[][] blockMatrix = block.getBlockMatrix();
 
 		boolean place = false;
@@ -98,6 +98,13 @@ public class TetrisGame
 					}
 				}
 			}
+		}
+
+		/**
+		 * TODO: place block in grid
+		 */
+		if (place) {
+			// place in grid
 		}
 	}
 	
