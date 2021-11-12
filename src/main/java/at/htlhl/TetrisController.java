@@ -8,18 +8,18 @@ public class TetrisController
 {
     // Fields *****************************************************************
     @FXML
-    private GridPane gridPane;
+    private GridPane tetrisGridPane;
     @FXML
-    private GridPane nextGridPane;
+    private GridPane previewGridPane;
 
     private Pane[][] tetrisGrid;
-    private Pane[][] nextBlockGrid;
+    private Pane[][] previewGrid;
 
     // Constructors ***********************************************************
     public TetrisController()
     {
     }
-
+    
     /**
      * Updates a {@link Pane} object with the color from the given {@link Cell} object
      *
@@ -30,7 +30,7 @@ public class TetrisController
         pane.setStyle("-fx-background-color:" + cell.getColor().toHex() + ";");
         pane.setVisible(cell.isVisible());
     }
-
+    
     /**
      * Initialises the objects in the GridPane
      *
@@ -39,59 +39,74 @@ public class TetrisController
     public void initGridMatrix(final Cell[][] initialGrid)
     {
         this.tetrisGrid = new Pane[initialGrid.length][];
-
+        
         for (int y = 0; y < initialGrid.length; y++)
         {
             this.tetrisGrid[y] = new Pane[initialGrid[y].length];
             for (int x = 0; x < initialGrid[y].length; x++)
             {
                 this.tetrisGrid[y][x] = new Pane();
-                gridPane.add(tetrisGrid[y][x], x, y);
+                tetrisGridPane.add(tetrisGrid[y][x], x, y);
             }
         }
         
-        updateGridMatrix(initialGrid);
+        updateTetrisGrid(initialGrid);
     }
-
+    
     /**
-     * Updates the GridPane with the given grid data
+     * Updates the GridPane using the given grid data
      *
-     * @param newGrid The grid that should be displayed
+     * @param newGrid The grid that should be displayed. Must be the same size as the GridPane
      */
-    public void updateGridMatrix(final Cell[][] newGrid)
+    public void updateTetrisGrid(final Cell[][] newGrid)
     {
-        for (int y = 0; y < newGrid.length; y++)
+        for (int y = 0; y < tetrisGrid.length; y++)
         {
-            for (int x = 0; x < newGrid[y].length; x++)
+            for (int x = 0; x < tetrisGrid[y].length; x++)
             {
                 updatePane(tetrisGrid[y][x], newGrid[y][x]);
             }
         }
     }
-
-    public void initNextGridMatrix()
+    
+    public void addCellsToTetrisGrid(final int startX, final int startY, final Cell[][] newCells)
     {
-        this.nextBlockGrid = new Pane[4][4];
-
-        for (int y = 0; y < nextBlockGrid.length; y++)
+        for (int y = 0; y < newCells.length && (startY + y) < tetrisGrid.length; y++)
         {
-            for (int x = 0; x < nextBlockGrid[y].length; x++)
+            for (int x = 0; x < newCells[y].length && (startX + x) < tetrisGrid[y].length; x++)
             {
-                this.nextBlockGrid[y][x] = new Pane();
-                nextGridPane.add(nextBlockGrid[y][x], x, y);
+                final int actualY = startY + y;
+                final int actualX = startX + x;
+                if(newCells[y][x].isVisible())
+                {
+                    updatePane(tetrisGrid[actualY][actualX], newCells[y][x]);
+                }
             }
         }
     }
 
-    public void updateNextBlock(Block newBlock)
+    public void initPreviewGrid()
+    {
+        this.previewGrid = new Pane[4][4];
+
+        for (int y = 0; y < previewGrid.length; y++)
+        {
+            for (int x = 0; x < previewGrid[y].length; x++)
+            {
+                this.previewGrid[y][x] = new Pane();
+                previewGridPane.add(previewGrid[y][x], x, y);
+            }
+        }
+    }
+
+    public void updatePreviewGrid(Block newBlock)
     {
         Cell[][] newGrid = newBlock.toCellMatrix();
         for (int y = 0; y < newGrid.length; y++)
         {
             for (int x = 0; x < newGrid[y].length; x++)
             {
-                updatePane(nextBlockGrid[y][x], newGrid[y][x]);
-                System.out.println(nextBlockGrid[y][x].getWidth());
+                updatePane(previewGrid[y][x], newGrid[y][x]);
             }
         }
     }
