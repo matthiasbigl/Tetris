@@ -71,15 +71,15 @@ public class TetrisController
     
     public void addCellsToTetrisGrid(final int startX, final int startY, final Cell[][] newCells)
     {
-        final int maxY = Math.min(tetrisGrid.length, newCells.length);
-        for (int y = startY; y < maxY; y++)
+        for (int y = 0; y < newCells.length && (startY + y) < tetrisGrid.length; y++)
         {
-            final int maxX = Math.min(tetrisGrid[y].length, newCells[y].length);
-            for (int x = startX; y < maxX; x++)
+            for (int x = 0; x < newCells[y].length && (startX + x) < tetrisGrid[y].length; x++)
             {
+                final int actualY = startY + y;
+                final int actualX = startX + x;
                 if(newCells[y][x].isVisible())
                 {
-                    updatePane(tetrisGrid[y][x], newCells[y][x]);
+                    updatePane(tetrisGrid[actualY][actualX], newCells[y][x]);
                 }
             }
         }
@@ -107,7 +107,6 @@ public class TetrisController
             for (int x = 0; x < newGrid[y].length; x++)
             {
                 updatePane(previewGrid[y][x], newGrid[y][x]);
-                System.out.println(previewGrid[y][x].getWidth());
             }
         }
     }
