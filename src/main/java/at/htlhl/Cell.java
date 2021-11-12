@@ -62,4 +62,9 @@ public class Cell
                 ", " + isVisible +
                 '}';
     }
+
+    @Override
+    protected Cell clone() {
+        return new Cell(this.getColor(), this.isVisible());
+    }
 }

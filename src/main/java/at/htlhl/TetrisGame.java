@@ -1,6 +1,8 @@
 package at.htlhl;
 
 
+import java.util.Arrays;
+
 public class TetrisGame
 {
 	// Constants **************************************************************
@@ -106,16 +108,17 @@ public class TetrisGame
 	}
 
 	private void deleteLine(int index){
-		//Line delete
-		Cell[] line = grid[index];
-		for (Cell cell : line){
-			cell.setVisible(false);
-		}
-
 		//Line above comes down
 		for (int i = index; i > 0; i--) {
-			Cell[] lineabove = grid[index-1];
-			grid[i] = lineabove;
+			Cell[] lineabove = grid[i-1];
+			for(int j = 0; j < lineabove.length; j++)
+			{
+				grid[i][j] = lineabove[j].clone();
+			}
+		}
+
+		for (Cell cell : grid[0]){
+			cell.setVisible(false);
 		}
 	}
 
