@@ -169,12 +169,19 @@ public class TetrisGame
 	}
 
 	private void deleteLine(int index){
+		//Line delete
 		Cell[] line = grid[index];
 		for (Cell cell : line){
 			cell.setVisible(false);
 		}
+
+		//Line above comes down
+		for (int i = index; i > 0; i--) {
+			Cell[] lineabove = grid[index-1];
+			grid[i] = lineabove;
+		}
 	}
-	
+
 	/**
 	 * Fill the Grid Matrix with Cell objects
 	 */
