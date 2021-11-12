@@ -13,7 +13,7 @@ public class TetrisGame
 	// Fields *****************************************************************
 	private final TetrisController controller;
 	private final Cell[][] grid;
-	private Block fallingBlock;
+	private FallingBlock fallingBlock;
 	private Block nextBlock;
 	
 	private Timer tickTimer;
@@ -27,13 +27,14 @@ public class TetrisGame
 		this.grid = new Cell[GRID_HEIGHT][GRID_WIDTH];
 		
 		// Init the Game
-		this.fallingBlock = Block.randomBlock();
+		this.fallingBlock = Block.randomBlock().falling();
 		this.nextBlock = Block.randomBlock();
 
 		controller.initPreviewGrid();
 		controller.updatePreviewGrid(nextBlock);
 
 		initGridMatrix();
+		updateGridMatrix();
 	}
 	
 	// Logic ******************************************************************
@@ -56,7 +57,7 @@ public class TetrisGame
 					tick();
 				}
 			}
-		}, 0, 100);
+		}, 0, 1000);
 	}
 	
 	public void stop()
@@ -104,10 +105,12 @@ public class TetrisGame
 		
 		if (moveBlock())
 		{
-			this.fallingBlock = nextBlock;
+			this.fallingBlock = nextBlock.falling();
 			this.nextBlock = generateNewBlock(nextBlock);
 			deleteFullLines();
 		}
+		
+		updateGridMatrix();
 	}
 	
 	private void processUserInput()
@@ -161,7 +164,8 @@ public class TetrisGame
 	 */
 	private boolean moveBlock()
 	{
-		return true;
+		this.fallingBlock.move(0, 1);
+		return false;
 	}
 	
 	private void deleteFullLines()
@@ -198,6 +202,7 @@ public class TetrisGame
 		}
 		
 		controller.initGridMatrix(grid);
+		updateGridMatrix();
 	}
 	
 	/**
@@ -206,6 +211,7 @@ public class TetrisGame
 	private void updateGridMatrix()
 	{
 		controller.updateTetrisGrid(grid);
+		controller.addCellsToTetrisGrid(fallingBlock.getX(), fallingBlock.getY(), fallingBlock.getBlock().toCellMatrix());
 	}
 	
 	/**
