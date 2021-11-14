@@ -5,6 +5,7 @@ package at.htlhl;
  */
 public enum Block
 {
+    // TODO: Change to 4x4 matrix for every Block
     RIGHT_L(Color.ORANGE, new boolean[][] {
         {false, true, false, false},
         {false, true, false, false},
