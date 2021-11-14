@@ -17,8 +17,10 @@ public class TetrisGame
 	private Block nextBlock;
 	
 	private Timer tickTimer;
-	private boolean isRunning = false;
-	private boolean isPaused = true;
+	private boolean isRunning;
+	private boolean isPaused;
+	
+	private boolean wasBlockMoved;
 	
 	// Constructors ***********************************************************
 	public TetrisGame(TetrisController controller)
@@ -27,9 +29,12 @@ public class TetrisGame
 		this.grid = new Cell[GRID_HEIGHT][GRID_WIDTH];
 		
 		// Init the Game
-		this.fallingBlock = Block.randomBlock().falling();
+		this.isRunning = false;
+		this.isPaused = true;
 		this.nextBlock = Block.randomBlock();
+		generateNewBlock();
 
+		// Init the controller
 		controller.initPreviewGrid();
 		controller.updatePreviewGrid(nextBlock);
 
@@ -57,7 +62,7 @@ public class TetrisGame
 					tick();
 				}
 			}
-		}, 0, 1000);
+		}, 0, 100);
 	}
 	
 	public void stop()
@@ -96,26 +101,47 @@ public class TetrisGame
 	}
 	
 	/**
-	 * Is called 10 times per second
+	 * Is called x times per second
 	 */
 	private void tick()
 	{
+		// This should happen each tick:
+		// * process user input
+		// * move the block down one block (only do this every x ticks)
+		// * if the block didn't move, place it in the grid
+		
 		System.out.println("Tick");
 		processUserInput();
 		
-		if (moveBlock())
+		// TODO: Don't call this every tick
 		{
-			this.fallingBlock = nextBlock.falling();
-			this.nextBlock = generateNewBlock(nextBlock);
-			deleteFullLines();
+			this.wasBlockMoved = false;
+			tryMoveBlock(0, 1);
+
+			// If the block wasn't moved, place it in the grid
+			if (!wasBlockMoved)
+			{
+				fallingBlock.placeBlock(this);
+				generateNewBlock();
+				controller.updatePreviewGrid(nextBlock);
+				deleteFullLines();
+			}
 		}
 		
 		updateGridMatrix();
 	}
 	
+	private void generateNewBlock()
+	{
+		this.fallingBlock = nextBlock.falling();
+		this.nextBlock = generateNewBlock(nextBlock);
+	}
+	
 	private void processUserInput()
 	{
-	
+		// * move the block
+		// * rotate the block TODO
+		// according to the user input
 	}
 	
 	/**
@@ -124,16 +150,8 @@ public class TetrisGame
 	private Block generateNewBlock(Block excludedBlock)
 	{
 		return Block.values()[(excludedBlock.ordinal() +
-				(int) (Math.random() * (Block.values().length - 1)))
+				(int) (Math.random() * (Block.values().length - 1)) + 1)
 				% Block.values().length];
-	}
-	
-	/**
-	 * Places the falling Block in the grid
-	 */
-	private void placeFallingBlock()
-	{
-	
 	}
 	
 	/**
@@ -144,28 +162,32 @@ public class TetrisGame
 	 * @param posX       The x position
 	 * @param posY       The y position
 	 */
-	private void placeInGrid(Cell[][] cellMatrix, int posX, int posY)
+	public void placeInGrid(Cell[][] cellMatrix, int posX, int posY)
 	{
 		for (int currY = 0; currY < cellMatrix.length; currY++)
 		{
 			for (int x = 0; x < cellMatrix[currY].length; x++)
 			{
-				grid[posY + currY][posX + x] = cellMatrix[currY][x];
+				final Cell cell = cellMatrix[currY][x];
+				if(cell.isVisible())
+				{
+					grid[posY + currY][posX + x] = cellMatrix[currY][x];
+				}
 			}
 		}
 	}
 	
-	
 	/**
-	 * Moves the falling {@link Brick} down one cell.<br>
-	 * If it collides with anything, it will be placed in the grid
-	 *
-	 * @return Whether the {@link Brick} was placed in the grid
+	 * Moves the {@link FallingBlock} according to the x and y parameters if it can and sets the wasBlockMoved variable
 	 */
-	private boolean moveBlock()
+	private void tryMoveBlock(final int x, final int y)
 	{
-		this.fallingBlock.move(0, 1);
-		return false;
+		// Move the block if it can be moved
+		if(fallingBlock.canMove(this, x, y))
+		{
+			fallingBlock.move(x, y);
+			wasBlockMoved = true;
+		}
 	}
 	
 	private void deleteFullLines()
@@ -186,6 +208,29 @@ public class TetrisGame
 		for (Cell cell : grid[0]){
 			cell.setVisible(false);
 		}
+	}
+	
+	public Cell getCell(int x, int y)
+	{
+		if(isInBounds(x, y))
+		{
+			return grid[y][x];
+		}
+		
+		return new Cell(Color.TRANSPARENT, true);
+	}
+	
+	public boolean isInBounds(int x, int y)
+	{
+		if(y >= 0 && y < grid.length)
+		{
+			if(x >= 0 && x < grid[y].length)
+			{
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 	/**
@@ -211,6 +256,7 @@ public class TetrisGame
 	private void updateGridMatrix()
 	{
 		controller.updateTetrisGrid(grid);
+		// Add the FallingBlock to the controller grid
 		controller.addCellsToTetrisGrid(fallingBlock.getX(), fallingBlock.getY(), fallingBlock.getBlock().toCellMatrix());
 	}
 	
