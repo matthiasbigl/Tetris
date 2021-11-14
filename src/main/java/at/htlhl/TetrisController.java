@@ -100,6 +100,16 @@ public class TetrisController
     public void updatePreviewGrid(Block newBlock)
     {
         Cell[][] newGrid = newBlock.toCellMatrix();
+        // TODO: Change Block enum
+        // Pfusch
+        for (int y = 0; y < previewGrid.length; y++)
+        {
+            for (int x = 0; x < previewGrid[y].length; x++)
+            {
+                updatePane(previewGrid[y][x], new Cell());
+            }
+        }
+        
         for (int y = 0; y < newGrid.length; y++)
         {
             for (int x = 0; x < newGrid[y].length; x++)
