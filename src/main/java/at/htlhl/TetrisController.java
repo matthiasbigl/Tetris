@@ -1,5 +1,6 @@
 package at.htlhl;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -27,8 +28,11 @@ public class TetrisController
      */
     private void updatePane(final Pane pane, final Cell cell)
     {
-        pane.setStyle("-fx-background-color:" + cell.getColor().toHex() + ";");
-        pane.setVisible(cell.isVisible());
+        Platform.runLater(() ->
+        {
+            pane.setStyle("-fx-background-color:" + cell.getColor().toHex() + ";");
+            pane.setVisible(cell.isVisible());
+        });
     }
     
     /**
@@ -100,16 +104,6 @@ public class TetrisController
     public void updatePreviewGrid(Block newBlock)
     {
         Cell[][] newGrid = newBlock.toCellMatrix();
-        // TODO: Change Block enum
-        // Pfusch
-        for (int y = 0; y < previewGrid.length; y++)
-        {
-            for (int x = 0; x < previewGrid[y].length; x++)
-            {
-                updatePane(previewGrid[y][x], new Cell());
-            }
-        }
-        
         for (int y = 0; y < newGrid.length; y++)
         {
             for (int x = 0; x < newGrid[y].length; x++)
