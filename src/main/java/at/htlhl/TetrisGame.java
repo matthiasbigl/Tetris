@@ -11,16 +11,21 @@ public class TetrisGame
 	public static final int GRID_HEIGHT = 20;
 	
 	// Fields *****************************************************************
+	// Grid and Blocks
 	private final TetrisController controller;
 	private final Cell[][] grid;
 	private FallingBlock fallingBlock;
 	private Block nextBlock;
 	
+	// Timer & Tick loop
 	private Timer tickTimer;
 	private boolean isRunning;
 	private boolean isPaused;
 	
-	private boolean wasBlockMoved;
+	// Movement
+	private long totalTickCount; // The total number of ticks that have happened
+	private long lastBlockFall; // The last tick the FallingBlock was moved
+	private boolean didBlockFall;
 	
 	// Constructors ***********************************************************
 	public TetrisGame(TetrisController controller)
@@ -51,18 +56,19 @@ public class TetrisGame
 		this.isRunning = true;
 		unpause();
 		
+		this.totalTickCount = 1;
 		this.tickTimer = new Timer();
 		tickTimer.scheduleAtFixedRate(new TimerTask()
 		{
 			@Override
 			public void run()
 			{
-				if(!isPaused())
-				{
-					tick();
-				}
+			if(!isPaused())
+			{
+				tick();
 			}
-		}, 0, 100);
+			}
+		}, 0, 20);
 	}
 	
 	public void stop()
@@ -109,31 +115,38 @@ public class TetrisGame
 		// * process user input
 		// * move the block down one block (only do this every x ticks)
 		// * if the block didn't move, place it in the grid
+		// * increment the total tick count
 		
-		System.out.println("Tick");
 		processUserInput();
+		System.out.print("Tick " + totalTickCount);
 		
-		// TODO: Don't call this every tick
+		if(lastBlockFall + 10 <= totalTickCount)
 		{
-			this.wasBlockMoved = false;
+			System.out.print(": Block fall");
+			this.lastBlockFall = totalTickCount;
+			this.didBlockFall = false;
 			tryMoveBlock(0, 1);
 
-			// If the block wasn't moved, place it in the grid
-			if (!wasBlockMoved)
-			{
-				fallingBlock.placeBlock(this);
-				generateNewBlock();
-				controller.updatePreviewGrid(nextBlock);
-				deleteFullLines();
-			}
+            // If the block couldn't fall, place it in the grid
+            if (!didBlockFall)
+            {
+                System.out.print(", Block placed");
+                fallingBlock.placeBlock(this);
+                generateNewBlock();
+                controller.updatePreviewGrid(nextBlock);
+                deleteFullLines();
+            }
 		}
+		System.out.println();
 		
+		totalTickCount++;
 		updateGridMatrix();
 	}
 	
 	private void generateNewBlock()
 	{
-		this.fallingBlock = nextBlock.falling();
+		int centeredX = (GRID_WIDTH / 2) - (nextBlock.getWidth() / 2);
+		this.fallingBlock = nextBlock.falling(centeredX, 0);
 		this.nextBlock = generateNewBlock(nextBlock);
 	}
 	
@@ -178,7 +191,7 @@ public class TetrisGame
 	}
 	
 	/**
-	 * Moves the {@link FallingBlock} according to the x and y parameters if it can and sets the wasBlockMoved variable
+	 * Moves the {@link FallingBlock} according to the x and y parameters if it can and sets the didBlockFall variable
 	 */
 	private void tryMoveBlock(final int x, final int y)
 	{
@@ -186,7 +199,7 @@ public class TetrisGame
 		if(fallingBlock.canMove(this, x, y))
 		{
 			fallingBlock.move(x, y);
-			wasBlockMoved = true;
+			didBlockFall = true;
 		}
 	}
 	
