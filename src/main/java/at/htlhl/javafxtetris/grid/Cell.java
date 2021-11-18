@@ -24,19 +24,11 @@ public class Cell
         this.isSolid = isSolid;
     }
 
-    public Cell(final Color color)
+    public Cell(boolean isSolid)
     {
-        this(color, false);
+        this(Color.TRANSPARENT, isSolid);
     }
     
-    /**
-     * Constructor with default color
-      */
-    public Cell()
-    {
-        this(Color.TRANSPARENT);
-    }
-
     // Logic ******************************************************************
     public void setSolid(boolean solid)
     {

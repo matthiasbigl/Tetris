@@ -261,7 +261,7 @@ public class TetrisGame
 		{
 			for (int x = 0; x < GRID_WIDTH; x++)
 			{
-				grid[y][x] = new Cell();
+				grid[y][x] = new Cell(false);
 			}
 		}
 		
