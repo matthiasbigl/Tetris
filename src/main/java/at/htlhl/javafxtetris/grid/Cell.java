@@ -1,4 +1,6 @@
-package at.htlhl;
+package at.htlhl.javafxtetris.grid;
+
+import at.htlhl.javafxtetris.graphics.Color;
 
 /**
  * Represents a tile in the Tetris grid
@@ -64,7 +66,7 @@ public class Cell
     }
 
     @Override
-    protected Cell clone() {
+    public Cell clone() {
         return new Cell(this.getColor(), this.isVisible());
     }
 }

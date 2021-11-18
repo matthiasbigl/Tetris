@@ -1,5 +1,7 @@
-package at.htlhl;
+package at.htlhl.javafxtetris.graphics;
 
+import at.htlhl.javafxtetris.grid.Block;
+import at.htlhl.javafxtetris.grid.Cell;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;

@@ -1,4 +1,4 @@
-package at.htlhl;
+package at.htlhl.javafxtetris.graphics;
 
 import java.util.Random;
 

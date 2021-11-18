@@ -1,5 +1,11 @@
-package at.htlhl;
+package at.htlhl.javafxtetris;
 
+
+import at.htlhl.javafxtetris.graphics.Color;
+import at.htlhl.javafxtetris.graphics.TetrisController;
+import at.htlhl.javafxtetris.grid.Block;
+import at.htlhl.javafxtetris.grid.Cell;
+import at.htlhl.javafxtetris.grid.FallingBlock;
 
 import java.util.Timer;
 import java.util.TimerTask;

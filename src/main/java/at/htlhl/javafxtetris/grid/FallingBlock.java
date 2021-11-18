@@ -1,6 +1,6 @@
-package at.htlhl;
+package at.htlhl.javafxtetris.grid;
 
-import java.util.Arrays;
+import at.htlhl.javafxtetris.TetrisGame;
 
 public class FallingBlock
 {

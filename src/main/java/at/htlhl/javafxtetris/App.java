@@ -1,5 +1,6 @@
-package at.htlhl;
+package at.htlhl.javafxtetris;
 
+import at.htlhl.javafxtetris.graphics.TetrisController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;

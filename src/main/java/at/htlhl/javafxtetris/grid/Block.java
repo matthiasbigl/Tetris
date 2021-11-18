@@ -1,4 +1,6 @@
-package at.htlhl;
+package at.htlhl.javafxtetris.grid;
+
+import at.htlhl.javafxtetris.graphics.Color;
 
 /**
  * Represents a Tetris block
