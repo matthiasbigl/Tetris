@@ -1,6 +1,5 @@
 package at.htlhl;
 
-
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -30,8 +29,8 @@ public class TetrisGame
 		this.fallingBlock = Block.randomBlock();
 		this.nextBlock = Block.randomBlock();
 
-		controller.initNextGridMatrix();
-		controller.updateNextBlock(nextBlock);
+		controller.initPreviewGrid();
+		controller.updatePreviewGrid(nextBlock);
 
 		initGridMatrix();
 	}
@@ -134,7 +133,8 @@ public class TetrisGame
 	}
 	
 	/**
-	 * Places the given {@link Cell} matrix in the grid and updates it
+	 * Places the given {@link Cell} matrix in the grid.<br>
+	 * DOES NOT update the {@link TetrisController}
 	 *
 	 * @param cellMatrix The {@link Cell}s to place in the grid
 	 * @param posX       The x position
@@ -146,11 +146,9 @@ public class TetrisGame
 		{
 			for (int x = 0; x < cellMatrix[currY].length; x++)
 			{
-				grid[posX + currY][posX + x] = cellMatrix[currY][x];
+				grid[posY + currY][posX + x] = cellMatrix[currY][x];
 			}
 		}
-		
-		updateGridMatrix();
 	}
 	
 	
@@ -169,7 +167,22 @@ public class TetrisGame
 	{
 	
 	}
-	
+
+	private void deleteLine(int index){
+		//Line above comes down
+		for (int i = index; i > 0; i--) {
+			Cell[] lineabove = grid[i-1];
+			for(int j = 0; j < lineabove.length; j++)
+			{
+				grid[i][j] = lineabove[j].clone();
+			}
+		}
+
+		for (Cell cell : grid[0]){
+			cell.setVisible(false);
+		}
+	}
+
 	/**
 	 * Fill the Grid Matrix with Cell objects
 	 */
@@ -191,7 +204,7 @@ public class TetrisGame
 	 */
 	private void updateGridMatrix()
 	{
-		controller.updateGridMatrix(grid);
+		controller.updateTetrisGrid(grid);
 	}
 	
 	/**
@@ -209,5 +222,23 @@ public class TetrisGame
 		}
 		
 		updateGridMatrix();
+	}
+
+
+	/**
+	 * Simple method to check if a line in the grid is full
+	 *
+	 * @param index Index of the line to check
+	 * @return boolean if line is full
+	 */
+	private boolean lineFull(int index) {
+		Cell[] line = grid[index];
+		boolean isFull = true;
+		for (Cell cell : line) {
+			if (!cell.isVisible()) {
+				isFull = false;
+			}
+		}
+		return isFull;
 	}
 }
