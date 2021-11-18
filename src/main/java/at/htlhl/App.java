@@ -1,6 +1,7 @@
 package at.htlhl;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -19,6 +20,7 @@ public class App extends Application {
         TetrisGame game = new TetrisGame(controller);
         game.start();
 
+        Platform.setImplicitExit(true);
         stage.setOnCloseRequest(e -> game.stop());
         
         stage.setScene(new Scene(root));
