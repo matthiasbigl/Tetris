@@ -33,7 +33,7 @@ public class TetrisController
         Platform.runLater(() ->
         {
             pane.setStyle("-fx-background-color:" + cell.getColor().toHex() + ";");
-            pane.setVisible(cell.isVisible());
+            pane.setVisible(cell.isSolid());
         });
     }
     
@@ -81,7 +81,7 @@ public class TetrisController
             {
                 final int actualY = startY + y;
                 final int actualX = startX + x;
-                if(newCells[y][x].isVisible())
+                if(newCells[y][x].isSolid())
                 {
                     updatePane(tetrisGrid[actualY][actualX], newCells[y][x]);
                 }

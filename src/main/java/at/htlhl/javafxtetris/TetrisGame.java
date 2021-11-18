@@ -188,7 +188,7 @@ public class TetrisGame
 			for (int x = 0; x < cellMatrix[currY].length; x++)
 			{
 				final Cell cell = cellMatrix[currY][x];
-				if(cell.isVisible())
+				if(cell.isSolid())
 				{
 					grid[posY + currY][posX + x] = cellMatrix[currY][x];
 				}
@@ -225,7 +225,7 @@ public class TetrisGame
 		}
 
 		for (Cell cell : grid[0]){
-			cell.setVisible(false);
+			cell.setSolid(false);
 		}
 	}
 	
@@ -307,7 +307,7 @@ public class TetrisGame
 		Cell[] line = grid[index];
 		boolean isFull = true;
 		for (Cell cell : line) {
-			if (!cell.isVisible()) {
+			if (!cell.isSolid()) {
 				isFull = false;
 			}
 		}

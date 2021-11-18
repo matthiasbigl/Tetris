@@ -65,10 +65,10 @@ public class FallingBlock
             for (int x = 0; x < cellMatrix[y].length; x++)
             {
                 // If there is a Cell at the current position, check if it can move in the given direction
-                if (cellMatrix[y][x].isVisible())
+                if (cellMatrix[y][x].isSolid())
                 {
                     // If there is a Cell at the new position, the current Cell can't be moved
-                    if (game.getCell(getX() + x + moveX, getY() + y + moveY).isVisible())
+                    if (game.getCell(getX() + x + moveX, getY() + y + moveY).isSolid())
                     {
                         return false;
                     }

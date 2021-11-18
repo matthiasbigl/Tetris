@@ -13,15 +13,15 @@ public class Cell
      */
     private Color color;
     /**
-     * Whether the tile is visible (= has collision)
+     * Whether the tile is solid
      */
-    private boolean isVisible;
+    private boolean isSolid;
 
     // Constructors ***********************************************************
-    public Cell(final Color color, boolean isVisible)
+    public Cell(final Color color, boolean isSolid)
     {
         this.color = color;
-        this.isVisible = isVisible;
+        this.isSolid = isSolid;
     }
 
     public Cell(final Color color)
@@ -38,14 +38,14 @@ public class Cell
     }
 
     // Logic ******************************************************************
-    public void setVisible(boolean visible)
+    public void setSolid(boolean solid)
     {
-        isVisible = visible;
+        isSolid = solid;
     }
     
-    public boolean isVisible()
+    public boolean isSolid()
     {
-        return isVisible;
+        return isSolid;
     }
 
     public void setColor(Color color) {
@@ -53,7 +53,7 @@ public class Cell
     }
 
     public Color getColor() {
-        return isVisible() ? color : Color.TRANSPARENT;
+        return isSolid() ? color : Color.TRANSPARENT;
     }
     
     @Override
@@ -61,12 +61,12 @@ public class Cell
     {
         return "Cell{" +
                 color +
-                ", " + isVisible +
+                ", " + isSolid +
                 '}';
     }
 
     @Override
     public Cell clone() {
-        return new Cell(this.getColor(), this.isVisible());
+        return new Cell(this.getColor(), this.isSolid());
     }
 }
