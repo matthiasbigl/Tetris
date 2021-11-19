@@ -205,15 +205,6 @@ public class Grid
         return new Cell(true);
     }
     
-    /**
-     * Returns the Grid in form of a {@link Cell} matrix
-     * @return a two dimensional {@link Cell} array
-     */
-    private Cell[][] getCellMatrix()
-    {
-        return cellMatrix;
-    }
-    
     public int getHeight()
     {
         return cellMatrix.length;
