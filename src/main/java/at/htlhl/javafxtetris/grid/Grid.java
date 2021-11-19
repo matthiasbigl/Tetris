@@ -1,5 +1,7 @@
 package at.htlhl.javafxtetris.grid;
 
+import at.htlhl.javafxtetris.graphics.Color;
+
 public class Grid
 {
     // Fields *****************************************************************
@@ -70,7 +72,11 @@ public class Grid
      */
     public void deleteFullLines()
     {
-        // TODO
+        for (int y = 0; y < cellMatrix.length; y++) {
+            if (isLineFull(y)) {
+                deleteLine(y);
+            }
+        }
     }
 
     /**
