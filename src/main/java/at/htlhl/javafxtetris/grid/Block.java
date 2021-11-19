@@ -161,6 +161,18 @@ public enum Block
         return with+1;
     }
 
+    public int getTrueHeight() {
+        int height = 0;
+        for (int y = 0; y < blockMatrix.length; y++) {
+            for (int x = 0; x < blockMatrix[y].length; x++) {
+                if (blockMatrix[y][x] == true) {
+                    height = y;
+                }
+            }
+        }
+        return height+1;
+    }
+
     public boolean[][] getBlockMatrix()
     {
         return blockMatrix;

@@ -2,10 +2,7 @@ package at.htlhl.javafxtetris;
 
 
 import at.htlhl.javafxtetris.graphics.TetrisController;
-import at.htlhl.javafxtetris.grid.Block;
-import at.htlhl.javafxtetris.grid.FallingBlock;
-import at.htlhl.javafxtetris.grid.Grid;
-import at.htlhl.javafxtetris.grid.TetrisGrid;
+import at.htlhl.javafxtetris.grid.*;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 
@@ -160,6 +157,8 @@ public class TetrisGame {
                     break;
                 case " ":
                     System.out.println("SPACE pressed");
+
+                    //fallingBlock.move(0, 20 - fallingBlock.getY() - fallingBlock.getBlock().getTrueHeight());
                     break;
                 case "Q":
                     System.out.println("Q pressed");
