@@ -12,14 +12,8 @@ import java.io.IOException;
 
 public class App extends Application {
 
-    private static App instance;
-    private Stage primaryStage;
-
     @Override
     public void start(Stage stage) throws IOException {
-        App.instance = this;
-        this.primaryStage = stage;
-
         FXMLLoader loader = new FXMLLoader(App.class.getResource("TetrisView.fxml"));
         Pane root = loader.load();
         TetrisController controller = loader.getController();
@@ -33,24 +27,6 @@ public class App extends Application {
         stage.setScene(new Scene(root));
         stage.setFullScreen(true);
         stage.show();
-    }
-
-    public void showLosingScreen()
-    {
-        FXMLLoader loader = new FXMLLoader(App.class.getResource("LosingScreen.fxml"));
-        Platform.runLater(() ->
-        {
-            try {
-                primaryStage.setScene(new Scene(loader.load()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
-    public static App instance()
-    {
-        return instance;
     }
 
     public static void main(String[] args) {
