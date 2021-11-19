@@ -2,8 +2,10 @@ package at.htlhl.javafxtetris.grid;
 
 public class Grid
 {
+    // Fields *****************************************************************
     private final Cell[][] cellMatrix;
 
+    // Constructors ***********************************************************
     /**
      * Constructs a new {@link Grid} using the specified {@link Cell} matrix
      * @param cellMatrix
@@ -25,6 +27,7 @@ public class Grid
         this(new Cell[height][width]);
     }
 
+    // Logic ******************************************************************
     /*
      * Places an empty Cell object if the field in the array is null
      */
@@ -43,28 +46,7 @@ public class Grid
         }
     }
 
-    /**
-     * Places the given {@link Cell}s in the grid at the specified location
-     *
-     * @param cells The {@link Cell}s to place in the grid
-     * @param posX  The x position
-     * @param posY  The y position
-     */
-    public void placeCellsInGrid(Cell[][] cells, int posX, int posY)
-    {
-        for(int currY = 0; currY < cells.length; currY++)
-        {
-            for(int x = 0; x < cells[currY].length; x++)
-            {
-                final Cell cell = cells[currY][x];
-                if(cell.isSolid())
-                {
-                    this.cellMatrix[posY + currY][posX + x] = cells[currY][x];
-                }
-            }
-        }
-    }
-
+    // Line logic
     /**
      * Deletes one line and moves all above lines down one Cell
      *
@@ -104,6 +86,26 @@ public class Grid
     }
 
     /**
+     * Checks whether a line is full (= all {@link Cell}s are solid)
+     *
+     * @param lineY The y position of the line
+     * @return Whether the line is full
+     */
+    public boolean isLineFull(int lineY)
+    {
+        Cell[] line = cellMatrix[lineY];
+        for(Cell cell : line)
+        {
+            if(!cell.isSolid())
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Checks whether the line at the specified position is IN the grid
      *
      * @param lineY The y position of the line
@@ -124,6 +126,29 @@ public class Grid
         return cellMatrix[lineY];
     }
 
+    // Cell logic
+    /**
+     * Places the given {@link Cell}s in the grid at the specified location
+     *
+     * @param cells The {@link Cell}s to place in the grid
+     * @param posX  The x position
+     * @param posY  The y position
+     */
+    public void placeCellsInGrid(Cell[][] cells, int posX, int posY)
+    {
+        for(int currY = 0; currY < cells.length; currY++)
+        {
+            for(int x = 0; x < cells[currY].length; x++)
+            {
+                final Cell cell = cells[currY][x];
+                if(cell.isSolid())
+                {
+                    this.cellMatrix[posY + currY][posX + x] = cells[currY][x];
+                }
+            }
+        }
+    }
+    
     /**
      * Checks whether the Cell at the specified position is IN the grid
      *
@@ -158,25 +183,5 @@ public class Grid
     public Cell[][] getCellMatrix()
     {
         return cellMatrix;
-    }
-
-    /**
-     * Checks whether a line is full (= all {@link Cell}s are solid)
-     *
-     * @param lineY The y position of the line
-     * @return Whether the line is full
-     */
-    public boolean isLineFull(int lineY)
-    {
-        Cell[] line = cellMatrix[lineY];
-        for(Cell cell : line)
-        {
-            if(!cell.isSolid())
-            {
-                return false;
-            }
-        }
-
-        return true;
     }
 }
