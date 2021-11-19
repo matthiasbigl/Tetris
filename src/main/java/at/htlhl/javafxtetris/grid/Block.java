@@ -147,6 +147,20 @@ public enum Block
         return blockMatrix.length;
     }
 
+    public int getTrueWith() {
+        int with = 0;
+        for (int y = 0; y < blockMatrix.length; y++) {
+            for (int x = 0; x < blockMatrix[y].length; x++) {
+                if (blockMatrix[y][x] == true) {
+                    if (with < x) {
+                        with = x;
+                    }
+                }
+            }
+        }
+        return with+1;
+    }
+
     public boolean[][] getBlockMatrix()
     {
         return blockMatrix;
