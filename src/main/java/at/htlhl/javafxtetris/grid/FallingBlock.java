@@ -1,7 +1,5 @@
 package at.htlhl.javafxtetris.grid;
 
-import at.htlhl.javafxtetris.TetrisGame;
-
 public class FallingBlock
 {
     private final Block block;
@@ -47,28 +45,29 @@ public class FallingBlock
     }
 
     // Logic ******************************************************************
+
     /**
      * Checks if the block can move in the given directions
      *
-     * @param game  The game object
-     * @param moveX x movement
-     * @param moveY y movement
+     * @param gridIn The gridIn object
+     * @param moveX  x movement
+     * @param moveY  y movement
      * @return Whether the Block can move in the given directions
      */
-    public boolean canMove(TetrisGame game, int moveX, int moveY)
+    public boolean canMove(Grid gridIn, int moveX, int moveY)
     {
         final Cell[][] cellMatrix = getBlock().toCellMatrix();
 
         // Iterate over every Cell in the matrix
-        for (int y = 0; y < cellMatrix.length; y++)
+        for(int y = 0; y < cellMatrix.length; y++)
         {
-            for (int x = 0; x < cellMatrix[y].length; x++)
+            for(int x = 0; x < cellMatrix[y].length; x++)
             {
                 // If there is a Cell at the current position, check if it can move in the given direction
-                if (cellMatrix[y][x].isSolid())
+                if(cellMatrix[y][x].isSolid())
                 {
                     // If there is a Cell at the new position, the current Cell can't be moved
-                    if (game.getCell(getX() + x + moveX, getY() + y + moveY).isSolid())
+                    if(gridIn.getCell(getX() + x + moveX, getY() + y + moveY).isSolid())
                     {
                         return false;
                     }
@@ -79,14 +78,47 @@ public class FallingBlock
         return true;
     }
 
+    /**
+     * Returns the relative x value ({@code absoluteX -} {@link FallingBlock#getX()})
+     *
+     * @param absoluteX The absolute x value
+     * @return The relative x value
+     */
+    public int getRelativeX(int absoluteX)
+    {
+        return absoluteX - getX();
+    }
+
+    /**
+     * Returns the relative y value ({@code absoluteY -} {@link FallingBlock#getY()})
+     *
+     * @param absoluteY The absolute y value
+     * @return The relative y value
+     */
+    public int getRelativeY(int absoluteY)
+    {
+        return absoluteY - getY();
+    }
+
+    /**
+     * moves the block in the specified directions
+     *
+     * @param moveX X movement
+     * @param moveY Y movement
+     */
     public void move(int moveX, int moveY)
     {
         setX(getX() + moveX);
         setY(getY() + moveY);
     }
 
-    public void placeBlock(TetrisGame game)
+    /**
+     * Places the Block in the specified Grid
+     *
+     * @param grid The {@link Grid} to place the {@link Block} in
+     */
+    public void placeBlock(Grid grid)
     {
-        game.placeInGrid(this.getBlock().toCellMatrix(), getX(), getY());
+        grid.placeCellsInGrid(this.getBlock().toCellMatrix(), getX(), getY());
     }
 }
