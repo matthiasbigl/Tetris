@@ -66,6 +66,14 @@ public class Grid
     }
 
     /**
+     * Deletes all full lines using {@link Grid#deleteLine(int)}
+     */
+    public void deleteFullLines()
+    {
+        // TODO
+    }
+
+    /**
      * Clears a line by creating a new array and Cell objects
      *
      * @param lineY The y position of the line
@@ -77,12 +85,7 @@ public class Grid
             return;
         }
 
-        cellMatrix[lineY] = new Cell[cellMatrix[lineY].length];
-        Cell[] line = cellMatrix[lineY];
-        for(int x = 0; x < line.length; x++)
-        {
-            line[x] = new Cell(false);
-        }
+        cellMatrix[lineY] = createEmptyLine(cellMatrix[lineY].length);
     }
 
     /**
@@ -120,10 +123,24 @@ public class Grid
     {
         if(!isLineInBounds(lineY))
         {
-            return null;
+            return createEmptyLine(10);
         }
         
         return cellMatrix[lineY];
+    }
+    
+    /*
+     * Creates a Cell array containing empty Cells
+     */
+    private Cell[] createEmptyLine(int length)
+    {
+        Cell[] line = new Cell[length];
+        for(int x = 0; x < line.length; x++)
+        {
+            line[x] = new Cell(false);
+        }
+        
+        return line;
     }
 
     // Cell logic
@@ -162,6 +179,18 @@ public class Grid
     }
     
     /**
+     * Returns the Cell that is visible at the specified position in the Grid
+     * @param cellX The x position of the Cell
+     * @param cellY The y position of the Cell
+     * @return A {@link Cell} object from the Cell matrix
+     */
+    public Cell getVisibleCell(int cellX, int cellY)
+    {
+        return getCell(cellX, cellY);
+    }
+
+    /**
+     * Returns the Cell at the specified position in the Grid
      * @param cellX The x position of the Cell
      * @param cellY The y position of the Cell
      * @return A {@link Cell} object from the Cell matrix
@@ -180,8 +209,13 @@ public class Grid
      * Returns the Grid in form of a {@link Cell} matrix
      * @return a two dimensional {@link Cell} array
      */
-    public Cell[][] getCellMatrix()
+    private Cell[][] getCellMatrix()
     {
         return cellMatrix;
+    }
+    
+    public int getHeight()
+    {
+        return cellMatrix.length;
     }
 }
