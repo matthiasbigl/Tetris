@@ -10,6 +10,7 @@ import java.util.Arrays;
 public enum Block
 {
     // TODO: Change to 4x4 matrix for every Block
+    // TODO: if first line has no true, spawns one line too low
     RIGHT_L(Color.ORANGE, new boolean[][] {
             {false, true, false, false},
             {false, true, false, false},
