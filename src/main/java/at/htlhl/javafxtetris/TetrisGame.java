@@ -137,6 +137,10 @@ public class TetrisGame {
     private void processUserInput(Scene scene) {
         scene.setOnKeyPressed(e -> {
             FallingBlock fallingBlock = tetrisGrid.getFallingBlock();
+            /**
+             * TODO:
+             *     A and D können vor block wenn links oder rechts danenben einer is
+             */
             switch (e.getCode().getChar()) {
                 case "A":
                     //System.out.println("A pressed");
