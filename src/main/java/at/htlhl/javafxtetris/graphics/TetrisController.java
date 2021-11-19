@@ -109,20 +109,4 @@ public class TetrisController
             pane.setVisible(cell.isSolid());
         });
     }
-
-    public void addCellsToTetrisGrid(final int startX, final int startY, final Cell[][] newCells)
-    {
-        for(int y = 0; y < newCells.length && (startY + y) < tetrisPaneMatrix.length; y++)
-        {
-            for(int x = 0; x < newCells[y].length && (startX + x) < tetrisPaneMatrix[y].length; x++)
-            {
-                final int actualY = startY + y;
-                final int actualX = startX + x;
-                if(newCells[y][x].isSolid())
-                {
-                    updatePane(tetrisPaneMatrix[actualY][actualX], newCells[y][x]);
-                }
-            }
-        }
-    }
 }
