@@ -6,6 +6,8 @@ import at.htlhl.javafxtetris.grid.Block;
 import at.htlhl.javafxtetris.grid.FallingBlock;
 import at.htlhl.javafxtetris.grid.Grid;
 import at.htlhl.javafxtetris.grid.TetrisGrid;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.Pane;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -135,6 +137,7 @@ public class TetrisGame
                 else
                 {
                     // Lost
+                    App.instance().showLosingScreen();
                     this.hasPlayerLost = true;
                 }
 
