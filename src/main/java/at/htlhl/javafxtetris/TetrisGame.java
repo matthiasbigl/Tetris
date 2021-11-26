@@ -149,6 +149,9 @@ public class TetrisGame {
                 // S, arrow_down
                 case 83:
                 case 40:
+                    if (fallingBlock.canMove(tetrisGrid, 0, 1)) {
+                        fallingBlock.move(0, 1);
+                    }
                     break;
 
                 // D, arrow_right
