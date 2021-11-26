@@ -215,4 +215,8 @@ public class Grid
     {
         return cellMatrix.length;
     }
+
+    public int getWidth() {
+        return cellMatrix[0].length;
+    }
 }

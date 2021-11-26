@@ -10,6 +10,7 @@ import java.util.Arrays;
 public enum Block
 {
     // TODO: Change to 4x4 matrix for every Block
+    // TODO: if first line has no true, spawns one line too low
     RIGHT_L(Color.ORANGE, new boolean[][] {
             {false, true, false, false},
             {false, true, false, false},
@@ -145,6 +146,32 @@ public enum Block
     public int getHeight()
     {
         return blockMatrix.length;
+    }
+
+    public int getTrueWith() {
+        int with = 0;
+        for (int y = 0; y < blockMatrix.length; y++) {
+            for (int x = 0; x < blockMatrix[y].length; x++) {
+                if (blockMatrix[y][x] == true) {
+                    if (with < x) {
+                        with = x;
+                    }
+                }
+            }
+        }
+        return with+1;
+    }
+
+    public int getTrueHeight() {
+        int height = 0;
+        for (int y = 0; y < blockMatrix.length; y++) {
+            for (int x = 0; x < blockMatrix[y].length; x++) {
+                if (blockMatrix[y][x] == true) {
+                    height = y;
+                }
+            }
+        }
+        return height+1;
     }
 
     public boolean[][] getBlockMatrix()
