@@ -154,17 +154,14 @@ public class TetrisGame {
                 // D, arrow_right
                 case 68:
                 case 39:
+                    if (fallingBlock.canMove(tetrisGrid, 1, 0)) {
+                        fallingBlock.move(1, 0);
+                    }
                     break;
 
                 // space
                 case 32:
-                    lineIteration: for (int y = tetrisGrid.getHeight()-1; y > 0; y++) {
-                        if (fallingBlock.canMove(tetrisGrid, y, 0)) {
-                            //fallingBlock.move(y, 0);
-                            System.out.println(y);
-                            break lineIteration;
-                        }
-                    }
+                    
                     break;
 
                 // Q
