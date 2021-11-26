@@ -136,17 +136,12 @@ public class TetrisGame {
 
     private void processUserInput(Scene scene) {
         scene.setOnKeyPressed(e -> {
-            System.out.println(e.getCode().getCode());
             FallingBlock fallingBlock = tetrisGrid.getFallingBlock();
-            /**
-             * TODO:
-             *     A and D können vor block wenn links oder rechts danenben einer is
-             */
             switch (e.getCode().getCode()) {
                 //A, arrow_left
                 case 65:
                 case 37:
-                    if (fallingBlock.getX() >= 0) {
+                    if (fallingBlock.canMove(tetrisGrid, -1, 0)) {
                         fallingBlock.move(-1, 0);
                     }
                     break;
@@ -159,13 +154,17 @@ public class TetrisGame {
                 // D, arrow_right
                 case 68:
                 case 39:
-                    if (fallingBlock.getX() + fallingBlock.getBlock().getTrueWith() < tetrisGrid.getWidth()) {
-                        fallingBlock.move(1, 0);
-                    }
                     break;
 
                 // space
                 case 32:
+                    lineIteration: for (int y = tetrisGrid.getHeight()-1; y > 0; y++) {
+                        if (fallingBlock.canMove(tetrisGrid, y, 0)) {
+                            //fallingBlock.move(y, 0);
+                            System.out.println(y);
+                            break lineIteration;
+                        }
+                    }
                     break;
 
                 // Q
