@@ -121,4 +121,9 @@ public class FallingBlock
     {
         grid.placeCellsInGrid(this.getBlock().toCellMatrix(), getX(), getY());
     }
+
+    public boolean canPlace(Grid grid)
+    {
+        return grid.canPlaceCells(getBlock().toCellMatrix(), getX(), getY());
+    }
 }

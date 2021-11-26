@@ -165,6 +165,23 @@ public class Grid
             }
         }
     }
+
+    public boolean canPlaceCells(Cell[][] cells, int posX, int posY)
+    {
+        for(int currY = 0; currY < cells.length; currY++)
+        {
+            for(int currX = 0; currX < cells[currY].length; currX++)
+            {
+                final Cell cell = cells[currY][currX];
+                if(cell.isSolid() && getCell(posX + currX, posY + currY).isSolid())
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
     
     /**
      * Checks whether the Cell at the specified position is IN the grid
