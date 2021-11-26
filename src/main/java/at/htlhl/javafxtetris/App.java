@@ -24,13 +24,15 @@ public class App extends Application {
         Pane root = loader.load();
         TetrisController controller = loader.getController();
 
-        TetrisGame game = new TetrisGame(controller);
+        Scene scene = new Scene(root);
+
+        TetrisGame game = new TetrisGame(controller, scene);
         game.start();
 
         Platform.setImplicitExit(true);
         stage.setOnCloseRequest(e -> game.stop());
         
-        stage.setScene(new Scene(root));
+        stage.setScene(scene);
         stage.setFullScreen(true);
         stage.show();
     }
