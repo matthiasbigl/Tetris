@@ -3,7 +3,7 @@ package at.htlhl.javafxtetris;
 
 import at.htlhl.javafxtetris.graphics.TetrisController;
 import at.htlhl.javafxtetris.grid.Block;
-import at.htlhl.javafxtetris.grid.Grid;
+import at.htlhl.javafxtetris.grid.FallingBlock;
 import at.htlhl.javafxtetris.grid.TetrisGrid;
 
 import java.util.Timer;
@@ -29,6 +29,8 @@ public class TetrisGame
     // Movement
     private long totalTickCount; // The total number of ticks that have happened
     private long lastBlockFall;  // The last tick the FallingBlock was moved
+
+    private boolean hasPlayerLost;
 
     // Constructors ***********************************************************
     public TetrisGame(TetrisController controller)
@@ -56,6 +58,7 @@ public class TetrisGame
             return;
 
         this.isRunning = true;
+        this.hasPlayerLost = false;
         unpause();
 
         this.totalTickCount = 1;
@@ -123,7 +126,17 @@ public class TetrisGame
             if(!tetrisGrid.didBlockFall())
             {
                 // Place the Block in the Grid
-                tetrisGrid.getFallingBlock().placeBlock(tetrisGrid);
+                FallingBlock fallingBlock = tetrisGrid.getFallingBlock();
+                if(fallingBlock.canPlace(tetrisGrid))
+                {
+                    fallingBlock.placeBlock(tetrisGrid);
+                }
+                else
+                {
+                    // Lost
+                    this.hasPlayerLost = true;
+                }
+
                 // Update the Falling Block in the Grid
                 tetrisGrid.setFallingBlock(nextBlock);
                 // Generate a new Block
@@ -134,7 +147,7 @@ public class TetrisGame
                 controller.updatePreviewGrid(nextBlock);
             }
         }
-
+        // You can say here "YOU LOST"
         totalTickCount++;
         controller.updateTetrisGrid(tetrisGrid);
     }
@@ -155,4 +168,7 @@ public class TetrisGame
         // * rotate the block
         // according to the user input
     }
+
+
+
 }
