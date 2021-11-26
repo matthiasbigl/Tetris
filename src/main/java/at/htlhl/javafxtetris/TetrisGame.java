@@ -161,7 +161,17 @@ public class TetrisGame {
 
                 // space
                 case 32:
-                    
+                    /**
+                     * would also work if y starts with gridheight
+                     * checkheight calculates the space to the ground - better performance
+                     */
+                    int checkHeight = tetrisGrid.getHeight() - fallingBlock.getY() - fallingBlock.getBlock().getHeight()+1;
+                    for (int y = checkHeight; y > 0; y--) {
+                        if (fallingBlock.canMove(tetrisGrid, 0, y)) {
+                            fallingBlock.move(0, y);
+                            break;
+                        }
+                    }
                     break;
 
                 // Q
