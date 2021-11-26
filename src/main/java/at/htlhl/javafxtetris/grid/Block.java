@@ -16,36 +16,167 @@ public enum Block
             {false, true, true, false},
             {false, false, false, false}
     }),
+
+    Right_L90(Color.ORANGE,new boolean[][]{
+            {false, false, true, false},
+            {true, true, true, false},
+            {false, false, false, false},
+            {false, false, false, false}
+
+    }),
+    Right_L180(Color.ORANGE,new boolean[][]{
+            {true, true, false, false},
+            {false, true, false, false},
+            {false, true, false, false},
+            {false, false, false, false}
+
+    }),
+    Right_L270(Color.ORANGE,new boolean[][]{
+            {false, false, false, false},
+            {true, true, true, false},
+            {true, false, false, false},
+            {false, false, false, false}
+
+    }),
+
+
+
     LEFT_L(Color.BLUE, new boolean[][] {
             {false, false, true, false},
             {false, false, true, false},
             {false, true, true, false},
             {false, false, false, false}
     }),
+    LEFT_L90(Color.BLUE, new boolean[][] {
+            {false, true, false, false},
+            {false, true, true, true},
+            {false, false, false, false},
+            {false, false, false, false}
+    }),
+    LEFT_L180(Color.BLUE, new boolean[][] {
+            {false, false, true, true},
+            {false, false, true, false},
+            {false, false, true, false},
+            {false, false, false, false}
+    }),
+
+    LEFT_L270(Color.BLUE, new boolean[][] {
+            {false, false, false, false},
+            {false, true, true, true},
+            {false, false, false, true},
+            {false, false, false, false}
+    }),
+
+
+
+
     RIGHT_Z(Color.RED, new boolean[][] {
             {false, false, false, false},
             {false, false, true, true},
             {false, true, true, false},
             {false, false, false, false}
     }),
+    RIGHT_Z_90(Color.RED, new boolean[][] {
+            {false, false, false, false},
+            {false, true, false, false},
+            {false, true, true, false},
+            {false, false, true, false}
+    }),
+    RIGHT_Z_180(Color.RED, new boolean[][] {
+            {false, false, false, false},
+            {false, false, false, false},
+            {false, false, true, true},
+            {false, true, true, false}
+    }),
+    RIGHT_Z_270(Color.RED, new boolean[][] {
+            {false, false, false, false},
+            {false, false, true, false},
+            {false, false, true, true},
+            {false, false, false, true}
+    }),
+
+
+
     LEFT_Z(Color.GREEN, new boolean[][] {
             {false, false, false, false},
             {false, true, true, false},
             {false, false, true, true},
             {false, false, false, false}
     }),
+    LEFT_Z_90(Color.GREEN, new boolean[][] {
+            {false, false, false, false},
+            {false, false, true, false},
+            {false, true, true, false},
+            {false, true, false, false}
+    }),
+    LEFT_Z_180(Color.GREEN, new boolean[][] {
+            {false, false, false, false},
+            {false, false, false, false},
+            {false, true, true, false},
+            {false, false, true, true}
+    }),
+    LEFT_Z_270(Color.GREEN, new boolean[][] {
+            {false, false, false, false},
+            {false, false, false, true},
+            {false, false, true, true},
+            {false, false, true, false}
+    }),
+
+
+
     I_SHAPE(Color.LIGHT_BLUE, new boolean[][] {
+            {false, false, true, false},
+            {false, false, true, false},
+            {false, false, true, false},
+            {false, false, true, false}
+    }),
+    I_SHAPE_90(Color.LIGHT_BLUE, new boolean[][] {
+            {false, false, false, false},
+            {true, true, true, true},
+            {false, false, false, false},
+            {false, false, false, false}
+    }),
+    I_SHAPE_180(Color.LIGHT_BLUE, new boolean[][] {
             {false, true, false, false},
             {false, true, false, false},
             {false, true, false, false},
             {false, true, false, false}
     }),
+    I_SHAPE_270(Color.LIGHT_BLUE, new boolean[][] {
+            {false, false, false, false},
+            {false, false, false, false},
+            {true, true, true, true},
+            {false, false, false, false}
+    }),
+
+
+
     STAIRS(Color.PURPLE, new boolean[][] {
             {false, false, false, false},
             {false, false, true, false},
             {false, true, true, true},
             {false, false, false, false}
     }),
+    STAIRS_90(Color.PURPLE, new boolean[][] {
+            {false, false, false, false},
+            {false, false, true, false},
+            {false, true, true, false},
+            {false, false, true, false}
+    }),
+    STAIRS_180(Color.PURPLE, new boolean[][] {
+            {false, false, false, false},
+            {false, false,false, false},
+            {false, true, true, true},
+            {false, false, true, false}
+    }),
+    STAIRS_270(Color.PURPLE, new boolean[][] {
+            {false, false, false, false},
+            {false, false, true, false},
+            {false, false, true, true},
+            {false, false, true, false}
+    }),
+
+    //man braucht nur eine Form
     BRICK(Color.YELLOW, new boolean[][] {
             {false, false, false, false},
             {false, true, true, false},
