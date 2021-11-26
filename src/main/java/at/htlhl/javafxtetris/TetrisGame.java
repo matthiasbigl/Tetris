@@ -136,42 +136,48 @@ public class TetrisGame {
 
     private void processUserInput(Scene scene) {
         scene.setOnKeyPressed(e -> {
+            System.out.println(e.getCode().getCode());
             FallingBlock fallingBlock = tetrisGrid.getFallingBlock();
             /**
              * TODO:
              *     A and D können vor block wenn links oder rechts danenben einer is
              */
-            switch (e.getCode().getChar()) {
-                case "A":
-                    //System.out.println("A pressed");
-
+            switch (e.getCode().getCode()) {
+                //A, arrow_left
+                case 65:
+                case 37:
                     if (fallingBlock.getX() >= 0) {
                         fallingBlock.move(-1, 0);
                     }
                     break;
-                case "S":
-                    System.out.println("S pressed");
-                    break;
-                case "D":
-                    //System.out.println("D pressed");
 
-                    if (fallingBlock.getX() + fallingBlock.getBlock().getTrueWith() < 10) {
+                // S, arrow_down
+                case 83:
+                case 40:
+                    break;
+
+                // D, arrow_right
+                case 68:
+                case 39:
+                    if (fallingBlock.getX() + fallingBlock.getBlock().getTrueWith() < tetrisGrid.getWidth()) {
                         fallingBlock.move(1, 0);
                     }
                     break;
-                case " ":
-                    System.out.println("SPACE pressed");
 
-                    //fallingBlock.move(0, 20 - fallingBlock.getY() - fallingBlock.getBlock().getTrueHeight());
+                // space
+                case 32:
                     break;
-                case "Q":
-                    System.out.println("Q pressed");
+
+                // Q
+                case 81:
                     break;
-                case "W":
-                    System.out.println("W pressed");
+
+                // W
+                case 87:
                     break;
-                case "E":
-                    System.out.println("E pressed");
+
+                // E
+                case 69:
                     break;
                 default:
                     break;
