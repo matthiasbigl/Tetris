@@ -10,6 +10,8 @@ import java.util.Arrays;
 public enum Block
 {
     // TODO: Change to 4x4 matrix for every Block
+
+    //Für jede Form eine umdrehungspunkt erstellt+ 0-90-270-360 drehungen
     RIGHT_L(Color.ORANGE, new boolean[][] {
             {false, true, false, false},
             {false, true, false, false},
@@ -66,7 +68,6 @@ public enum Block
             {false, false, false, true},
             {false, false, false, false}
     }),
-
 
 
 
