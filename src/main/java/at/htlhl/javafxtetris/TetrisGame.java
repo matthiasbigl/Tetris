@@ -76,7 +76,7 @@ public class TetrisGame
                     tick();
                 }
             }
-        }, 1000, 16);
+        }, 1000, 10);
     }
 
     public void stop()
@@ -121,7 +121,7 @@ public class TetrisGame
      */
     private void tick()
     {
-        if(lastBlockFall + 10 <= totalTickCount)
+        if(lastBlockFall + 30 <= totalTickCount)
         {
             this.lastBlockFall = totalTickCount;
     
