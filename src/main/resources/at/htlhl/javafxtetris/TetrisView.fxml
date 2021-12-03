@@ -63,7 +63,7 @@
          <children>
             <VBox layoutX="5.0" layoutY="89.0" opacity="0.5" prefHeight="258.0" prefWidth="128.0" styleClass="bg" stylesheets="@background.css" AnchorPane.rightAnchor="5.0">
                <children>
-                  <Text fill="#ffbe40" strokeType="OUTSIDE" strokeWidth="0.0" text="Punkte:" VBox.vgrow="ALWAYS">
+                  <Text fx:id="scoreText" fill="#ffbe40" strokeType="OUTSIDE" strokeWidth="0.0" text="Punkte: 0" VBox.vgrow="ALWAYS">
                      <font>
                         <Font name="Comic Sans MS" size="18.0" />
                      </font>
@@ -71,7 +71,7 @@
                         <Insets bottom="20.0" left="5.0" />
                      </VBox.margin>
                   </Text>
-                  <Text fill="#ffbe40" strokeType="OUTSIDE" strokeWidth="0.0" text="Lines:" VBox.vgrow="ALWAYS">
+                  <Text fx:id="linesText" fill="#ffbe40" strokeType="OUTSIDE" strokeWidth="0.0" text="Lines: 0" VBox.vgrow="ALWAYS">
                      <font>
                         <Font name="Comic Sans MS" size="18.0" />
                      </font>

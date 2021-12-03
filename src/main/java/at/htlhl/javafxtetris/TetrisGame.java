@@ -4,7 +4,6 @@ package at.htlhl.javafxtetris;
 import at.htlhl.javafxtetris.graphics.TetrisController;
 import at.htlhl.javafxtetris.grid.Block;
 import at.htlhl.javafxtetris.grid.FallingBlock;
-import at.htlhl.javafxtetris.grid.Grid;
 import at.htlhl.javafxtetris.grid.TetrisGrid;
 import javafx.scene.Scene;
 
@@ -134,6 +133,8 @@ public class TetrisGame
                 tetrisGrid.deleteFullLines();
                 // Update the preview Block in the controller
                 controller.updatePreviewGrid(nextBlock);
+                // Update the points and lines
+                controller.updatePointsAndLines();
             }
         }
 
@@ -213,7 +214,6 @@ public class TetrisGame
             }
         });
     }
-
 
 
 }
