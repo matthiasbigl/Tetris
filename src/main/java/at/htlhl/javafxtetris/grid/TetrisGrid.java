@@ -1,5 +1,8 @@
 package at.htlhl.javafxtetris.grid;
 
+import at.htlhl.javafxtetris.grid.block.Block;
+import at.htlhl.javafxtetris.grid.block.FallingBlock;
+
 public class TetrisGrid extends Grid
 {
     // Fields *****************************************************************

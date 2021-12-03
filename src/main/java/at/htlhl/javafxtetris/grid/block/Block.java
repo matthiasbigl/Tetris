@@ -1,8 +1,8 @@
-package at.htlhl.javafxtetris.grid;
+package at.htlhl.javafxtetris.grid.block;
 
 import at.htlhl.javafxtetris.graphics.Color;
-
-import java.util.Arrays;
+import at.htlhl.javafxtetris.grid.Cell;
+import at.htlhl.javafxtetris.grid.Grid;
 
 /**
  * Represents a Tetris block

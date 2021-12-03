@@ -1,6 +1,6 @@
 package at.htlhl.javafxtetris.graphics;
 
-import at.htlhl.javafxtetris.grid.Block;
+import at.htlhl.javafxtetris.grid.block.Block;
 import at.htlhl.javafxtetris.grid.Cell;
 import at.htlhl.javafxtetris.grid.Grid;
 import javafx.application.Platform;

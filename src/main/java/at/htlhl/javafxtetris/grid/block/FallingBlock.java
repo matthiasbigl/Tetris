@@ -1,4 +1,7 @@
-package at.htlhl.javafxtetris.grid;
+package at.htlhl.javafxtetris.grid.block;
+
+import at.htlhl.javafxtetris.grid.Cell;
+import at.htlhl.javafxtetris.grid.Grid;
 
 public class FallingBlock
 {

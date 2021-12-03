@@ -2,9 +2,8 @@ package at.htlhl.javafxtetris;
 
 
 import at.htlhl.javafxtetris.graphics.TetrisController;
-import at.htlhl.javafxtetris.grid.Block;
-import at.htlhl.javafxtetris.grid.FallingBlock;
-import at.htlhl.javafxtetris.grid.Grid;
+import at.htlhl.javafxtetris.grid.block.Block;
+import at.htlhl.javafxtetris.grid.block.FallingBlock;
 import at.htlhl.javafxtetris.grid.TetrisGrid;
 import javafx.scene.Scene;
 
