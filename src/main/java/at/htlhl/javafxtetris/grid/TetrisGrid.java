@@ -37,10 +37,10 @@ public class TetrisGrid extends Grid
     @Override
     public Cell getVisibleCell(int cellX, int cellY)
     {
-        final int relativeX = fallingBlock.getRelativeX(cellX);
-        final int relativeY = fallingBlock.getRelativeY(cellY);
+        final int relativeX = cellX - fallingBlock.getX();
+        final int relativeY = cellY - fallingBlock.getY();
 
-        if(fallingBlock.getBlock().isCellInBounds(relativeX, relativeY))
+        if(fallingBlock.getBlockState().toGrid().isCellInBounds(relativeX, relativeY))
         {
             final Cell cell = fallingBlockMatrix[relativeY][relativeX];
             if(cell.isSolid())
@@ -55,7 +55,7 @@ public class TetrisGrid extends Grid
     public void setFallingBlock(final FallingBlock fallingBlock)
     {
         this.fallingBlock = fallingBlock;
-        this.fallingBlockMatrix = fallingBlock.getBlock().toCellMatrix();
+        this.fallingBlockMatrix = fallingBlock.getBlockState().toCellMatrix();
     }
 
     public void setFallingBlock(final Block block)
@@ -79,6 +79,6 @@ public class TetrisGrid extends Grid
     private FallingBlock createFallingBlock(final Block block)
     {
         int centeredX = (getLine(0).length / 2) - (block.getWidth() / 2);
-        return block.falling(centeredX, 0);
+        return block.getDefaultState().falling(centeredX, 0);
     }
 }

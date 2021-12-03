@@ -30,8 +30,6 @@ public class TetrisGame
     // Movement
     private long totalTickCount; // The total number of ticks that have happened
     private long lastBlockFall;  // The last tick the FallingBlock was moved
-    
-    private boolean hasPlayerLost;
 
     // Constructors ***********************************************************
     public TetrisGame(TetrisController controller, Scene scene)
@@ -51,20 +49,18 @@ public class TetrisGame
 
         // Init the controller
         controller.initTetrisGrid(tetrisGrid);
-        controller.initPreviewGrid(nextBlock);
+        controller.initPreviewGrid(nextBlock.getDefaultState().toGrid());
     }
 
     // Logic ******************************************************************
     public void start()
     {
+        this.isRunning = true;
         if(isRunning())
             return;
 
-        this.isRunning = true;
         unpause();
     
-        this.hasPlayerLost = false;
-
         this.totalTickCount = 1;
         this.tickTimer = new Timer();
         tickTimer.scheduleAtFixedRate(new TimerTask()
@@ -82,10 +78,12 @@ public class TetrisGame
 
     public void stop()
     {
+        this.isRunning = false;
         if(!isRunning())
             return;
 
-        this.isRunning = false;
+        pause();
+        
         tickTimer.cancel();
     }
 
@@ -136,7 +134,9 @@ public class TetrisGame
                 else
                 {
                     // Otherwise the player has lost
-                    this.hasPlayerLost = true;
+                    this.stop();
+                    App.instance().showLosingScreen();
+                    return;
                 }
                 
                 // Update the Falling Block in the Grid
@@ -146,18 +146,12 @@ public class TetrisGame
                 // Delete all full lines in the Grid
                 tetrisGrid.deleteFullLines();
                 // Update the preview Block in the controller
-                controller.updatePreviewGrid(nextBlock);
+                controller.updatePreviewGrid(nextBlock.getDefaultState().toGrid());
             }
         }
 
         totalTickCount++;
         controller.updateTetrisGrid(tetrisGrid);
-    
-        if(hasPlayerLost)
-        {
-            this.stop();
-            App.instance().showLosingScreen();
-        }
     }
 
     /*
@@ -207,7 +201,7 @@ public class TetrisGame
                      *
                      * TODO: Issue - block can fall through another
                      */
-                    int checkHeight = tetrisGrid.getHeight() - fallingBlock.getY() - fallingBlock.getBlock().getHeight()+1;
+                    int checkHeight = tetrisGrid.getHeight() - fallingBlock.getY() - fallingBlock.getBlockState().getBlock().getHeight()+1;
                     for (int y = checkHeight; y > 0; y--) {
                         if (fallingBlock.canMove(tetrisGrid, 0, y)) {
                             fallingBlock.move(0, y);
@@ -232,7 +226,4 @@ public class TetrisGame
             }
         });
     }
-
-
-
 }

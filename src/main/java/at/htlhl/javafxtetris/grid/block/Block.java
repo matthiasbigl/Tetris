@@ -1,8 +1,8 @@
 package at.htlhl.javafxtetris.grid.block;
 
 import at.htlhl.javafxtetris.graphics.Color;
-import at.htlhl.javafxtetris.grid.Cell;
-import at.htlhl.javafxtetris.grid.Grid;
+
+import java.util.Arrays;
 
 /**
  * Represents a Tetris block
@@ -65,63 +65,9 @@ public enum Block
     }
 
     // Logic ******************************************************************
-    public boolean isCellInBounds(int cellX, int cellY)
+    public BlockState getDefaultState()
     {
-        return (cellY >= 0 && cellY < getHeight()) && (cellX >= 0 && cellX < blockMatrix[cellY].length);
-    }
-
-    /**
-     * Converts this Block to a Cell matrix
-     *
-     * @return A 2 dimensional {@link Cell} array
-     */
-    public Cell[][] toCellMatrix()
-    {
-        final boolean[][] blockMatrix = getBlockMatrix();
-        final Cell[][] cellMatrix = new Cell[blockMatrix.length][];
-
-        for(int y = 0; y < blockMatrix.length; y++)
-        {
-            cellMatrix[y] = new Cell[blockMatrix[y].length];
-            for(int x = 0; x < blockMatrix[y].length; x++)
-            {
-                cellMatrix[y][x] = new Cell(getColor(), blockMatrix[y][x]);
-            }
-        }
-
-        return cellMatrix;
-    }
-
-    /**
-     * Creates a new Grid using the {@link Cell} matrix of this {@link Block}
-     *
-     * @return A {@link Grid} object
-     */
-    public Grid toGrid()
-    {
-        return new Grid(toCellMatrix());
-    }
-
-    /**
-     * Constructs a falling block at the specified location
-     *
-     * @param x The x position of the falling Block
-     * @param y The y position of the falling Block
-     * @return A {@link FallingBlock}
-     */
-    public FallingBlock falling(int x, int y)
-    {
-        return new FallingBlock(this, x, y);
-    }
-
-    /**
-     * Constructs a falling block at the location (0|0)
-     *
-     * @return A {@link FallingBlock}
-     */
-    public FallingBlock falling()
-    {
-        return falling(0, 0);
+        return new BlockState(this);
     }
 
     /**
@@ -146,15 +92,18 @@ public enum Block
     {
         return blockMatrix.length;
     }
-
+    
+    /**
+     * Returns a copy of the Block matrix
+     * @return A boolean array
+     */
     public boolean[][] getBlockMatrix()
     {
-        return blockMatrix;
+        return Arrays.copyOf(blockMatrix, blockMatrix.length);
     }
 
-    public Color getColor()
+    public Color getDefaultColor()
     {
         return blockColor;
     }
-
 }

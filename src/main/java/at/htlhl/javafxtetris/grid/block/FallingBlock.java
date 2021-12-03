@@ -5,26 +5,21 @@ import at.htlhl.javafxtetris.grid.Grid;
 
 public class FallingBlock
 {
-    private final Block block;
+    private final BlockState blockState;
     private int x, y;
 
     // Constructors ***********************************************************
-    public FallingBlock(Block block, int x, int y)
+    public FallingBlock(BlockState state, int x, int y)
     {
-        this.block = block;
+        this.blockState = state;
         this.x = x;
         this.y = y;
     }
 
-    public FallingBlock(Block block)
-    {
-        this(block, 0, 0);
-    }
-
     // Accessors **************************************************************
-    public Block getBlock()
+    public BlockState getBlockState()
     {
-        return block;
+        return blockState;
     }
 
     public int getX()
@@ -59,7 +54,7 @@ public class FallingBlock
      */
     public boolean canMove(Grid gridIn, int moveX, int moveY)
     {
-        final Cell[][] cellMatrix = getBlock().toCellMatrix();
+        final Cell[][] cellMatrix = getBlockState().toCellMatrix();
 
         // Iterate over every Cell in the matrix
         for(int y = 0; y < cellMatrix.length; y++)
@@ -82,28 +77,6 @@ public class FallingBlock
     }
 
     /**
-     * Returns the relative x value ({@code absoluteX -} {@link FallingBlock#getX()})
-     *
-     * @param absoluteX The absolute x value
-     * @return The relative x value
-     */
-    public int getRelativeX(int absoluteX)
-    {
-        return absoluteX - getX();
-    }
-
-    /**
-     * Returns the relative y value ({@code absoluteY -} {@link FallingBlock#getY()})
-     *
-     * @param absoluteY The absolute y value
-     * @return The relative y value
-     */
-    public int getRelativeY(int absoluteY)
-    {
-        return absoluteY - getY();
-    }
-
-    /**
      * moves the block in the specified directions
      *
      * @param moveX X movement
@@ -122,11 +95,11 @@ public class FallingBlock
      */
     public void placeBlock(Grid grid)
     {
-        grid.placeCellsInGrid(this.getBlock().toCellMatrix(), getX(), getY());
+        grid.placeCellsInGrid(this.getBlockState().toCellMatrix(), getX(), getY());
     }
 
     public boolean canPlace(Grid grid)
     {
-        return grid.canPlaceCells(getBlock().toCellMatrix(), getX(), getY());
+        return grid.canPlaceCells(getBlockState().toCellMatrix(), getX(), getY());
     }
 }
