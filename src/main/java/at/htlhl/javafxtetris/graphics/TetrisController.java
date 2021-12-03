@@ -16,13 +16,16 @@ public class TetrisController
     private Pane[][] tetrisPaneMatrix;
     private Pane[][] previewPaneMatrix;
 
-    // Score and Lines
+    // score, lines and level
     public static int score;
     public static int lines;
+    public static int level;
     @FXML
     private Text scoreText;
     @FXML
     private Text linesText;
+    @FXML
+    private Text levelText;
 
     // Constructors ***********************************************************
     public TetrisController()
@@ -124,5 +127,6 @@ public class TetrisController
     public void updatePointsAndLines() {
         scoreText.setText("Punkte: " + score);
         linesText.setText("Lines: " + lines);
+        levelText.setText("Level: " + level);
     }
 }
