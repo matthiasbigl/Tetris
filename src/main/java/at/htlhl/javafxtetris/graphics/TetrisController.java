@@ -7,6 +7,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 
 public class TetrisController
 {
@@ -15,6 +16,14 @@ public class TetrisController
     @FXML private GridPane previewGridPane;
     private Pane[][] tetrisPaneMatrix;
     private Pane[][] previewPaneMatrix;
+
+    // Score and Lines
+    public static int score;
+    public static int lines;
+    @FXML
+    private Text scoreText;
+    @FXML
+    private Text linesText;
 
     // Constructors ***********************************************************
     public TetrisController()
@@ -108,5 +117,13 @@ public class TetrisController
             pane.setStyle("-fx-background-color:" + cell.getColor().toHex() + ";");
             pane.setVisible(cell.isSolid());
         });
+    }
+
+    /**
+     * Updates the points and lines if lines full
+     */
+    public void updatePointsAndLines() {
+        scoreText.setText("Punkte: " + score);
+        linesText.setText("Lines: " + lines);
     }
 }

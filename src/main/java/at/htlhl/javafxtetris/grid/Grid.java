@@ -1,6 +1,6 @@
 package at.htlhl.javafxtetris.grid;
 
-import at.htlhl.javafxtetris.graphics.Color;
+import at.htlhl.javafxtetris.graphics.TetrisController;
 
 public class Grid
 {
@@ -72,10 +72,37 @@ public class Grid
      */
     public void deleteFullLines()
     {
+        int amount = 0;
         for (int y = 0; y < cellMatrix.length; y++) {
             if (isLineFull(y)) {
                 deleteLine(y);
+                amount++;
             }
+        }
+
+
+        // TODO: set score and lines to 0 if lost
+
+        // add amount of lines deleted to lines
+        TetrisController.lines += amount;
+
+        // add points to score
+        // scoring system from https://tetris.fandom.com/wiki/Scoring
+        switch (amount) {
+            case 1:
+                TetrisController.score += 40;
+                break;
+            case 2:
+                TetrisController.score += 100;
+                break;
+            case 3:
+                TetrisController.score += 300;
+                break;
+            case 4:
+                TetrisController.score += 1200;
+                break;
+            default:
+                break;
         }
     }
 
