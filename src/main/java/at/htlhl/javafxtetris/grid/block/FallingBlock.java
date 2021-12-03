@@ -93,13 +93,13 @@ public class FallingBlock
      *
      * @param grid The {@link Grid} to place the {@link Block} in
      */
-    public void placeBlock(Grid grid)
+    public void placeBlockIn(Grid grid)
     {
-        grid.placeCellsInGrid(this.getBlockState().toCellMatrix(), getX(), getY());
+        grid.placeCellsInGrid(this.getBlockState().toGrid(), getX(), getY());
     }
-
-    public boolean canPlace(Grid grid)
+    
+    public boolean canPlaceBlockIn(Grid grid)
     {
-        return grid.canPlaceCells(getBlockState().toCellMatrix(), getX(), getY());
+        return grid.canPlace(getBlockState().toGrid(), getX(), getY());
     }
 }

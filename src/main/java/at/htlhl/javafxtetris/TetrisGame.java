@@ -126,10 +126,10 @@ public class TetrisGame
             if(!tetrisGrid.didBlockFall())
             {
                 final FallingBlock fallingBlock = tetrisGrid.getFallingBlock();
-                if(fallingBlock.canPlace(tetrisGrid))
+                if(fallingBlock.canPlaceBlockIn(tetrisGrid))
                 {
                     // If the Block can be placed, place it in the Grid
-                    fallingBlock.placeBlock(tetrisGrid);
+                    fallingBlock.placeBlockIn(tetrisGrid);
                 }
                 else
                 {
