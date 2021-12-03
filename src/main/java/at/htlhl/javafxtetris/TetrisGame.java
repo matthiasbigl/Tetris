@@ -126,7 +126,7 @@ public class TetrisGame
         {
             this.lastBlockFall = totalTickCount;
     
-            if(!tetrisGrid.tryMoveFallingBlock())
+            if(!tetrisGrid.getFallingBlock().tryMove(tetrisGrid, Direction.DOWN))
             {
                 placeCurrentBlock();
             }

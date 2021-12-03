@@ -1,6 +1,7 @@
 package at.htlhl.javafxtetris.grid;
 
 import at.htlhl.javafxtetris.grid.block.Block;
+import at.htlhl.javafxtetris.grid.block.Direction;
 import at.htlhl.javafxtetris.grid.block.FallingBlock;
 
 public class TetrisGrid extends Grid
@@ -16,23 +17,7 @@ public class TetrisGrid extends Grid
         super(width, height);
         setFallingBlock(fallingBlock);
     }
-
-    // Logic ******************************************************************
-
-    /**
-     * Moves the {@link FallingBlock} down one cell.<br>
-     * Updates the didBlockFall variable. See {@link TetrisGrid#didBlockFall()}
-     */
-    public void tick()
-    {
-        this.didBlockFall = false;
-        if(fallingBlock.canMove(this, 0, 1))
-        {
-            fallingBlock.move(0, 1);
-            this.didBlockFall = true;
-        }
-    }
-
+    
     // Accessors **************************************************************
     @Override
     public Cell getVisibleCell(int cellX, int cellY)
