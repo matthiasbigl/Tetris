@@ -9,8 +9,8 @@ public class Grid
 
     // Constructors ***********************************************************
     /**
-     * Constructs a new {@link Grid} using the specified {@link Cell} matrix
-     * @param cellMatrix
+     * Constructs a new grid using the specified {@link Cell} matrix
+     * @param cellMatrix The initial contents of this {@link Grid}
      */
     public Grid(Cell[][] cellMatrix)
     {
@@ -151,16 +151,38 @@ public class Grid
     {
         return lineY >= 0 && lineY < cellMatrix.length;
     }
-
+	
+	/**
+	 * Returns the line at the specified position in the grid
+	 *
+	 * @param lineY The y index of the line
+	 * @return A {@link Cell} array
+	 */
     public Cell[] getLine(int lineY)
     {
         if(!isLineInBounds(lineY))
-        {
-            return createEmptyLine(10);
-        }
-        
-        return cellMatrix[lineY];
+            return createEmptyLine(10); // TODO: Add width and height
+	
+		return cellMatrix[lineY];
     }
+	
+	/**
+	 * Places the specified line at the specified position in the grid
+	 *
+	 * @param newLine The line to place as a {@link Cell} array
+	 * @param lineY       The {@link Cell} to place
+	 * @return The line that currently is at the specified position as a {@link Cell} array
+	 */
+	public Cell[] setLine(Cell[] newLine, int lineY)
+	{
+		final Cell[] currentLine = getLine(lineY);
+		
+		if(!isLineInBounds(lineY))
+			return currentLine;
+		
+		cellMatrix[lineY] = newLine;
+		return currentLine;
+	}
     
     /*
      * Creates a Cell array containing empty Cells
@@ -169,9 +191,7 @@ public class Grid
     {
         Cell[] line = new Cell[length];
         for(int x = 0; x < line.length; x++)
-        {
             line[x] = new Cell(false);
-        }
         
         return line;
     }
@@ -180,33 +200,41 @@ public class Grid
     /**
      * Places the given {@link Cell}s in the grid at the specified location
      *
-     * @param cells The {@link Cell}s to place in the grid
+     * @param cellsToPlace The {@link Cell}s to place in the grid
      * @param posX  The x position
      * @param posY  The y position
      */
-    public void placeCellsInGrid(Cell[][] cells, int posX, int posY)
+    public void placeCellsInGrid(Grid cellsToPlace, int posX, int posY)
     {
-        for(int currY = 0; currY < cells.length; currY++)
+        for(int currY = 0; currY < cellsToPlace.getHeight(); currY++)
         {
-            for(int x = 0; x < cells[currY].length; x++)
+            for(int x = 0; x < cellsToPlace.getWidth(); x++)
             {
-                final Cell cell = cells[currY][x];
+                final Cell cell = cellsToPlace.getCell(x, currY);
                 if(cell.isSolid())
                 {
-                    this.cellMatrix[posY + currY][posX + x] = cells[currY][x];
+                    setCell(cell, posX + x, posY + currY);
                 }
             }
         }
     }
-
-    public boolean canPlaceCells(Cell[][] cells, int posX, int posY)
+	
+	/**
+	 * Checks if the contents of the specified {@link Grid} can be placed at the x,y coordinates in this {@link Grid}
+	 *
+	 * @param cellsToPlace The {@link Cell}s to place
+	 * @param posX         x position
+	 * @param posY         y position
+	 * @return Whether the {@link Grid} contents can be placed
+	 */
+    public boolean canPlace(Grid cellsToPlace, int posX, int posY)
     {
-        for(int currY = 0; currY < cells.length; currY++)
+        for(int currY = 0; currY < cellsToPlace.getHeight(); currY++)
         {
-            for(int currX = 0; currX < cells[currY].length; currX++)
+            for(int currX = 0; currX < cellsToPlace.getWidth(); currX++)
             {
-                final Cell cell = cells[currY][currX];
-                if(cell.isSolid() && getCell(posX + currX, posY + currY).isSolid())
+                final Cell cellToPlace = cellsToPlace.getCell(currX, currY);
+                if(cellToPlace.isSolid() && getCell(posX + currX, posY + currY).isSolid())
                 {
                     return false;
                 }
@@ -227,18 +255,37 @@ public class Grid
     {
         return isLineInBounds(cellY) && (cellX >= 0 && cellX < cellMatrix[cellY].length);
     }
-    
-    /**
-     * Returns the Cell that is visible at the specified position in the Grid
-     * @param cellX The x position of the Cell
-     * @param cellY The y position of the Cell
-     * @return A {@link Cell} object from the Cell matrix
-     */
-    public Cell getVisibleCell(int cellX, int cellY)
+
+	/**
+	 * Returns the Cell that is visible at the specified position in the Grid
+	 *
+	 * @param cellX The x position of the Cell
+	 * @param cellY The y position of the Cell
+	 * @return A {@link Cell} object from the Cell matrix
+	 */
+	public Cell getVisibleCell(int cellX, int cellY)
     {
         return getCell(cellX, cellY);
     }
-
+	
+	/**
+	 * Places a {@link Cell} at the specified position in the {@link Grid}
+	 *
+	 * @param newCell The {@link Cell} to place
+	 * @param cellX   The x position
+	 * @param cellY   The y position
+	 * @return The {@link Cell} that currently is at the specified position
+	 */
+	public Cell setCell(final Cell newCell, int cellX, int cellY)
+	{
+		final Cell currentCell = getCell(cellX, cellY);
+		if (!isCellInBounds(cellX, cellY))
+			return currentCell;
+		
+		cellMatrix[cellY][cellX] = newCell;
+		return currentCell;
+	}
+	
     /**
      * Returns the Cell at the specified position in the Grid
      * @param cellX The x position of the Cell
@@ -247,12 +294,10 @@ public class Grid
      */
     public Cell getCell(int cellX, int cellY)
     {
-        if(isCellInBounds(cellX, cellY))
-        {
-            return cellMatrix[cellY][cellX];
-        }
-
-        return new Cell(true);
+        if (!isCellInBounds(cellX, cellY))
+			return new Cell(true);
+		
+		return cellMatrix[cellY][cellX];
     }
     
     public int getHeight()
@@ -261,6 +306,6 @@ public class Grid
     }
 
     public int getWidth() {
-        return cellMatrix[0].length;
+        return getLine(0).length;
     }
 }

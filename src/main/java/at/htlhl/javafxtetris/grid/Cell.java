@@ -3,18 +3,12 @@ package at.htlhl.javafxtetris.grid;
 import at.htlhl.javafxtetris.graphics.Color;
 
 /**
- * Represents a tile in the Tetris grid
+ * Represents a tile in a {@link Grid}
  */
 public class Cell
 {
     // Fields *****************************************************************
-    /**
-     * {@link Color} of the tile
-     */
     private Color color;
-    /**
-     * Whether the tile is solid
-     */
     private boolean isSolid;
 
     // Constructors ***********************************************************
@@ -35,6 +29,9 @@ public class Cell
         isSolid = solid;
     }
     
+    /**
+     * @returns Whether the tile is solid
+     */
     public boolean isSolid()
     {
         return isSolid;
@@ -43,7 +40,10 @@ public class Cell
     public void setColor(Color color) {
         this.color = color;
     }
-
+    
+    /**
+     * @returns The {@link Color} of the tile
+     */
     public Color getColor() {
         return isSolid() ? color : Color.TRANSPARENT;
     }

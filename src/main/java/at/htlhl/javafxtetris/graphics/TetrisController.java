@@ -1,6 +1,5 @@
 package at.htlhl.javafxtetris.graphics;
 
-import at.htlhl.javafxtetris.grid.Block;
 import at.htlhl.javafxtetris.grid.Cell;
 import at.htlhl.javafxtetris.grid.Grid;
 import javafx.application.Platform;
@@ -46,12 +45,12 @@ public class TetrisController
     /**
      * Initialises the previewGrid
      *
-     * @param initialBlock The data to fill the tetrisGrid with as a {@link Block}
+     * @param initialGrid The data to fill the tetrisGrid with
      */
-    public void initPreviewGrid(final Block initialBlock)
+    public void initPreviewGrid(final Grid initialGrid)
     {
         this.previewPaneMatrix = new Pane[4][4];
-        initGridPane(previewGridPane, previewPaneMatrix, initialBlock.toGrid());
+        initGridPane(previewGridPane, previewPaneMatrix, initialGrid);
     }
 
     /*
@@ -85,13 +84,13 @@ public class TetrisController
     }
 
     /**
-     * Updates the previewGrid using data from the specified {@link Block}
+     * Updates the previewGrid using the specified {@link Grid}
      *
-     * @param newBlock The {@link Block} that should be displayed
+     * @param newGrid The {@link Grid} that should be displayed
      */
-    public void updatePreviewGrid(Block newBlock)
+    public void updatePreviewGrid(Grid newGrid)
     {
-        updatePaneMatrix(previewPaneMatrix, newBlock.toGrid());
+        updatePaneMatrix(previewPaneMatrix, newGrid);
     }
     
     private void updatePaneMatrix(final Pane[][] paneMatrix, final Grid grid)
