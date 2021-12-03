@@ -31,6 +31,8 @@ public class TetrisGame
     // Movement
     private long totalTickCount; // The total number of ticks that have happened
     private long lastBlockFall;  // The last tick the FallingBlock was moved
+    
+    private boolean hasPlayerLost;
 
     // Constructors ***********************************************************
     public TetrisGame(TetrisController controller, Scene scene)
@@ -61,6 +63,8 @@ public class TetrisGame
 
         this.isRunning = true;
         unpause();
+    
+        this.hasPlayerLost = false;
 
         this.totalTickCount = 1;
         this.tickTimer = new Timer();
@@ -124,8 +128,18 @@ public class TetrisGame
 
             if(!tetrisGrid.didBlockFall())
             {
-                // Place the Block in the Grid
-                tetrisGrid.getFallingBlock().placeBlock(tetrisGrid);
+                final FallingBlock fallingBlock = tetrisGrid.getFallingBlock();
+                if(fallingBlock.canPlace(tetrisGrid))
+                {
+                    // If the Block can be placed, place it in the Grid
+                    fallingBlock.placeBlock(tetrisGrid);
+                }
+                else
+                {
+                    // Otherwise the player has lost
+                    this.hasPlayerLost = true;
+                }
+                
                 // Update the Falling Block in the Grid
                 tetrisGrid.setFallingBlock(nextBlock);
                 // Generate a new Block
@@ -139,6 +153,12 @@ public class TetrisGame
 
         totalTickCount++;
         controller.updateTetrisGrid(tetrisGrid);
+    
+        if(hasPlayerLost)
+        {
+            this.stop();
+            App.instance().showLosingScreen();
+        }
     }
 
     /*
