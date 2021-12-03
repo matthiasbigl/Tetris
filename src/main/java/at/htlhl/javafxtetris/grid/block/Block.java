@@ -64,7 +64,7 @@ public enum Block
         this.blockMatrix = blockMatrix;
     }
 
-    // Logic
+    // Logic ******************************************************************
     public boolean isCellInBounds(int cellX, int cellY)
     {
         return (cellY >= 0 && cellY < getHeight()) && (cellX >= 0 && cellX < blockMatrix[cellY].length);
@@ -145,32 +145,6 @@ public enum Block
     public int getHeight()
     {
         return blockMatrix.length;
-    }
-
-    public int getTrueWith() {
-        int with = 0;
-        for (int y = 0; y < blockMatrix.length; y++) {
-            for (int x = 0; x < blockMatrix[y].length; x++) {
-                if (blockMatrix[y][x] == true) {
-                    if (with < x) {
-                        with = x;
-                    }
-                }
-            }
-        }
-        return with+1;
-    }
-
-    public int getTrueHeight() {
-        int height = 0;
-        for (int y = 0; y < blockMatrix.length; y++) {
-            for (int x = 0; x < blockMatrix[y].length; x++) {
-                if (blockMatrix[y][x] == true) {
-                    height = y;
-                }
-            }
-        }
-        return height+1;
     }
 
     public boolean[][] getBlockMatrix()
