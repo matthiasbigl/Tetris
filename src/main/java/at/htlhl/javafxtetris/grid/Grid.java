@@ -252,20 +252,20 @@ public class Grid
         // add amount of lines deleted to lines
         TetrisController.lines += amountOfLines;
 
-        // add points to score
+        // add points to score depending on level
         // scoring system from https://tetris.fandom.com/wiki/Scoring
         switch (amountOfLines) {
             case 1:
-                TetrisController.score += 40;
+                TetrisController.score += 40 * (TetrisController.level + 1);
                 break;
             case 2:
-                TetrisController.score += 100;
+                TetrisController.score += 100 * (TetrisController.level + 1);
                 break;
             case 3:
-                TetrisController.score += 300;
+                TetrisController.score += 300 * (TetrisController.level + 1);
                 break;
             case 4:
-                TetrisController.score += 1200;
+                TetrisController.score += 1200 * (TetrisController.level + 1);
                 break;
             default:
                 break;
