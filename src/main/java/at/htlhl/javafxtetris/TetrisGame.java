@@ -127,7 +127,7 @@ public class TetrisGame
     
             if(!tetrisGrid.getFallingBlock().tryMove(tetrisGrid, Direction.DOWN))
             {
-                placeCurrentBlock();
+                placeCurrentBlock();;
             }
         }
 
@@ -158,6 +158,8 @@ public class TetrisGame
         generateNextBlock();
         // Delete all full lines in the Grid
         tetrisGrid.deleteFullLines();
+        // Update the points and lines
+        controller.updatePointsAndLines();
     }
 
     /*
