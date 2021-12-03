@@ -43,49 +43,44 @@ public class FallingBlock
     }
 
     // Logic ******************************************************************
-
+    
+    /**
+     * Attempts to move the Block in the specified {@link Direction}
+     *
+     * @param gridIn   The {@link Grid} to move in
+     * @param movement movement {@link Direction}
+     * @return Whether the Block was moved
+     */
+    public boolean tryMove(Grid gridIn, Direction movement)
+    {
+        if(!canMove(gridIn, movement))
+            return false;
+        
+        move(movement);
+        return true;
+    }
+    
     /**
      * Checks if the block can move in the given directions
      *
-     * @param gridIn The gridIn object
-     * @param moveX  x movement
-     * @param moveY  y movement
+     * @param gridIn   The gridIn object
+     * @param movement The movement direction
      * @return Whether the Block can move in the given directions
      */
-    public boolean canMove(Grid gridIn, int moveX, int moveY)
+    public boolean canMove(Grid gridIn, Direction movement)
     {
-        final Cell[][] cellMatrix = getBlockState().toCellMatrix();
-
-        // Iterate over every Cell in the matrix
-        for(int y = 0; y < cellMatrix.length; y++)
-        {
-            for(int x = 0; x < cellMatrix[y].length; x++)
-            {
-                // If there is a Cell at the current position, check if it can move in the given direction
-                if(cellMatrix[y][x].isSolid())
-                {
-                    // If there is a Cell at the new position, the current Cell can't be moved
-                    if(gridIn.getCell(getX() + x + moveX, getY() + y + moveY).isSolid())
-                    {
-                        return false;
-                    }
-                }
-            }
-        }
-
-        return true;
+        return gridIn.canPlace(getBlockState().toGrid(), getX() + movement.getX(), getY() + movement.getY());
     }
 
     /**
      * moves the block in the specified directions
      *
-     * @param moveX X movement
-     * @param moveY Y movement
+     * @param movement Y movement
      */
-    public void move(int moveX, int moveY)
+    public void move(Direction movement)
     {
-        setX(getX() + moveX);
-        setY(getY() + moveY);
+        setX(getX() + movement.getX());
+        setY(getY() + movement.getY());
     }
 
     /**
