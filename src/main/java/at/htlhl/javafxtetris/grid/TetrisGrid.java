@@ -1,7 +1,6 @@
 package at.htlhl.javafxtetris.grid;
 
 import at.htlhl.javafxtetris.grid.block.Block;
-import at.htlhl.javafxtetris.grid.block.Direction;
 import at.htlhl.javafxtetris.grid.block.FallingBlock;
 
 public class TetrisGrid extends Grid
@@ -9,7 +8,6 @@ public class TetrisGrid extends Grid
     // Fields *****************************************************************
     private FallingBlock fallingBlock;
     private Cell[][] fallingBlockMatrix;
-    private boolean didBlockFall;
 
     // Constructors ***********************************************************
     public TetrisGrid(int width, int height, Block fallingBlock)
@@ -51,14 +49,6 @@ public class TetrisGrid extends Grid
     public FallingBlock getFallingBlock()
     {
         return fallingBlock;
-    }
-
-    /**
-     * @return Whether the {@link FallingBlock} has been moved down last tick
-     */
-    public boolean didBlockFall()
-    {
-        return didBlockFall;
     }
 
     private FallingBlock createFallingBlock(final Block block)
