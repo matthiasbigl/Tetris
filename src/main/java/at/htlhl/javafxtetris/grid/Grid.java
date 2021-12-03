@@ -80,30 +80,8 @@ public class Grid
             }
         }
 
-
-        // TODO: set score and lines to 0 if lost
-
-        // add amount of lines deleted to lines
-        TetrisController.lines += amount;
-
-        // add points to score
-        // scoring system from https://tetris.fandom.com/wiki/Scoring
-        switch (amount) {
-            case 1:
-                TetrisController.score += 40;
-                break;
-            case 2:
-                TetrisController.score += 100;
-                break;
-            case 3:
-                TetrisController.score += 300;
-                break;
-            case 4:
-                TetrisController.score += 1200;
-                break;
-            default:
-                break;
-        }
+        // update points, lines and level
+        addStats(amount);
     }
 
     /**
@@ -262,5 +240,44 @@ public class Grid
 
     public int getWidth() {
         return cellMatrix[0].length;
+    }
+
+    /**
+     * Method to add Points, Level and lines based on the amount of lines removed
+     * @param amountOfLines The amount of removed lines
+     */
+    private void addStats(int amountOfLines) {
+        // TODO: set score and lines to 0 if lost
+
+        // add amount of lines deleted to lines
+        TetrisController.lines += amountOfLines;
+
+        // add points to score
+        // scoring system from https://tetris.fandom.com/wiki/Scoring
+        switch (amountOfLines) {
+            case 1:
+                TetrisController.score += 40;
+                break;
+            case 2:
+                TetrisController.score += 100;
+                break;
+            case 3:
+                TetrisController.score += 300;
+                break;
+            case 4:
+                TetrisController.score += 1200;
+                break;
+            default:
+                break;
+        }
+
+        // if 10 lines got removed, increase level by one
+        // TODO: increase tick speed depending on level
+        // TODO: show level in graphic
+        if (TetrisController.lines > 0) {
+            if (TetrisController.lines % 10 == 0) {
+                TetrisController.level = TetrisController.lines / 10;
+            }
+        }
     }
 }

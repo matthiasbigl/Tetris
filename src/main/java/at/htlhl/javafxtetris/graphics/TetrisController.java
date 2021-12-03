@@ -17,9 +17,10 @@ public class TetrisController
     private Pane[][] tetrisPaneMatrix;
     private Pane[][] previewPaneMatrix;
 
-    // Score and Lines
+    // score, lines and level
     public static int score;
     public static int lines;
+    public static int level;
     @FXML
     private Text scoreText;
     @FXML
