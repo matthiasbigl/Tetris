@@ -15,7 +15,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="468.0" prefWidth="584.0" styleClass="bodybg" stylesheets="@background.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.htlhl.javafxtetris.graphics.TetrisController">
    <center>
-      <GridPane fx:id="tetrisGridPane" alignment="CENTER" maxHeight="608.0" maxWidth="300.0" opacity="0.5" style="-fx-grid-lines-visible: true;" styleClass="grid">
+      <GridPane fx:id="tetrisGridPane" alignment="CENTER" maxHeight="608.0" maxWidth="300.0" opacity="1.0" style="-fx-grid-lines-visible: true;" styleClass="grid">
         <columnConstraints>
           <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="30.0" />
           <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="30.0" />

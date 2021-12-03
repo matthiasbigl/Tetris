@@ -127,7 +127,7 @@ public class TetrisGame
     
             if(!tetrisGrid.getFallingBlock().tryMove(tetrisGrid, Direction.DOWN))
             {
-                placeCurrentBlock();;
+                placeCurrentBlock();
             }
         }
 
