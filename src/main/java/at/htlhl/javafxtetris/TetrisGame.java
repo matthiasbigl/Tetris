@@ -205,6 +205,8 @@ public class TetrisGame
                     /**
                      * would also work if y starts with gridheight
                      * checkheight calculates the space to the ground - better performance
+                     *
+                     * TODO: Issue - block can fall through another
                      */
                     int checkHeight = tetrisGrid.getHeight() - fallingBlock.getY() - fallingBlock.getBlock().getHeight()+1;
                     for (int y = checkHeight; y > 0; y--) {
