@@ -77,7 +77,7 @@ public class TetrisGame
                     tick();
                 }
             }
-        }, 0, 20);
+        }, 1000, 16);
     }
 
     public void stop()
