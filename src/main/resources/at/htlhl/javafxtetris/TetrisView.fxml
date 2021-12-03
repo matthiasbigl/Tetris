@@ -61,7 +61,7 @@
             <Insets />
          </BorderPane.margin>
          <children>
-            <VBox layoutX="5.0" layoutY="89.0" opacity="0.5" prefHeight="258.0" prefWidth="128.0" styleClass="bg" stylesheets="@background.css" AnchorPane.rightAnchor="5.0">
+            <VBox layoutX="5.0" layoutY="89.0" opacity="0.5" prefHeight="278.0" prefWidth="128.0" styleClass="bg" stylesheets="@background.css" AnchorPane.rightAnchor="5.0">
                <children>
                   <Text fx:id="scoreText" fill="#ffbe40" strokeType="OUTSIDE" strokeWidth="0.0" text="Punkte: 0" VBox.vgrow="ALWAYS">
                      <font>
@@ -72,6 +72,14 @@
                      </VBox.margin>
                   </Text>
                   <Text fx:id="linesText" fill="#ffbe40" strokeType="OUTSIDE" strokeWidth="0.0" text="Lines: 0" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="Comic Sans MS" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="5.0" />
+                     </VBox.margin>
+                  </Text>
+                  <Text fx:id="levelText" fill="#ffbe40" strokeType="OUTSIDE" strokeWidth="0.0" text="Level: 0">
                      <font>
                         <Font name="Comic Sans MS" size="18.0" />
                      </font>

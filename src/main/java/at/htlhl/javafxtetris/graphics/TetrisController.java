@@ -25,6 +25,8 @@ public class TetrisController
     private Text scoreText;
     @FXML
     private Text linesText;
+    @FXML
+    private Text levelText;
 
     // Constructors ***********************************************************
     public TetrisController()
@@ -126,5 +128,6 @@ public class TetrisController
     public void updatePointsAndLines() {
         scoreText.setText("Punkte: " + score);
         linesText.setText("Lines: " + lines);
+        levelText.setText("Level: " + level);
     }
 }
