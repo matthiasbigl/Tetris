@@ -143,7 +143,7 @@ public class Grid
     public Cell[] getLine(int lineY)
     {
         if(!isLineInBounds(lineY))
-            return createEmptyLine(10); // TODO: Add width and height
+            return createEmptyLine(getWidth());
         
         return cellMatrix[lineY];
     }
