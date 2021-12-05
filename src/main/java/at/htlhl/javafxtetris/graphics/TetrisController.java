@@ -1,9 +1,14 @@
 package at.htlhl.javafxtetris.graphics;
 
+import at.htlhl.javafxtetris.TetrisGame;
 import at.htlhl.javafxtetris.grid.Cell;
 import at.htlhl.javafxtetris.grid.Grid;
+import at.htlhl.javafxtetris.grid.block.BlockState;
 import at.htlhl.javafxtetris.grid.block.FallingBlock;
 import javafx.application.Platform;
+import javafx.beans.property.Property;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -17,10 +22,6 @@ public class TetrisController
     private Pane[][] tetrisPaneMatrix;
     private Pane[][] previewPaneMatrix;
 
-    // score, lines and level
-    public static int score;
-    public static int lines;
-    public static int level;
     @FXML
     private Text scoreText;
     @FXML
@@ -88,13 +89,13 @@ public class TetrisController
     }
 
     /**
-     * Updates the previewGrid using data from the specified {@link Grid}
+     * Displays the specified {@link BlockState} in the previewGrid
      *
-     * @param newGrid The {@link Grid} that should be displayed
+     * @param blockState The {@link BlockState} that should be displayed
      */
-    public void updatePreviewGrid(Grid newGrid)
+    public void updatePreview(BlockState blockState)
     {
-        updatePaneMatrix(previewPaneMatrix, newGrid);
+        updatePaneMatrix(previewPaneMatrix, blockState.toGrid());
     }
 
     /**
@@ -104,51 +105,57 @@ public class TetrisController
      */
     public void updateFallingBlock(FallingBlock fallingBlock)
     {
-        Grid grid = fallingBlock.getBlockState().toGrid();
-        for(int y = 0; y < grid.getHeight(); y++)
+        Platform.runLater(() ->
         {
-            for(int x = 0; x < grid.getLine(y).length; x++)
+            Grid grid = fallingBlock.getBlockState().toGrid();
+            for(int y = 0; y < grid.getHeight(); y++)
             {
-                Cell cell = grid.getCell(x, y);
-                if(cell.isSolid())
+                for(int x = 0; x < grid.getLine(y).length; x++)
                 {
-                    updatePane(tetrisPaneMatrix[fallingBlock.getY() + y][fallingBlock.getX() + x], cell);
+                    Cell cell = grid.getCell(x, y);
+                    if(cell.isSolid())
+                    {
+                        updatePane(tetrisPaneMatrix[fallingBlock.getY() + y][fallingBlock.getX() + x], cell);
+                    }
                 }
             }
-        }
+        });
     }
     
     private void updatePaneMatrix(final Pane[][] paneMatrix, final Grid grid)
     {
-        for(int y = 0; y < grid.getHeight(); y++)
-        {
-            for(int x = 0; x < grid.getLine(y).length; x++)
-            {
-                updatePane(paneMatrix[y][x], grid.getCell(x, y));
-            }
-        }
-    }
-
-    /**
-     * Updates a {@link Pane} object using the data from the specified {@link Cell} object
-     *
-     * @param cell The {@link Cell} object representing a tetris tile
-     */
-    private void updatePane(final Pane pane, final Cell cell)
-    {
         Platform.runLater(() ->
         {
-            pane.setStyle("-fx-background-color:" + cell.getColor().toHex() + ";");
-            pane.setVisible(cell.isSolid());
+            for(int y = 0; y < grid.getHeight(); y++)
+            {
+                for(int x = 0; x < grid.getLine(y).length; x++)
+                {
+                    updatePane(paneMatrix[y][x], grid.getCell(x, y));
+                }
+            }
         });
     }
 
-    /**
-     * Updates the points and lines if lines full
+    /*
+     * Updates a Pane object using the data from the specified Cell object
+     * MUST be called in JavaFX Thread
      */
-    public void updatePointsAndLines() {
-        scoreText.setText("Punkte: " + score);
-        linesText.setText("Lines: " + lines);
-        levelText.setText("Level: " + level);
+    private void updatePane(final Pane pane, final Cell cell)
+    {
+        pane.setStyle("-fx-background-color:" + cell.getColor().toHex() + ";");
+        pane.setVisible(cell.isSolid());
+    }
+
+    /**
+     * Init bindings for all stats displayed
+     * 
+     * @param game The {@link TetrisGame} instance
+     */
+    public void initStats(final TetrisGame game)
+    {
+        // Looks weird but works
+        scoreText.textProperty().bind(new SimpleStringProperty("Score: ").concat(game.scoreProperty()));
+        levelText.textProperty().bind(new SimpleStringProperty("Level: ").concat(game.levelProperty()));
+        linesText.textProperty().bind(new SimpleStringProperty("Lines cleared: ").concat(game.linesClearedProperty()));
     }
 }
