@@ -21,7 +21,7 @@ public class TetrisGame
     // Fields *****************************************************************
     // Grid and Blocks
     private final TetrisController controller;
-    private final TetrisGrid tetrisGrid; // TODO: Replace with normal grid and add 'visibleGrid'
+    private final TetrisGrid tetrisGrid;
     private Block nextBlock;
 
     // Timer & Tick loop
@@ -133,6 +133,7 @@ public class TetrisGame
 
         totalTickCount++;
         controller.updateTetrisGrid(tetrisGrid);
+        controller.updateFallingBlock(tetrisGrid.getFallingBlock());
     }
     
     private void placeCurrentBlock()

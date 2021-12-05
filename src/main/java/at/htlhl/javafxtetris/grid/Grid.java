@@ -235,18 +235,6 @@ public class Grid
     }
 
 	/**
-	 * Returns the Cell that is visible at the specified position in the Grid
-	 *
-	 * @param cellX The x position of the Cell
-	 * @param cellY The y position of the Cell
-	 * @return A {@link Cell} object from the Cell matrix
-	 */
-	public Cell getVisibleCell(int cellX, int cellY)
-    {
-        return getCell(cellX, cellY);
-    }
-	
-	/**
 	 * Places a {@link Cell} at the specified position in the {@link Grid}
 	 *
 	 * @param newCell The {@link Cell} to place

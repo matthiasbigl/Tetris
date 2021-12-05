@@ -2,6 +2,7 @@ package at.htlhl.javafxtetris.graphics;
 
 import at.htlhl.javafxtetris.grid.Cell;
 import at.htlhl.javafxtetris.grid.Grid;
+import at.htlhl.javafxtetris.grid.block.FallingBlock;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
@@ -87,13 +88,34 @@ public class TetrisController
     }
 
     /**
-     * Updates the previewGrid using the specified {@link Grid}
+     * Updates the previewGrid using data from the specified {@link Grid}
      *
      * @param newGrid The {@link Grid} that should be displayed
      */
     public void updatePreviewGrid(Grid newGrid)
     {
         updatePaneMatrix(previewPaneMatrix, newGrid);
+    }
+
+    /**
+     * Updates the {@link FallingBlock} displayed in the tetrisGrid
+     * 
+     * @param fallingBlock The {@link FallingBlock} that should be displayed
+     */
+    public void updateFallingBlock(FallingBlock fallingBlock)
+    {
+        Grid grid = fallingBlock.getBlockState().toGrid();
+        for(int y = 0; y < grid.getHeight(); y++)
+        {
+            for(int x = 0; x < grid.getLine(y).length; x++)
+            {
+                Cell cell = grid.getCell(x, y);
+                if(cell.isSolid())
+                {
+                    updatePane(tetrisPaneMatrix[fallingBlock.getY() + y][fallingBlock.getX() + x], cell);
+                }
+            }
+        }
     }
     
     private void updatePaneMatrix(final Pane[][] paneMatrix, final Grid grid)
@@ -102,7 +124,7 @@ public class TetrisController
         {
             for(int x = 0; x < grid.getLine(y).length; x++)
             {
-                updatePane(paneMatrix[y][x], grid.getVisibleCell(x, y));
+                updatePane(paneMatrix[y][x], grid.getCell(x, y));
             }
         }
     }
