@@ -62,7 +62,7 @@ public class TetrisGame
         controller.initPreviewGrid(nextBlock.getDefaultState().toGrid());
         controller.initStats(this);
         
-        generateNextBlock();
+        generateNewBlock();
     }
     
     // Game loop **************************************************************
@@ -153,17 +153,20 @@ public class TetrisGame
     {
         this.lastBlockFall = totalTickCount;
         final FallingBlock fallingBlock = tetrisGrid.getFallingBlock();
-        if(!fallingBlock.tryPlaceBlockIn(tetrisGrid))
+        fallingBlock.tryPlaceBlockIn(tetrisGrid);
+        
+        // Update the Falling Block in the Grid
+        tetrisGrid.setFallingBlock(nextBlock);
+        // Generate a new Block
+        generateNewBlock();
+        if(!tetrisGrid.getFallingBlock().canPlaceBlockIn(tetrisGrid))
         {
+            // If the new Block can't be placed, the player has lost
             this.stop();
             App.instance().showLosingScreen();
             return;
         }
         
-        // Update the Falling Block in the Grid
-        tetrisGrid.setFallingBlock(nextBlock);
-        // Generate a new Block
-        generateNextBlock();
         // Delete all full lines in the Grid
         final int deletedLines = tetrisGrid.deleteFullLines();
         updateStats(deletedLines);
@@ -172,7 +175,7 @@ public class TetrisGame
     /*
      * Generates a new Block that is different from nextBlock
      */
-    private void generateNextBlock()
+    private void generateNewBlock()
     {
         this.nextBlock = Block.values()[(nextBlock.ordinal() +
                 (int) (Math.random() * (Block.values().length - 1)) + 1)
