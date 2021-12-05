@@ -44,6 +44,7 @@ public class App extends Application {
         {
             try {
                 primaryStage.setScene(new Scene(loader.load()));
+                primaryStage.centerOnScreen();
             } catch (IOException e) {
                 e.printStackTrace();
             }
