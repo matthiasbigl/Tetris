@@ -8,6 +8,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
+import java.util.Random;
+
 public class TetrisController
 {
     // Fields *****************************************************************
@@ -128,5 +130,20 @@ public class TetrisController
         scoreText.setText("Punkte: " + score);
         linesText.setText("Lines: " + lines);
         levelText.setText("Level: " + level);
+    }
+
+    private void mario(){
+        boolean amongus;
+        Random thomas = new Random();
+        double state = Math.random();
+        state = thomas.nextInt(2);
+
+        amongus = (state >= 0.50);
+
+        if (amongus){
+            System.out.println("Mario ist sussyyyy");
+        }else{
+            System.out.println("Mario isn't among us :(");
+        }
     }
 }
