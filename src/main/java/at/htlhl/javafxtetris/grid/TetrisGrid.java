@@ -1,39 +1,36 @@
 package at.htlhl.javafxtetris.grid;
 
-import at.htlhl.javafxtetris.grid.block.Block;
-import at.htlhl.javafxtetris.grid.block.FallingBlock;
-
 public class TetrisGrid extends Grid
 {
     // Fields *****************************************************************
-    private FallingBlock fallingBlock;
+    private final int yOffset;
 
     // Constructors ***********************************************************
-    public TetrisGrid(int width, int height, Block fallingBlock)
+    public TetrisGrid(int width, int height, int yOffset)
     {
         super(width, height);
-        setFallingBlock(fallingBlock);
+        this.yOffset = yOffset;
     }
     
-    // Accessors **************************************************************
-    public void setFallingBlock(final FallingBlock fallingBlock)
+    @Override
+    public Cell getCell(int cellX, int cellY)
     {
-        this.fallingBlock = fallingBlock;
+        if(isCellInOffsetBounds(cellX, cellY))
+           return new Cell(false); 
+        
+        return super.getCell(cellX, cellY);
     }
-
-    public void setFallingBlock(final Block block)
+    
+    public int getYOffset()
     {
-        setFallingBlock(createFallingBlock(block));
+        return yOffset;
     }
-
-    public FallingBlock getFallingBlock()
+    
+    /*
+     * Checks whether the Cell at the specified position is OUTSIDE OF THE GRID but INSIDE THE GRID OFFSET
+     */
+    private boolean isCellInOffsetBounds(final int cellX, final int cellY)
     {
-        return fallingBlock;
-    }
-
-    private FallingBlock createFallingBlock(final Block block)
-    {
-        int centeredX = (getWidth() / 2) - (block.getWidth() / 2);
-        return block.getDefaultState().falling(centeredX, 0);
+        return (cellY >= (0 - yOffset) && cellY < 0) && isCellInBounds(cellX, 0);
     }
 }
