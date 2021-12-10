@@ -1,5 +1,7 @@
 package at.htlhl.javafxtetris.grid;
 
+import java.util.Arrays;
+
 public class Grid
 {
     // Fields *****************************************************************
@@ -46,6 +48,42 @@ public class Grid
                 }
             }
         }
+    }
+    
+    /*
+     * Searches for the Cell with the lowest y index in the Grid
+     * Returns the index
+     */
+    private int getHighestCellIndex()
+    {
+        for(int y = 0; y < getTotalHeight(); y++)
+        {
+            for(int x = 0; x < getLine(y).length; x++)
+            {
+                if(getCell(x, y).isSolid())
+                    return y;
+            }
+        }
+        
+        return -1;
+    }
+    
+    /*
+     * Searches for the Cell with the highest y index in the Grid
+     * Returns the index
+     */
+    private int getLowestCellIndex()
+    {
+        for(int y = getTotalHeight() - 1; y >= 0; y--)
+        {
+            for(int x = 0; x < getLine(y).length; x++)
+            {
+                if(getCell(x, y).isSolid())
+                    return y;
+            }
+        }
+    
+        return -1;
     }
     
     // Line logic
@@ -143,7 +181,7 @@ public class Grid
     public Cell[] getLine(int lineY)
     {
         if(!isLineInBounds(lineY))
-            return createEmptyLine(getWidth());
+            return createEmptyLine(getTotalWidth());
         
         return cellMatrix[lineY];
     }
@@ -189,9 +227,9 @@ public class Grid
      */
     public void placeCellsInGrid(Grid cellsToPlace, int posX, int posY)
     {
-        for(int currY = 0; currY < cellsToPlace.getHeight(); currY++)
+        for(int currY = 0; currY < cellsToPlace.getTotalHeight(); currY++)
         {
-            for(int x = 0; x < cellsToPlace.getWidth(); x++)
+            for(int x = 0; x < cellsToPlace.getTotalWidth(); x++)
             {
                 final Cell cell = cellsToPlace.getCell(x, currY);
                 if(cell.isSolid())
@@ -212,12 +250,12 @@ public class Grid
      */
     public boolean canPlace(Grid cellsToPlace, int posX, int posY)
     {
-        for(int currY = 0; currY < cellsToPlace.getHeight(); currY++)
+        for(int currY = 0; currY < cellsToPlace.getTotalHeight(); currY++)
         {
-            for(int currX = 0; currX < cellsToPlace.getWidth(); currX++)
+            for(int currX = 0; currX < cellsToPlace.getTotalWidth(); currX++)
             {
                 final Cell cellToPlace = cellsToPlace.getCell(currX, currY);
-                if(cellToPlace.isSolid() && getCell(posX + currX, posY + currY).isSolid())
+                if(cellToPlace.isSolid() && this.getCell(posX + currX, posY + currY).isSolid())
                 {
                     return false;
                 }
@@ -272,12 +310,59 @@ public class Grid
         return cellMatrix[cellY][cellX];
     }
     
-    public int getHeight()
+    /**
+     * Returns the total height of the Grid (including all empty Cells)
+     * 
+     * Example:<br>
+     * <pre>----  1</pre>
+     * <pre>-*--  2</pre>
+     * <pre>----  3</pre>
+     * <pre>-**-  4</pre>
+     * Calling {@link Grid#getTotalHeight()} on this Grid will return 4
+     * 
+     * @return The height of the Grid
+     */
+    public int getTotalHeight()
     {
         return cellMatrix.length;
     }
     
-    public int getWidth()
+    /**
+     * Calculates the 'real' height of this {@link Grid}, meaning that only the highest and lowest solid Cells will be taken into account<br>
+     * Example:<br>
+     * <pre>- - - -</pre>
+     * <pre>- * - - 1</pre>
+     * <pre>- - - - 2</pre>
+     * <pre>- * * - 3</pre>
+     * Calling {@link Grid#getRealHeight()} on this Grid will return 4
+     *
+     * @return The 'real' height of this {@link Grid}
+     */
+    public int getRealHeight()
+    {
+        final int topCellY = getHighestCellIndex();
+        final int bottomCellX = getLowestCellIndex();
+    
+        if(topCellY < 0 || bottomCellX < 0)
+            return 0;
+    
+        return bottomCellX - topCellY + 1;
+    }
+    
+    /**
+     Returns the total width of the Grid (including all empty Cells)
+     *
+     * Example:<br>
+     * <pre>- - - -</pre>
+     * <pre>- * - -</pre>
+     * <pre>- - - -</pre>
+     * <pre>- * * -</pre>
+     * <pre>1 2 3 4</pre>
+     * Calling {@link Grid#getTotalWidth()} on this Grid will return 4
+     *
+     * @return The width of the Grid
+     */
+    public int getTotalWidth()
     {
         return getLine(0).length;
     }
