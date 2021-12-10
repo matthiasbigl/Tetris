@@ -148,7 +148,7 @@ public class TetrisGame
         {
             // Otherwise the player has lost
             this.stop();
-            App.instance().showLosingScreen();
+            App.instance().loadLosingScreen();
             return;
         }
     
