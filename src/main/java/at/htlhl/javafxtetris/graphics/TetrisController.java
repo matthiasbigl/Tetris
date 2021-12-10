@@ -108,14 +108,23 @@ public class TetrisController
         Platform.runLater(() ->
         {
             Grid grid = fallingBlock.getBlockState().toGrid();
-            for(int y = 0; y < grid.getHeight(); y++)
+            final int startY = Math.max(0, fallingBlock.getY());
+            final int endY = Math.min(tetrisPaneMatrix.length, fallingBlock.getY() + grid.getHeight());
+    
+            System.out.println(startY + "   " + endY);
+            
+            final int startX = Math.max(0, fallingBlock.getX());
+    
+            for(int y = 0; y < endY - startY; y++)
             {
-                for(int x = 0; x < grid.getLine(y).length; x++)
+                final int endX = Math.min(tetrisPaneMatrix[y].length, fallingBlock.getX() + grid.getWidth());
+                for(int x = 0; x < endX - startX; x++)
                 {
+                    System.out.println(x + "   " + y);
                     Cell cell = grid.getCell(x, y);
                     if(cell.isSolid())
                     {
-                        updatePane(tetrisPaneMatrix[fallingBlock.getY() + y][fallingBlock.getX() + x], cell);
+                        updatePane(tetrisPaneMatrix[startY + y][startX + x], cell);
                     }
                 }
             }
