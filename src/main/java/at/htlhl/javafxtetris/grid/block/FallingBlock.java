@@ -1,6 +1,5 @@
 package at.htlhl.javafxtetris.grid.block;
 
-import at.htlhl.javafxtetris.grid.Cell;
 import at.htlhl.javafxtetris.grid.Grid;
 
 public class FallingBlock
@@ -53,10 +52,10 @@ public class FallingBlock
      */
     public boolean tryMove(Grid gridIn, Direction movement)
     {
-        if(!canMove(gridIn, movement))
+        if(!canMoveTo(gridIn, movement))
             return false;
         
-        move(movement);
+        moveTo(movement);
         return true;
     }
     
@@ -67,7 +66,7 @@ public class FallingBlock
      * @param movement The movement direction
      * @return Whether the Block can move in the given directions
      */
-    public boolean canMove(Grid gridIn, Direction movement)
+    public boolean canMoveTo(Grid gridIn, Direction movement)
     {
         return gridIn.canPlace(getBlockState().toGrid(), getX() + movement.getX(), getY() + movement.getY());
     }
@@ -77,7 +76,7 @@ public class FallingBlock
      *
      * @param movement Y movement
      */
-    public void move(Direction movement)
+    public void moveTo(Direction movement)
     {
         setX(getX() + movement.getX());
         setY(getY() + movement.getY());
