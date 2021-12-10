@@ -6,8 +6,6 @@ import at.htlhl.javafxtetris.grid.Grid;
 import at.htlhl.javafxtetris.grid.block.BlockState;
 import at.htlhl.javafxtetris.grid.block.FallingBlock;
 import javafx.application.Platform;
-import javafx.beans.property.Property;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
@@ -43,7 +41,7 @@ public class TetrisController
      */
     public void initTetrisGrid(final Grid grid)
     {
-        this.tetrisPaneMatrix = new Pane[grid.getHeight()][];
+        this.tetrisPaneMatrix = new Pane[grid.getTotalHeight()][];
         initGridPane(tetrisGridPane, tetrisPaneMatrix, grid);
     }
 
@@ -64,7 +62,7 @@ public class TetrisController
      */
     private void initGridPane(final GridPane gridPane, final Pane[][] paneMatrix, final Grid grid)
     {
-        for(int y = 0; y < grid.getHeight(); y++)
+        for(int y = 0; y < grid.getTotalHeight(); y++)
         {
             paneMatrix[y] = new Pane[grid.getLine(y).length];
             for(int x = 0; x < grid.getLine(y).length; x++)
@@ -105,44 +103,34 @@ public class TetrisController
      */
     public void updateFallingBlock(FallingBlock fallingBlock)
     {
-        Platform.runLater(() ->
+        Grid grid = fallingBlock.getBlockState().toGrid();
+        final int startY = Math.max(0, fallingBlock.getY());
+        final int endY = Math.min(tetrisPaneMatrix.length, fallingBlock.getY() + grid.getTotalHeight());
+
+        for(int y = 0; y < endY - startY; y++)
         {
-            Grid grid = fallingBlock.getBlockState().toGrid();
-            final int startY = Math.max(0, fallingBlock.getY());
-            final int endY = Math.min(tetrisPaneMatrix.length, fallingBlock.getY() + grid.getHeight());
-    
-            System.out.println(startY + "   " + endY);
-            
             final int startX = Math.max(0, fallingBlock.getX());
-    
-            for(int y = 0; y < endY - startY; y++)
+            final int endX = Math.min(tetrisPaneMatrix[y].length, fallingBlock.getX() + grid.getTotalWidth());
+            for(int x = 0; x < endX - startX; x++)
             {
-                final int endX = Math.min(tetrisPaneMatrix[y].length, fallingBlock.getX() + grid.getWidth());
-                for(int x = 0; x < endX - startX; x++)
+                Cell cell = grid.getCell(startX - fallingBlock.getX() + x, startY - fallingBlock.getY() + y);
+                if(cell.isSolid())
                 {
-                    System.out.println(x + "   " + y);
-                    Cell cell = grid.getCell(x, y);
-                    if(cell.isSolid())
-                    {
-                        updatePane(tetrisPaneMatrix[startY + y][startX + x], cell);
-                    }
+                    updatePane(tetrisPaneMatrix[startY + y][Math.max(0, startX) + x], cell);
                 }
             }
-        });
+        }
     }
     
     private void updatePaneMatrix(final Pane[][] paneMatrix, final Grid grid)
     {
-        Platform.runLater(() ->
+        for(int y = 0; y < grid.getTotalHeight(); y++)
         {
-            for(int y = 0; y < grid.getHeight(); y++)
+            for(int x = 0; x < grid.getLine(y).length; x++)
             {
-                for(int x = 0; x < grid.getLine(y).length; x++)
-                {
-                    updatePane(paneMatrix[y][x], grid.getCell(x, y));
-                }
+                updatePane(paneMatrix[y][x], grid.getCell(x, y));
             }
-        });
+        }
     }
 
     /*
@@ -151,8 +139,11 @@ public class TetrisController
      */
     private void updatePane(final Pane pane, final Cell cell)
     {
-        pane.setStyle("-fx-background-color:" + cell.getColor().toHex() + ";");
-        pane.setVisible(cell.isSolid());
+        Platform.runLater(() ->
+        {
+            pane.setStyle("-fx-background-color:" + cell.getColor().toHex() + ";");
+            pane.setVisible(cell.isSolid());
+        });
     }
 
     /**
