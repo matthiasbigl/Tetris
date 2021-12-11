@@ -147,13 +147,13 @@ public class TetrisGame
  *          place
  */
         
-        final boolean canFall = currentBlock.canMoveTo(tetrisGrid, Direction.DOWN);
+        final boolean canFall = currentBlock.canMove(tetrisGrid, Direction.DOWN);
         
         // TODO: increase tick speed depending on level
         final int period = 30;
         if(canFall && (lastBlockFall + period <= totalTickCount))
         {
-            currentBlock.moveTo(Direction.DOWN);
+            currentBlock.move(Direction.DOWN);
             this.lastBlockFall = this.lastBlockMove = totalTickCount;
         }
     
@@ -190,7 +190,8 @@ public class TetrisGame
         {
             // Lose
             this.stop();
-            App.instance().showLosingScreen();
+            App.instance().loadLosingScreen();
+            return;
         }
     }
     
@@ -214,9 +215,9 @@ public class TetrisGame
     private FallingBlock createFallingBlock(final BlockState state)
     {
         final Grid grid = state.toGrid();
-        final int centeredX = ((tetrisGrid.getTotalWidth() + 1) / 2) - ((grid.getTotalWidth() + 1) / 2);
-        final int y = Math.max(- tetrisGrid.getYOffset(), - grid.getRealHeight() / 2);
-        return state.falling(centeredX, y);
+        final int centeredX = ((tetrisGrid.getTotalWidth()) / 2) - ((grid.getTotalWidth() + 1) / 2);
+        final int y = Math.max(- tetrisGrid.getYOffset(), - grid.getHighestCellY());
+        return state.falling(centeredX, y + 1);
     }
     
     /**

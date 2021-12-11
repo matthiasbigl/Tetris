@@ -19,6 +19,19 @@
     -fx-border-width: 3;
     -fx-border-style: dashed;
 }
+
+.bg2{
+    -fx-background-color: black;
+    -fx-border-color: yellow;
+    -fx-border-insets: 10;
+    -fx-border-width: 3;
+    -fx-border-style: dashed;
+}
+
+
 .test{
     -fx-background-color: #ffbe40;
+}
+.black{
+    -fx-background-color: black;
 }

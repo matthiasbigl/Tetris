@@ -19,25 +19,40 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         App.instance = this;
         this.primaryStage = stage;
-
-        FXMLLoader loader = new FXMLLoader(App.class.getResource("TetrisView.fxml"));
-        Pane root = loader.load();
-        TetrisController controller = loader.getController();
-
-        Scene scene = new Scene(root);
-
-        TetrisGame game = new TetrisGame(controller, scene);
-        game.start();
-
-        Platform.setImplicitExit(true);
-        stage.setOnCloseRequest(e -> game.stop());
         
-        stage.setScene(scene);
-        stage.setFullScreen(true);
-        stage.show();
+        Platform.setImplicitExit(true);
+        
+        loadTetrisGame();
+        primaryStage.show();
     }
 
-    public void showLosingScreen()
+    public void loadTetrisGame() {
+        Platform.runLater(() ->
+        {
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("TetrisView.fxml"));
+            
+            Pane root;
+            try {
+                root = loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
+            
+            TetrisController controller = loader.getController();
+            Scene scene = new Scene(root);
+            
+            TetrisGame game = new TetrisGame(controller, scene);
+            
+            primaryStage.setOnCloseRequest(e -> game.stop());
+            primaryStage.setScene(scene);
+            primaryStage.setFullScreen(true);
+            
+            game.start();
+        });
+    }
+
+    public void loadLosingScreen()
     {
         FXMLLoader loader = new FXMLLoader(App.class.getResource("LosingScreen.fxml"));
         Platform.runLater(() ->
@@ -45,6 +60,7 @@ public class App extends Application {
             try {
                 primaryStage.setScene(new Scene(loader.load()));
                 primaryStage.centerOnScreen();
+                primaryStage.setFullScreen(true);
             } catch (IOException e) {
                 e.printStackTrace();
             }

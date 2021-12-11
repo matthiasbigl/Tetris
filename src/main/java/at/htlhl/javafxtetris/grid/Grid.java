@@ -1,7 +1,5 @@
 package at.htlhl.javafxtetris.grid;
 
-import java.util.Arrays;
-
 public class Grid
 {
     // Fields *****************************************************************
@@ -50,11 +48,10 @@ public class Grid
         }
     }
     
-    /*
-     * Searches for the Cell with the lowest y index in the Grid
-     * Returns the index
+    /**
+     * @return The index of the Cell with the lowest y index in the Grid
      */
-    private int getHighestCellIndex()
+    public int getLowestCellY()
     {
         for(int y = 0; y < getTotalHeight(); y++)
         {
@@ -68,11 +65,10 @@ public class Grid
         return -1;
     }
     
-    /*
-     * Searches for the Cell with the highest y index in the Grid
-     * Returns the index
+    /**
+     * @return The index of the Cell with the highest y index in the Grid
      */
-    private int getLowestCellIndex()
+    public int getHighestCellY()
     {
         for(int y = getTotalHeight() - 1; y >= 0; y--)
         {
@@ -340,8 +336,8 @@ public class Grid
      */
     public int getRealHeight()
     {
-        final int topCellY = getHighestCellIndex();
-        final int bottomCellX = getLowestCellIndex();
+        final int topCellY = getLowestCellY();
+        final int bottomCellX = getHighestCellY();
     
         if(topCellY < 0 || bottomCellX < 0)
             return 0;
