@@ -3,10 +3,7 @@ package at.htlhl.javafxtetris;
 
 import at.htlhl.javafxtetris.graphics.TetrisController;
 import at.htlhl.javafxtetris.grid.Grid;
-import at.htlhl.javafxtetris.grid.block.Block;
-import at.htlhl.javafxtetris.grid.block.BlockState;
-import at.htlhl.javafxtetris.grid.block.Direction;
-import at.htlhl.javafxtetris.grid.block.FallingBlock;
+import at.htlhl.javafxtetris.grid.block.*;
 import at.htlhl.javafxtetris.grid.TetrisGrid;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.Scene;
@@ -64,7 +61,7 @@ public class TetrisGame
         // Init the controller
         this.controller = controller;
         controller.initTetrisGrid(tetrisGrid);
-        controller.initPreviewGrid(nextBlock.getDefaultState().toGrid());
+        controller.initPreviewGrid(nextBlock.getDefaultState().getGrid());
         controller.initStats(this);
     
         generateNewBlock();
@@ -214,10 +211,10 @@ public class TetrisGame
      */
     private FallingBlock createFallingBlock(final BlockState state)
     {
-        final Grid grid = state.toGrid();
-        final int centeredX = ((tetrisGrid.getTotalWidth()) / 2) - ((grid.getTotalWidth() + 1) / 2);
+        final Grid grid = state.getGrid();
+        final int centeredX = ((tetrisGrid.getWidth()) / 2) - ((grid.getWidth() + 1) / 2);
         final int y = Math.max(- tetrisGrid.getYOffset(), - grid.getHighestCellY());
-        return state.falling(centeredX, y + 1);
+        return state.falling(centeredX, y);
     }
     
     /**
@@ -267,17 +264,27 @@ public class TetrisGame
             final FallingBlock fallingBlock = currentBlock;
             final KeyCode code = e.getCode();
             
+            final Rotation rotation;
             // TODO: rotate
             switch(code)
             {
                 case Q:
+                    rotation = Rotation.ROTATE_LEFT_90;
                     break;
                 case W:
+                    rotation = Rotation.ROTATE_180;
                     break;
                 case E:
+                    rotation = Rotation.ROTATE_RIGHT_90;
                     break;
                 default:
-                    break;
+                    rotation = null;
+            }
+            
+            if(rotation != null)
+            {
+                fallingBlock.tryRotate(tetrisGrid, rotation);
+                this.lastBlockMove = totalTickCount;
             }
             
             // NOTE: Technically allows rotating and moving at the same time
@@ -303,12 +310,12 @@ public class TetrisGame
                 case SPACE:
                     // Move the block down one by one
                     // TODO: Make better.
-                    final Grid cellsToPlace = fallingBlock.getBlockState().toGrid();
+                    final Grid cellsToPlace = fallingBlock.getBlockState().getGrid();
                     int lowestValidY = 0;
                     
-                    for(int y = 0; y < tetrisGrid.getTotalHeight() - fallingBlock.getY(); y++)
+                    for(int y = 0; y < tetrisGrid.getHeight() - fallingBlock.getY(); y++)
                     {
-                        if(tetrisGrid.canPlace(cellsToPlace, fallingBlock.getX(), fallingBlock.getY() + y))
+                        if(tetrisGrid.canPlaceCells(cellsToPlace, fallingBlock.getX(), fallingBlock.getY() + y))
                             lowestValidY = y;
                         else
                             break;
