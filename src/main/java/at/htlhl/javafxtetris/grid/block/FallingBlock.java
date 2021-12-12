@@ -4,7 +4,7 @@ import at.htlhl.javafxtetris.grid.Grid;
 
 public class FallingBlock
 {
-    private final BlockState blockState;
+    private BlockState blockState;
     private int x, y;
     
     // Constructors ***********************************************************
@@ -68,7 +68,7 @@ public class FallingBlock
      */
     public boolean canMove(Grid gridIn, Direction movement)
     {
-        return gridIn.canPlace(getBlockState().toGrid(), getX() + movement.getX(), getY() + movement.getY());
+        return gridIn.canPlaceCells(getBlockState().getGrid(), getX() + movement.getX(), getY() + movement.getY());
     }
     
     /**
@@ -80,6 +80,40 @@ public class FallingBlock
     {
         setX(getX() + movement.getX());
         setY(getY() + movement.getY());
+    }
+    
+    /**
+     * Attempts to rotate the Block
+     *
+     * @param gridIn   The {@link Grid} to rotate in
+     * @param rotation rotation {@link Direction}
+     * @return Whether the Block was rotated
+     */
+    public boolean tryRotate(Grid gridIn, Rotation rotation)
+    {
+        if(!canRotate(gridIn, rotation))
+            return false;
+        
+        rotate(rotation);
+        return true;
+    }
+    
+    /**
+     * Checks if the block can rotate in the given direction
+     *
+     * @param gridIn   The gridIn object
+     * @param rotation The rotation direction
+     * @return Whether the Block can rotate
+     */
+    public boolean canRotate(Grid gridIn, Rotation rotation)
+    {
+        final BlockState rotatedState = blockState.rotate(rotation);
+        return gridIn.canPlaceCells(rotatedState.getGrid(), getX(), getY());
+    }
+    
+    public void rotate(final Rotation rotation)
+    {
+        this.blockState = blockState.rotate(rotation);
     }
     
     /**
@@ -104,11 +138,11 @@ public class FallingBlock
      */
     public void placeBlockIn(Grid grid)
     {
-        grid.placeCellsInGrid(this.getBlockState().toGrid(), getX(), getY());
+        grid.placeCellsInGrid(this.getBlockState().getGrid(), getX(), getY());
     }
     
     public boolean canPlaceBlockIn(Grid grid)
     {
-        return grid.canPlace(getBlockState().toGrid(), getX(), getY());
+        return grid.canPlaceCells(getBlockState().getGrid(), getX(), getY());
     }
 }
