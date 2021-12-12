@@ -14,8 +14,8 @@ public class Grid
      */
     public Grid(Cell[][] cellMatrix)
     {
-        this.cellMatrix = cellMatrix;
-        initCellMatrix();
+        this.cellMatrix = new Cell[cellMatrix.length][];
+        initCellMatrix(cellMatrix);
     }
     
     /**
@@ -29,40 +29,26 @@ public class Grid
         this(new Cell[height][width]);
     }
     
+    public Grid(final Grid grid)
+    {
+        this(grid.cellMatrix);
+    }
+    
     // Logic ******************************************************************
     /*
      * Places an empty Cell object if the field in the array is null
      */
-    private void initCellMatrix()
+    private void initCellMatrix(final Cell[][] matrix)
     {
         for(int y = 0; y < cellMatrix.length; y++)
         {
+            this.cellMatrix[y] = new Cell[matrix[y].length];
             for(int x = 0; x < cellMatrix[y].length; x++)
             {
-                // Don't overwrite Cells that are already set
-                if(cellMatrix[y][x] == null)
-                {
-                    cellMatrix[y][x] = new Cell(false);
-                }
+                Cell cell = matrix[y][x];
+                cellMatrix[y][x] = (cell == null) ? new Cell(false) : cell;
             }
         }
-    }
-    
-    /**
-     * @return The index of the Cell with the lowest y index in the Grid
-     */
-    public int getLowestCellY()
-    {
-        for(int y = 0; y < getTotalHeight(); y++)
-        {
-            for(int x = 0; x < getLine(y).length; x++)
-            {
-                if(getCell(x, y).isSolid())
-                    return y;
-            }
-        }
-        
-        return -1;
     }
     
     /**
@@ -70,7 +56,7 @@ public class Grid
      */
     public int getHighestCellY()
     {
-        for(int y = getTotalHeight() - 1; y >= 0; y--)
+        for(int y = getHeight() - 1; y >= 0; y--)
         {
             for(int x = 0; x < getLine(y).length; x++)
             {
@@ -177,7 +163,7 @@ public class Grid
     public Cell[] getLine(int lineY)
     {
         if(!isLineInBounds(lineY))
-            return createEmptyLine(getTotalWidth());
+            return createEmptyLine(10);
         
         return cellMatrix[lineY];
     }
@@ -223,9 +209,9 @@ public class Grid
      */
     public void placeCellsInGrid(Grid cellsToPlace, int posX, int posY)
     {
-        for(int currY = 0; currY < cellsToPlace.getTotalHeight(); currY++)
+        for(int currY = 0; currY < cellsToPlace.getHeight(); currY++)
         {
-            for(int x = 0; x < cellsToPlace.getTotalWidth(); x++)
+            for(int x = 0; x < cellsToPlace.getWidth(); x++)
             {
                 final Cell cell = cellsToPlace.getCell(x, currY);
                 if(cell.isSolid())
@@ -244,11 +230,11 @@ public class Grid
      * @param posY         y position
      * @return Whether the {@link Grid} contents can be placed
      */
-    public boolean canPlace(Grid cellsToPlace, int posX, int posY)
+    public boolean canPlaceCells(Grid cellsToPlace, int posX, int posY)
     {
-        for(int currY = 0; currY < cellsToPlace.getTotalHeight(); currY++)
+        for(int currY = 0; currY < cellsToPlace.getHeight(); currY++)
         {
-            for(int currX = 0; currX < cellsToPlace.getTotalWidth(); currX++)
+            for(int currX = 0; currX < cellsToPlace.getWidth(); currX++)
             {
                 final Cell cellToPlace = cellsToPlace.getCell(currX, currY);
                 if(cellToPlace.isSolid() && this.getCell(posX + currX, posY + currY).isSolid())
@@ -307,59 +293,31 @@ public class Grid
     }
     
     /**
-     * Returns the total height of the Grid (including all empty Cells)
-     * 
-     * Example:<br>
-     * <pre>----  1</pre>
-     * <pre>-*--  2</pre>
-     * <pre>----  3</pre>
-     * <pre>-**-  4</pre>
-     * Calling {@link Grid#getTotalHeight()} on this Grid will return 4
-     * 
      * @return The height of the Grid
      */
-    public int getTotalHeight()
+    public int getHeight()
     {
         return cellMatrix.length;
     }
     
     /**
-     * Calculates the 'real' height of this {@link Grid}, meaning that only the highest and lowest solid Cells will be taken into account<br>
-     * Example:<br>
-     * <pre>- - - -</pre>
-     * <pre>- * - - 1</pre>
-     * <pre>- - - - 2</pre>
-     * <pre>- * * - 3</pre>
-     * Calling {@link Grid#getRealHeight()} on this Grid will return 4
-     *
-     * @return The 'real' height of this {@link Grid}
+     * @return The width of the Grid at the first row
      */
-    public int getRealHeight()
+    public int getWidth()
     {
-        final int topCellY = getLowestCellY();
-        final int bottomCellX = getHighestCellY();
-    
-        if(topCellY < 0 || bottomCellX < 0)
-            return 0;
-    
-        return bottomCellX - topCellY + 1;
+        return getWidth(0);
     }
     
     /**
-     Returns the total width of the Grid (including all empty Cells)
-     *
-     * Example:<br>
-     * <pre>- - - -</pre>
-     * <pre>- * - -</pre>
-     * <pre>- - - -</pre>
-     * <pre>- * * -</pre>
-     * <pre>1 2 3 4</pre>
-     * Calling {@link Grid#getTotalWidth()} on this Grid will return 4
-     *
-     * @return The width of the Grid
+     * @return The width of the line at the specified y position
      */
-    public int getTotalWidth()
+    public int getWidth(final int lineY)
     {
-        return getLine(0).length;
+        return getLine(lineY).length;
+    }
+    
+    public Grid clone()
+    {
+        return new Grid(this);
     }
 }
