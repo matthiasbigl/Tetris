@@ -41,7 +41,7 @@ public class TetrisController
      */
     public void initTetrisGrid(final Grid grid)
     {
-        this.tetrisPaneMatrix = new Pane[grid.getTotalHeight()][];
+        this.tetrisPaneMatrix = new Pane[grid.getHeight()][];
         initGridPane(tetrisGridPane, tetrisPaneMatrix, grid);
     }
 
@@ -62,7 +62,7 @@ public class TetrisController
      */
     private void initGridPane(final GridPane gridPane, final Pane[][] paneMatrix, final Grid grid)
     {
-        for(int y = 0; y < grid.getTotalHeight(); y++)
+        for(int y = 0; y < grid.getHeight(); y++)
         {
             paneMatrix[y] = new Pane[grid.getLine(y).length];
             for(int x = 0; x < grid.getLine(y).length; x++)
@@ -93,7 +93,7 @@ public class TetrisController
      */
     public void updatePreview(BlockState blockState)
     {
-        updatePaneMatrix(previewPaneMatrix, blockState.toGrid());
+        updatePaneMatrix(previewPaneMatrix, blockState.getGrid());
     }
 
     /**
@@ -103,14 +103,14 @@ public class TetrisController
      */
     public void updateFallingBlock(FallingBlock fallingBlock)
     {
-        Grid grid = fallingBlock.getBlockState().toGrid();
+        Grid grid = fallingBlock.getBlockState().getGrid();
         final int startY = Math.max(0, fallingBlock.getY());
-        final int endY = Math.min(tetrisPaneMatrix.length, fallingBlock.getY() + grid.getTotalHeight());
+        final int endY = Math.min(tetrisPaneMatrix.length, fallingBlock.getY() + grid.getHeight());
 
         for(int y = 0; y < endY - startY; y++)
         {
             final int startX = Math.max(0, fallingBlock.getX());
-            final int endX = Math.min(tetrisPaneMatrix[y].length, fallingBlock.getX() + grid.getTotalWidth());
+            final int endX = Math.min(tetrisPaneMatrix[y].length, fallingBlock.getX() + grid.getWidth());
             for(int x = 0; x < endX - startX; x++)
             {
                 Cell cell = grid.getCell(startX - fallingBlock.getX() + x, startY - fallingBlock.getY() + y);
@@ -124,7 +124,7 @@ public class TetrisController
     
     private void updatePaneMatrix(final Pane[][] paneMatrix, final Grid grid)
     {
-        for(int y = 0; y < grid.getTotalHeight(); y++)
+        for(int y = 0; y < grid.getHeight(); y++)
         {
             for(int x = 0; x < grid.getLine(y).length; x++)
             {
