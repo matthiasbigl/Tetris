@@ -46,6 +46,7 @@ public class App extends Application {
             
             primaryStage.setOnCloseRequest(e -> game.stop());
             primaryStage.setScene(scene);
+            primaryStage.centerOnScreen();
             primaryStage.setFullScreen(true);
             
             game.start();
