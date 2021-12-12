@@ -10,43 +10,43 @@ import java.util.Arrays;
 public enum Block
 {
     // TODO: if first line has no true, spawns one line too low
-    RIGHT_L(Color.ORANGE, new boolean[][] {
+    RIGHT_L(Color.ORANGE, 1D, 1D, new boolean[][] {
             {false, true, false, false},
             {false, true, false, false},
             {false, true, true, false},
             {false, false, false, false}
     }),
-    LEFT_L(Color.BLUE, new boolean[][] {
+    LEFT_L(Color.BLUE, 2D, 1D, new boolean[][] {
             {false, false, true, false},
             {false, false, true, false},
             {false, true, true, false},
             {false, false, false, false}
     }),
-    RIGHT_Z(Color.RED, new boolean[][] {
+    RIGHT_Z(Color.RED, 2D, 2D, new boolean[][] {
             {false, false, false, false},
             {false, false, true, true},
             {false, true, true, false},
             {false, false, false, false}
     }),
-    LEFT_Z(Color.GREEN, new boolean[][] {
+    LEFT_Z(Color.GREEN, 2D, 2D, new boolean[][] {
             {false, false, false, false},
             {false, true, true, false},
             {false, false, true, true},
             {false, false, false, false}
     }),
-    I_SHAPE(Color.LIGHT_BLUE, new boolean[][] {
+    I_SHAPE(Color.LIGHT_BLUE, 1.5D, 1.5D, new boolean[][] {
             {false, true, false, false},
             {false, true, false, false},
             {false, true, false, false},
             {false, true, false, false}
     }),
-    STAIRS(Color.PURPLE, new boolean[][] {
+    STAIRS(Color.PURPLE, 2, 2, new boolean[][] {
             {false, false, false, false},
             {false, false, true, false},
             {false, true, true, true},
             {false, false, false, false}
     }),
-    BRICK(Color.YELLOW, new boolean[][] {
+    BRICK(Color.YELLOW, 1.5D, 1.5D, new boolean[][] {
             {false, false, false, false},
             {false, true, true, false},
             {false, true, true, false},
@@ -56,12 +56,16 @@ public enum Block
     // Fields *****************************************************************
     private final Color blockColor;
     private final boolean[][] blockMatrix;
+    private final double originX;
+    private final double originY;
 
     // Constructors ***********************************************************
-    Block(final Color color, final boolean[][] blockMatrix)
+    Block(final Color color, final double originX, final double originY, final boolean[][] blockMatrix)
     {
         this.blockColor = color;
         this.blockMatrix = blockMatrix;
+        this.originX = originX;
+        this.originY = originY;
     }
 
     // Logic ******************************************************************
@@ -91,6 +95,16 @@ public enum Block
     public int getHeight()
     {
         return blockMatrix.length;
+    }
+    
+    public double getOriginX()
+    {
+        return originX;
+    }
+    
+    public double getOriginY()
+    {
+        return originY;
     }
     
     /**
