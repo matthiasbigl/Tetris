@@ -1,0 +1,49 @@
+@startuml
+class App
+
+class TetrisGame
+class Grid
+class TetrisGrid
+
+enum Block
+class BlockState
+class FallingBlock
+class Cell
+
+class TetrisController
+class LosingScreenController
+
+class "TetrisView.fxml" as TetrisViewFXML
+class "LosingScreen.fxml" as LosingScreenFXML
+
+App --> TetrisViewFXML : load
+TetrisViewFXML --> TetrisController : instantiate
+TetrisViewFXML ..> App : pass TetrisController instance
+TetrisController ..> TetrisViewFXML : update view
+
+App --> LosingScreenFXML : load
+LosingScreenFXML --> LosingScreenController : instantiate
+LosingScreenController ..> App : call loadTetrisGame()
+
+App --> TetrisGame : create TetrisGame instance
+App ..> TetrisGame : pass TetrisController instance
+
+BlockState --> Block : Block instance
+FallingBlock --> BlockState
+
+BlockState --> Grid : converts Block to Grid
+
+Grid --> Cell : 2-dim Cell array
+
+TetrisGame --> TetrisGrid : Tetris Grid instance
+TetrisGame --> FallingBlock : Falling Block instance
+TetrisGame --> Block : Next Block instance
+
+TetrisGame ..> TetrisController : update
+TetrisGame ..> App : call loadLosingScreen()
+
+class "TetrisGrid" as TetrisGridChild
+class "Grid" as GridParent
+
+GridParent <|-- TetrisGridChild : extends
+@enduml
