@@ -15,7 +15,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="468.0" prefWidth="584.0" styleClass="bodybg" stylesheets="@background.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.htlhl.javafxtetris.graphics.TetrisController">
    <center>
-      <GridPane fx:id="tetrisGridPane" alignment="CENTER" maxHeight="608.0" maxWidth="300.0" opacity="1.0" style="-fx-grid-lines-visible: true;" styleClass="grid">
+      <GridPane fx:id="tetrisGridPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" style="-fx-grid-lines-visible: true;">
         <columnConstraints>
           <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="30.0" />
           <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="30.0" />
@@ -95,7 +95,7 @@
                         <Insets left="5.0" top="20.0" />
                      </VBox.margin>
                   </Text>
-                  <GridPane fx:id="previewGridPane" prefHeight="88.0" prefWidth="123.0" style="-fx-grid-lines-visible: true;" styleClass="grid" VBox.vgrow="SOMETIMES">
+                  <GridPane fx:id="previewGridPane" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="100.0" style="-fx-grid-lines-visible: true;" styleClass="grid" VBox.vgrow="SOMETIMES">
                     <columnConstraints>
                         <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
@@ -109,7 +109,7 @@
                       <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="ALWAYS" />
                     </rowConstraints>
                      <VBox.margin>
-                        <Insets bottom="2.5" left="2.5" right="2.5" />
+                        <Insets bottom="2.5" left="7.0" right="2.5" />
                      </VBox.margin>
                   </GridPane>
                </children>
