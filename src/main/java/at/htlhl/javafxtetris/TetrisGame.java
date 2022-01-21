@@ -258,9 +258,7 @@ public class TetrisGame
 
         //Update speed
         period = period - (int) (period * ((levelProp.get() -oldLevelProp)*0.1));
-        //period = period* ((levelProp.get()-oldLevelProp)*(int)Math.exp(0.9));
-        oldLevelProp = levelProp.get();
-        System.out.println("Speed:"+period);
+        oldLevelProp = levelProp.get();//Setzt oldLevel fest
     }
     
     private void initUserInput(Scene scene)
