@@ -11,7 +11,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class App extends Application {
-
+// thomas du kannst nichts
+// thomas du kannst nichts// thomas du kannst nichts// thomas du kannst nichts// thomas du kannst nichts// thomas du kannst nichts// thomas du kannst nichts// thomas du kannst nichts// thomas du kannst nichts// thomas du kannst nichts// thomas du kannst nichts// thomas du kannst nichts// thomas du kannst nichts// thomas du kannst nichts// thomas du kannst nichts// thomas du kannst nichts// thomas du kannst nichts// thomas du kannst nichts// thomas du kannst nichts// thomas du kannst nichts// thomas du kannst nichts// thomas du kannst nichts// thomas du kannst nichts// thomas du kannst nichts// thomas du kannst nichts// thomas du kannst nichts// thomas du kannst nichts// thomas du kannst nichts// thomas du kannst nichts// thomas du kannst nichts// thomas du kannst nichts// thomas du kannst nichts// thomas du kannst nichts// thomas du kannst nichts
     private static App instance;
     private Stage primaryStage;
 
