@@ -36,6 +36,8 @@ public class TetrisGame
     
     // Stats
     private SimpleIntegerProperty levelProp;        // The level the player is in (10 lines = 1 level)
+    private int oldLevelProp = 1;
+    private int period = 100;
     private SimpleIntegerProperty linesClearedProp; // The total number of lines the player has cleared
     private SimpleIntegerProperty scoreProp;
     
@@ -145,9 +147,7 @@ public class TetrisGame
  */
         
         final boolean canFall = currentBlock.canMove(tetrisGrid, Direction.DOWN);
-        
         // TODO: increase tick speed depending on level
-        final int period = 30;
         if(canFall && (lastBlockFall + period <= totalTickCount))
         {
             currentBlock.move(Direction.DOWN);
@@ -155,7 +155,8 @@ public class TetrisGame
         }
     
         // This should always be the same delay
-        if(!canFall && (lastBlockMove + 30 <= totalTickCount))
+        if(!canFall && (lastBlockMove + 50
+                <= totalTickCount))
             tryUpdateFallingBlock();
         
         totalTickCount++;
@@ -254,6 +255,12 @@ public class TetrisGame
         
         // for every 10 lines removed increase the level by one
         levelProp.set(linesClearedProp.get() / 10 + 1);
+
+        //Update speed
+        period = period - (int) (period * ((levelProp.get() -oldLevelProp)*0.1));
+        //period = period* ((levelProp.get()-oldLevelProp)*(int)Math.exp(0.9));
+        oldLevelProp = levelProp.get();
+        System.out.println("Speed:"+period);
     }
     
     private void initUserInput(Scene scene)
