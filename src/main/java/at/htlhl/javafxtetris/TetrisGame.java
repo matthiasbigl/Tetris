@@ -36,6 +36,12 @@ public class TetrisGame
     
     // Stats
     private SimpleIntegerProperty levelProp;        // The level the player is in (10 lines = 1 level)
+
+
+    public SimpleIntegerProperty linesClearedPropProperty() {
+        return linesClearedProp;
+    }
+
     private SimpleIntegerProperty linesClearedProp; // The total number of lines the player has cleared
     private SimpleIntegerProperty scoreProp;
     
@@ -349,4 +355,5 @@ public class TetrisGame
     {
         return linesClearedProp;
     }
+
 }
