@@ -7,7 +7,11 @@ import at.htlhl.javafxtetris.grid.block.*;
 import at.htlhl.javafxtetris.grid.TetrisGrid;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -337,6 +341,19 @@ public class TetrisGame
             if(fallingBlock.tryMove(tetrisGrid, directionToMove))
                 this.lastBlockMove = totalTickCount;
         });
+    }
+
+    public void createMessageBox(Stage primaryStage){
+
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Finish");
+        alert.setHeaderText("Time is out");
+        alert.setContentText("Lines: " + linesClearedProp.getValue());
+        alert.initOwner(primaryStage);
+
+        GridPane gridPane = new GridPane();
+        alert.showAndWait();
     }
     
     // Properties *************************************************************

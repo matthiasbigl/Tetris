@@ -1,5 +1,6 @@
 package at.htlhl.javafxtetris;
 
+import at.htlhl.javafxtetris.gameModes.BlitzGame;
 import at.htlhl.javafxtetris.graphics.TetrisController;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -48,6 +49,8 @@ public class App extends Application {
             primaryStage.setScene(scene);
             primaryStage.centerOnScreen();
             primaryStage.setFullScreen(true);
+
+            BlitzGame blitzGame = new BlitzGame(game, primaryStage);
             
             game.start();
         });
