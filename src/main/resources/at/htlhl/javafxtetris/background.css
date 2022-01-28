@@ -2,6 +2,10 @@
     -fx-background-image: url('rainbow.jpg');
     -fx-background-size: 100% 100%;
 }
+.screen{
+    -fx-background-image: url('TitleScreenPicture.png');
+    -fx-background-size: 100% 100%;
+}
 
 #tetrisGridPane {
     -fx-background-color: #FFFFFF90;
