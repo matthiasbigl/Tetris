@@ -133,7 +133,7 @@
             <Insets />
          </BorderPane.margin>
          <children>
-            <VBox layoutX="2.0" layoutY="175.0" opacity="0.5" prefHeight="300.0" prefWidth="162.0" styleClass="bg" stylesheets="@background.css" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="3.0">
+            <VBox layoutX="2.0" layoutY="175.0" opacity="0.5" prefHeight="290.0" prefWidth="173.0" styleClass="bg" stylesheets="@background.css" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="3.0">
                <children>
                   <ImageView fitHeight="58.0" fitWidth="93.0" pickOnBounds="true" preserveRatio="true" styleClass="test">
                      <image>
@@ -203,20 +203,14 @@
                   <Glow level="0.4" />
                </effect>
             </VBox>
-            <VBox layoutX="25.0" layoutY="14.0" opacity="0.5" prefHeight="150.0" prefWidth="120.0" styleClass="bg" stylesheets="@background.css">
-               <padding>
-                  <Insets left="5.0" right="5.0" top="10.0" />
-               </padding>
-               <effect>
-                  <Glow level="0.4" />
-               </effect>
+            <VBox layoutX="25.0" layoutY="23.0" opacity="0.5" prefHeight="149.0" prefWidth="130.0" styleClass="bg" stylesheets="@background.css">
                <children>
-                  <Text fill="#ffbe40" strokeType="OUTSIDE" strokeWidth="0.0" text="Hold Block:">
+                  <Text fx:id="linesText1" fill="#ffbe40" strokeType="OUTSIDE" strokeWidth="0.0" text="      Hold:" wrappingWidth="112.17385864257812">
                      <font>
                         <Font name="Comic Sans MS" size="18.0" />
                      </font>
                   </Text>
-                  <GridPane fx:id="holdGridPane" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="100.0" style="-fx-grid-lines-visible: true;" styleClass="grid">
+                  <GridPane fx:id="previewGridPane2" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="100.0" style="-fx-grid-lines-visible: true;" styleClass="grid" VBox.vgrow="SOMETIMES">
                      <columnConstraints>
                         <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
@@ -229,8 +223,20 @@
                         <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="ALWAYS" />
                         <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="ALWAYS" />
                      </rowConstraints>
+                     <VBox.margin>
+                        <Insets bottom="2.5" left="7.0" right="2.5" />
+                     </VBox.margin>
                   </GridPane>
                </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+               <effect>
+                  <Glow level="0.4" />
+               </effect>
             </VBox>
          </children>
       </AnchorPane>
