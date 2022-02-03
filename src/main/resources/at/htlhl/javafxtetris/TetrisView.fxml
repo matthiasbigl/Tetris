@@ -210,7 +210,7 @@
                         <Font name="Comic Sans MS" size="18.0" />
                      </font>
                   </Text>
-                  <GridPane fx:id="previewGridPane2" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="100.0" style="-fx-grid-lines-visible: true;" styleClass="grid" VBox.vgrow="SOMETIMES">
+                  <GridPane fx:id="holdGridPane" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="100.0" style="-fx-grid-lines-visible: true;" styleClass="grid" VBox.vgrow="SOMETIMES">
                      <columnConstraints>
                         <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
