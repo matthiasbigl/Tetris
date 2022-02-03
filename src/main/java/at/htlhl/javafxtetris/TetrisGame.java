@@ -204,6 +204,7 @@ public class TetrisGame
      */
     private void generateNewBlock()
     {
+        switchBlock.setSwitched(false);
         this.currentBlock = createFallingBlock(nextBlock.getDefaultState());
         this.nextBlock = Block.values()[(nextBlock.ordinal() +
                 (int) (Math.random() * (Block.values().length - 1)) + 1)
