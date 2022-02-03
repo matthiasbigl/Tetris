@@ -180,6 +180,11 @@
                         <Insets top="5.0" />
                      </VBox.margin>
                   </Text>
+                  <Text fill="#ffbe40" strokeType="OUTSIDE" strokeWidth="0.0" text="c -&gt; Hold Funktion">
+                     <font>
+                        <Font name="Comic Sans MS" size="14.0" />
+                     </font>
+                  </Text>
                   <Text fill="#ffbe40" strokeType="OUTSIDE" strokeWidth="0.0" text="[&lt;] -&gt; links bewegen">
                      <font>
                         <Font name="Comic Sans MS" size="14.0" />
