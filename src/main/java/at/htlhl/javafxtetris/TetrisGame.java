@@ -320,15 +320,14 @@ public class TetrisGame
                     directionToMove = Direction.RIGHT;
                     break;
                 case C:
-                    System.out.println("Switched: " + switchBlock.isSwitched());
                     if(controller.getHoldPaneMatrix()==null){
                         //Initialisiert holdGrid
                         switchBlock.setHoldBlock(currentBlock);
                         switchBlock.setHoldBlockState(currentBlock.getBlockState());
                         controller.initHoldGrid(switchBlock.getHoldBlockState().getGrid());
+                        generateNewBlock();
                         switchBlock.setSwitched(true);
                         switchBlock.setSwitchedNow(true);
-                        generateNewBlock();
 
                     } else if(!switchBlock.isSwitched()){
 
