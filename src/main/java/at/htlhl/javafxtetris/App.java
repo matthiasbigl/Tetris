@@ -1,6 +1,7 @@
 package at.htlhl.javafxtetris;
 
 import at.htlhl.javafxtetris.graphics.TetrisController;
+import at.htlhl.javafxtetris.graphics.WinScreenController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
