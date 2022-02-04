@@ -77,4 +77,6 @@ public class App extends Application {
         launch();
     }
 
+    public void loadWinningScreen(String s, String s1) {
+    }
 }
