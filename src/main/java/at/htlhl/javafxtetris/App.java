@@ -1,5 +1,6 @@
 package at.htlhl.javafxtetris;
 
+import at.htlhl.javafxtetris.graphics.StartScreenController;
 import at.htlhl.javafxtetris.graphics.TetrisController;
 import at.htlhl.javafxtetris.graphics.WinScreenController;
 import javafx.application.Application;
@@ -30,7 +31,7 @@ public class App extends Application {
     public void loadTetrisGame() {
         Platform.runLater(() ->
         {
-            FXMLLoader loader = new FXMLLoader(App.class.getResource("TetrisView.fxml"));
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("TitleScreen.fxml"));
             
             Pane root;
             try {
@@ -40,17 +41,13 @@ public class App extends Application {
                 return;
             }
             
-            TetrisController controller = loader.getController();
+            StartScreenController controller = loader.getController();
+            controller.init(primaryStage);
             Scene scene = new Scene(root);
-            
-            TetrisGame game = new TetrisGame(controller, scene);
-            
-            primaryStage.setOnCloseRequest(e -> game.stop());
+
             primaryStage.setScene(scene);
             primaryStage.centerOnScreen();
             primaryStage.setFullScreen(true);
-            
-            game.start();
         });
     }
 

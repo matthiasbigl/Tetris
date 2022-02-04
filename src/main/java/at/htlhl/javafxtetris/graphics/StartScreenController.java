@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -25,9 +26,11 @@ public class StartScreenController {
 
     private TetrisController controller;
     private Scene scene;
+    Stage primaryStage;
 
-    private void init(){
+    public void init(Stage primaryStage){
         FXMLLoader loader = new FXMLLoader(App.class.getResource("TetrisView.fxml"));
+        this.primaryStage=primaryStage;
 
         Pane root;
         try {
