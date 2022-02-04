@@ -2,6 +2,7 @@ package at.htlhl.javafxtetris.graphics;
 
 import at.htlhl.javafxtetris.App;
 import at.htlhl.javafxtetris.TetrisGame;
+import at.htlhl.javafxtetris.gameModes.BlitzGame;
 import at.htlhl.javafxtetris.gameModes.FourtyLineGame;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
