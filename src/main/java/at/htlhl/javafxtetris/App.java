@@ -67,6 +67,24 @@ public class App extends Application {
             }
         });
     }
+    public void loadWinningScreen(String titel,String data)
+    {
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("WinScreens.fxml"));
+        Platform.runLater(() ->
+        {
+            try {
+                primaryStage.setScene(new Scene(loader.load()));
+                primaryStage.centerOnScreen();
+                primaryStage.setFullScreen(true);
+
+                WinScreenController WinScreen = loader.getController();
+                WinScreen.init(titel,data);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
 
     public static App instance()
     {
@@ -77,6 +95,4 @@ public class App extends Application {
         launch();
     }
 
-    public void loadWinningScreen(String s, String s1) {
-    }
 }
