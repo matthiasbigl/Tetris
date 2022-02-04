@@ -1,5 +1,6 @@
 package at.htlhl.javafxtetris;
 
+import at.htlhl.javafxtetris.gameModes.BlitzGame;
 import at.htlhl.javafxtetris.graphics.TetrisController;
 import at.htlhl.javafxtetris.graphics.WinScreenController;
 import javafx.application.Application;
@@ -15,7 +16,7 @@ public class App extends Application {
 
     private static App instance;
     private Stage primaryStage;
-    private String gamemode="40lines";
+    private String gamemode="Blitz";
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -62,6 +63,16 @@ public class App extends Application {
                 game.start();
 
             }
+            else if(gamemode=="Blitz"){
+                TetrisGame game = new TetrisGame(controller, scene);
+                primaryStage.setOnCloseRequest(e -> game.stop());
+                primaryStage.setScene(scene);
+                primaryStage.centerOnScreen();
+                primaryStage.setFullScreen(true);
+                BlitzGame blitz = new BlitzGame(game, primaryStage);
+                blitz.startBlitzMode();
+
+            }
             
 
         });
@@ -92,7 +103,7 @@ public class App extends Application {
                 primaryStage.setFullScreen(true);
 
                 WinScreenController WinScreen = loader.getController();
-                WinScreen.init(titel,data+" s");
+                WinScreen.init(titel,data);
 
             } catch (IOException e) {
                 e.printStackTrace();

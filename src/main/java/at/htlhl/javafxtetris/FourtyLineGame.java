@@ -48,7 +48,7 @@ public class FourtyLineGame extends TetrisGame{
         }if(win==true){
             double seconds = time / 1000.0;
             String timeAsString=String.valueOf(seconds);
-            App.instance().loadWinningScreen("Deine Zeit:", timeAsString);
+            App.instance().loadWinningScreen("Deine Zeit:", timeAsString+" s");
 
 
         }

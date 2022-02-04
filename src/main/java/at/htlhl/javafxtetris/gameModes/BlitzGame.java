@@ -1,5 +1,6 @@
 package at.htlhl.javafxtetris.gameModes;
 
+import at.htlhl.javafxtetris.App;
 import at.htlhl.javafxtetris.TetrisGame;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
@@ -18,11 +19,16 @@ public class BlitzGame extends Service<Integer> {
     public BlitzGame(TetrisGame game, Stage primaryStage) {
         this.game = game;
         this.primaryStage = primaryStage;
+
+    }
+
+    public void startBlitzMode() {
         start();
+        game.start();
     }
 
     @Override
-    protected Task<Integer> createTask(){
+    protected Task<Integer> createTask() {
         return new counterTask();
     }
 
@@ -32,29 +38,31 @@ public class BlitzGame extends Service<Integer> {
         }
 
         @Override
-        protected Integer call(){
+        protected Integer call() {
             playTimer = new Timer();
             playTimer.scheduleAtFixedRate(new TimerTask() {
                 int counter;
+
                 @Override
                 public void run() {
                     counter++;
-                    if(counter == 5){
+                    if (counter == 100) {
                         game.pause();
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
-                                game.createMessageBox(primaryStage);
+                                App.instance().loadWinningScreen
+                                        ("Lines cleared :", String.valueOf(game.linesClearedProperty().get()));
                             }
                         });
                         playTimer.cancel();
                     }
                     System.out.println(counter);
                 }
-            } , 1000, 1000);
+            }, 1000, 1000);
             return null;
         }
     }
-
-
 }
+
+
