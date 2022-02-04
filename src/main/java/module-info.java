@@ -9,4 +9,5 @@ module at.htlhl {
     opens at.htlhl.javafxtetris.graphics to javafx.fxml;
 	exports at.htlhl.javafxtetris.grid.block;
 	opens at.htlhl.javafxtetris.grid.block to javafx.fxml;
+    opens at.htlhl.javafxtetris.gameModes to javafx.fxml, javafx.graphics;
 }

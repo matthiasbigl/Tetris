@@ -1,12 +1,14 @@
-package at.htlhl.javafxtetris;
+package at.htlhl.javafxtetris.gameModes;
 
+import at.htlhl.javafxtetris.App;
+import at.htlhl.javafxtetris.TetrisGame;
 import at.htlhl.javafxtetris.graphics.TetrisController;
 import javafx.scene.Scene;
 
 import static java.lang.Thread.sleep;
 
 
-public class FourtyLineGame extends TetrisGame{
+public class FourtyLineGame extends TetrisGame {
 
 
     private long start;

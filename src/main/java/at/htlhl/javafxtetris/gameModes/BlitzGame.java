@@ -46,8 +46,8 @@ public class BlitzGame extends Service<Integer> {
                 @Override
                 public void run() {
                     counter++;
-                    if (counter == 100) {
-                        game.pause();
+                    if (counter == 120) {
+                        game.stop();
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
