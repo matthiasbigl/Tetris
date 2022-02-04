@@ -215,8 +215,14 @@ public class TetrisGame
     }
 
     private void setNewCurrentBlock(FallingBlock currentBlock){
+        final Grid grid = currentBlock.getBlockState().getGrid();
+        final int centeredX = ((tetrisGrid.getWidth()) / 2) - ((grid.getWidth() + 1) / 2);
+        final int y = Math.max(- tetrisGrid.getYOffset(), - grid.getHighestCellY());
 
+        currentBlock.setY(y);
+        currentBlock.setX(centeredX);
         this.currentBlock = currentBlock;
+
     }
 
     /**
