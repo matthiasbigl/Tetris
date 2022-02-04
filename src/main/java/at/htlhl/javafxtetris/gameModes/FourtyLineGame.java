@@ -30,7 +30,7 @@ public class FourtyLineGame extends TetrisGame {
     private void checkLineCount() {
         boolean win=false;
         while (true) {
-            if(linesClearedProperty().get()>=40){
+            if(linesClearedProperty().get()>=2){
                 win=true;
 
                 end = System.currentTimeMillis();
