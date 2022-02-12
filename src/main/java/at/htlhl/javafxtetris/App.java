@@ -1,12 +1,15 @@
 package at.htlhl.javafxtetris;
 
+import at.htlhl.javafxtetris.graphics.StartScreenController;
 import at.htlhl.javafxtetris.graphics.TetrisController;
+import at.htlhl.javafxtetris.graphics.WinScreenController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
@@ -19,6 +22,7 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         App.instance = this;
         this.primaryStage = stage;
+        primaryStage.initStyle(StageStyle.DECORATED);
         
         Platform.setImplicitExit(true);
         
@@ -29,7 +33,7 @@ public class App extends Application {
     public void loadTetrisGame() {
         Platform.runLater(() ->
         {
-            FXMLLoader loader = new FXMLLoader(App.class.getResource("TetrisView.fxml"));
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("TitleScreen.fxml"));
             
             Pane root;
             try {
@@ -39,17 +43,13 @@ public class App extends Application {
                 return;
             }
             
-            TetrisController controller = loader.getController();
+            StartScreenController controller = loader.getController();
+            controller.init(primaryStage);
             Scene scene = new Scene(root);
-            
-            TetrisGame game = new TetrisGame(controller, scene);
-            
-            primaryStage.setOnCloseRequest(e -> game.stop());
+
             primaryStage.setScene(scene);
             primaryStage.centerOnScreen();
             primaryStage.setFullScreen(true);
-            
-            game.start();
         });
     }
 
@@ -67,13 +67,31 @@ public class App extends Application {
             }
         });
     }
+    public void loadWinningScreen(String titel,String data)
+    {
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("WinScreens.fxml"));
+        Platform.runLater(() ->
+        {
+            try {
+                primaryStage.setScene(new Scene(loader.load()));
+                primaryStage.centerOnScreen();
+                primaryStage.setFullScreen(true);
+
+                WinScreenController WinScreen = loader.getController();
+                WinScreen.init(titel,data);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
 
     public static App instance()
     {
         return instance;
     }
 
-    public static void main(String[] args) {
+    public static void main() {
         launch();
     }
 

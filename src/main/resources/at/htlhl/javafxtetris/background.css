@@ -1,5 +1,9 @@
 .bodybg{
-    -fx-background-image: url('background.jpg');
+    -fx-background-image: url('vaporwave.jpg');
+    -fx-background-size: 100% 100%;
+}
+.screen{
+    -fx-background-image: url('vaporwave.jpg');
     -fx-background-size: 100% 100%;
 }
 
@@ -17,7 +21,7 @@
     -fx-border-color: red;
     -fx-border-insets: 5;
     -fx-border-width: 3;
-    -fx-border-style: dashed;
+    -fx-border-style: dotted;
 }
 
 .bg2{

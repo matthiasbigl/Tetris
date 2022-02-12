@@ -17,8 +17,10 @@ public class TetrisController
     // Fields *****************************************************************
     @FXML private GridPane tetrisGridPane;
     @FXML private GridPane previewGridPane;
+    @FXML private GridPane holdGridPane;
     private Pane[][] tetrisPaneMatrix;
     private Pane[][] previewPaneMatrix;
+    private Pane[][] holdPaneMatrix;
 
     @FXML
     private Text scoreText;
@@ -56,7 +58,13 @@ public class TetrisController
         initGridPane(previewGridPane, previewPaneMatrix, initialGrid);
     }
 
-    /*
+    public void initHoldGrid(final Grid initialGrid){
+        this.holdPaneMatrix = new Pane[4][4];
+        initGridPane(holdGridPane, holdPaneMatrix, initialGrid);
+    }
+
+
+    /**
      * Initialises the specified GridPane and paneMatrix using data from the cellMatrix
      * The length of paneMatrix must be the same as cellMatrix
      */
@@ -94,6 +102,10 @@ public class TetrisController
     public void updatePreview(BlockState blockState)
     {
         updatePaneMatrix(previewPaneMatrix, blockState.getGrid());
+    }
+
+    public void updateHold(BlockState blockState){
+        updatePaneMatrix(holdPaneMatrix, blockState.getGrid());
     }
 
     /**
@@ -144,6 +156,10 @@ public class TetrisController
             pane.setStyle("-fx-background-color:" + cell.getColor().toHex() + ";");
             pane.setVisible(cell.isSolid());
         });
+    }
+
+    public Pane[][] getHoldPaneMatrix() {
+        return holdPaneMatrix;
     }
 
     /**

@@ -41,7 +41,7 @@
                         <!-- Usage: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>at.htlhl.javafxtetris.App</mainClass>
+                            <mainClass>at.htlhl.javafxtetris.Launcher</mainClass>
                         </configuration>
                     </execution>
                 </executions>

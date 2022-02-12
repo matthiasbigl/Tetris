@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="468.0" prefWidth="584.0" styleClass="bodybg" stylesheets="@background.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.htlhl.javafxtetris.graphics.TetrisController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="468.0" prefWidth="584.0" styleClass="bodybg" stylesheets="@background.css" xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.htlhl.javafxtetris.graphics.TetrisController">
    <center>
       <GridPane fx:id="tetrisGridPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" style="-fx-grid-lines-visible: true;">
         <columnConstraints>
@@ -61,7 +61,7 @@
             <Insets />
          </BorderPane.margin>
          <children>
-            <VBox layoutX="5.0" layoutY="89.0" opacity="0.5" prefHeight="278.0" prefWidth="128.0" styleClass="bg" stylesheets="@background.css" AnchorPane.rightAnchor="5.0">
+            <VBox layoutX="2.0" layoutY="169.0" opacity="0.5" prefHeight="278.0" prefWidth="128.0" styleClass="bg" stylesheets="@background.css" AnchorPane.rightAnchor="1.1999999999999886">
                <children>
                   <Text fx:id="scoreText" fill="#ffbe40" strokeType="OUTSIDE" strokeWidth="0.0" text="Punkte: 0" VBox.vgrow="ALWAYS">
                      <font>
@@ -133,7 +133,7 @@
             <Insets />
          </BorderPane.margin>
          <children>
-            <VBox layoutX="3.0" layoutY="94.0" opacity="0.5" prefHeight="174.0" prefWidth="128.0" styleClass="bg" stylesheets="@background.css" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0">
+            <VBox layoutX="2.0" layoutY="175.0" opacity="0.5" prefHeight="290.0" prefWidth="173.0" styleClass="bg" stylesheets="@background.css" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="3.0">
                <children>
                   <ImageView fitHeight="58.0" fitWidth="93.0" pickOnBounds="true" preserveRatio="true" styleClass="test">
                      <image>
@@ -180,9 +180,64 @@
                         <Insets top="5.0" />
                      </VBox.margin>
                   </Text>
+                  <Text fill="#ffbe40" strokeType="OUTSIDE" strokeWidth="0.0" text="c -&gt; Hold Funktion">
+                     <font>
+                        <Font name="Comic Sans MS" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#ffbe40" strokeType="OUTSIDE" strokeWidth="0.0" text="[&lt;] -&gt; links bewegen">
+                     <font>
+                        <Font name="Comic Sans MS" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#ffbe40" strokeType="OUTSIDE" strokeWidth="0.0" text="[&gt;] -&gt; rechts bewegen">
+                     <font>
+                        <Font name="Comic Sans MS" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#ffbe40" strokeType="OUTSIDE" strokeWidth="0.0" text="[↓] -&gt; unten bewegen" wrappingWidth="135.99999713897705">
+                     <font>
+                        <Font name="Comic Sans MS" size="14.0" />
+                     </font>
+                  </Text>
                </children>
                <padding>
                   <Insets left="5.0" right="5.0" top="10.0" />
+               </padding>
+               <effect>
+                  <Glow level="0.4" />
+               </effect>
+            </VBox>
+            <VBox layoutX="25.0" layoutY="23.0" opacity="0.5" prefHeight="149.0" prefWidth="130.0" styleClass="bg" stylesheets="@background.css">
+               <children>
+                  <Text fx:id="linesText1" fill="#ffbe40" strokeType="OUTSIDE" strokeWidth="0.0" text="      Hold:" wrappingWidth="112.17385864257812">
+                     <font>
+                        <Font name="Comic Sans MS" size="18.0" />
+                     </font>
+                  </Text>
+                  <GridPane fx:id="holdGridPane" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="100.0" style="-fx-grid-lines-visible: true;" styleClass="grid" VBox.vgrow="SOMETIMES">
+                     <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="ALWAYS" />
+                     </rowConstraints>
+                     <VBox.margin>
+                        <Insets bottom="2.5" left="7.0" right="2.5" />
+                     </VBox.margin>
+                  </GridPane>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets top="10.0" />
                </padding>
                <effect>
                   <Glow level="0.4" />

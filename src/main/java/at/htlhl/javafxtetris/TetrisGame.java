@@ -1,6 +1,7 @@
 package at.htlhl.javafxtetris;
 
 
+import at.htlhl.javafxtetris.graphics.SwitchBlock;
 import at.htlhl.javafxtetris.graphics.TetrisController;
 import at.htlhl.javafxtetris.grid.Grid;
 import at.htlhl.javafxtetris.grid.block.*;
@@ -22,6 +23,7 @@ public class TetrisGame
     // Fields *****************************************************************
     // Grid and Blocks
     private final TetrisController controller;
+    private SwitchBlock switchBlock;
     private final TetrisGrid tetrisGrid;
     private FallingBlock currentBlock;
     private Block nextBlock;
@@ -36,8 +38,6 @@ public class TetrisGame
     
     // Stats
     private SimpleIntegerProperty levelProp;        // The level the player is in (10 lines = 1 level)
-    private int oldLevelProp = 1;
-    private int period = 100;
     private SimpleIntegerProperty linesClearedProp; // The total number of lines the player has cleared
     private SimpleIntegerProperty scoreProp;
     
@@ -59,6 +59,7 @@ public class TetrisGame
         // Init the grid
         this.nextBlock = Block.randomBlock();
         this.tetrisGrid = new TetrisGrid(GRID_WIDTH, GRID_HEIGHT, GRID_Y_OFFSET);
+        this.switchBlock = new SwitchBlock();
     
         // Init the controller
         this.controller = controller;
@@ -68,7 +69,7 @@ public class TetrisGame
     
         generateNewBlock();
     }
-    
+
     // Game loop **************************************************************
     public void start()
     {
@@ -135,7 +136,7 @@ public class TetrisGame
     /**
      * Is called x times per second
      */
-    private void tick()
+    public void tick()
     {
         // Pseudo code:
 /*      if ((can fall) & (should fall this tick))
@@ -147,7 +148,9 @@ public class TetrisGame
  */
         
         final boolean canFall = currentBlock.canMove(tetrisGrid, Direction.DOWN);
+        
         // TODO: increase tick speed depending on level
+        final int period = 30;
         if(canFall && (lastBlockFall + period <= totalTickCount))
         {
             currentBlock.move(Direction.DOWN);
@@ -155,9 +158,10 @@ public class TetrisGame
         }
     
         // This should always be the same delay
-        if(!canFall && (lastBlockMove + 50
-                <= totalTickCount))
+        if(!canFall && (lastBlockMove + 30 <= totalTickCount)){
             tryUpdateFallingBlock();
+        }
+
         
         totalTickCount++;
         controller.updateTetrisGrid(tetrisGrid);
@@ -179,6 +183,8 @@ public class TetrisGame
         
         // Generate a new Block
         generateNewBlock();
+
+        // Make hold option avaible
         
         // Delete all full lines in the Grid
         final int deletedLines = tetrisGrid.deleteFullLines();
@@ -193,11 +199,12 @@ public class TetrisGame
         }
     }
     
-    /*
+    /**
      * Generates a new Block that is different from nextBlock
      */
     private void generateNewBlock()
     {
+        switchBlock.setSwitched(false);
         this.currentBlock = createFallingBlock(nextBlock.getDefaultState());
         this.nextBlock = Block.values()[(nextBlock.ordinal() +
                 (int) (Math.random() * (Block.values().length - 1)) + 1)
@@ -206,8 +213,19 @@ public class TetrisGame
         // Update the preview Block in the controller
         controller.updatePreview(nextBlock.getDefaultState());
     }
-    
-    /*
+
+    private void setNewCurrentBlock(FallingBlock currentBlock){
+        final Grid grid = currentBlock.getBlockState().getGrid();
+        final int centeredX = ((tetrisGrid.getWidth()) / 2) - ((grid.getWidth() + 1) / 2);
+        final int y = Math.max(- tetrisGrid.getYOffset(), - grid.getHighestCellY());
+
+        currentBlock.setY(y);
+        currentBlock.setX(centeredX);
+        this.currentBlock = currentBlock;
+
+    }
+
+    /**
      * Creates a new FallingBlock that is centered in the Grid
      */
     private FallingBlock createFallingBlock(final BlockState state)
@@ -255,10 +273,6 @@ public class TetrisGame
         
         // for every 10 lines removed increase the level by one
         levelProp.set(linesClearedProp.get() / 10 + 1);
-
-        //Update speed
-        period = period - (int) (period * ((levelProp.get() -oldLevelProp)*0.1));
-        oldLevelProp = levelProp.get();//Setzt oldLevel fest
     }
     
     private void initUserInput(Scene scene)
@@ -280,6 +294,7 @@ public class TetrisGame
                     rotation = Rotation.ROTATE_180;
                     break;
                 case E:
+                case UP:
                     rotation = Rotation.ROTATE_RIGHT_90;
                     break;
                 default:
@@ -311,7 +326,30 @@ public class TetrisGame
                 case RIGHT:
                     directionToMove = Direction.RIGHT;
                     break;
-                
+                case C:
+                    if(controller.getHoldPaneMatrix()==null){
+                        //Initialisiert holdGrid
+                        switchBlock.setHoldBlock(currentBlock);
+                        switchBlock.setHoldBlockState(currentBlock.getBlockState());
+                        controller.initHoldGrid(switchBlock.getHoldBlockState().getGrid());
+                        generateNewBlock();
+                        switchBlock.setSwitched(true);
+                        switchBlock.setSwitchedNow(true);
+
+                    } else if(!switchBlock.isSwitched()){
+
+                        switchBlock.setSwitched(true);
+                        BlockState blockState = currentBlock.getBlockState();
+                        FallingBlock temporalFallingBlock = currentBlock;
+
+                        setNewCurrentBlock(switchBlock.getHoldBlock());
+                        switchBlock.setHoldBlock(temporalFallingBlock);
+                        controller.updateHold(blockState);
+                        switchBlock.setHoldBlockState(blockState);
+
+                    }
+
+                    return;
                 case SPACE:
                     // Move the block down one by one
                     // TODO: Make better.

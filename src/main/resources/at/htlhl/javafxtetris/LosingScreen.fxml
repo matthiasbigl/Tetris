@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="bg2" stylesheets="@background.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.htlhl.javafxtetris.graphics.LosingScreenController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="bg2" stylesheets="@background.css" xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.htlhl.javafxtetris.graphics.LosingScreenController">
    <center>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" BorderPane.alignment="CENTER">
          <children>
