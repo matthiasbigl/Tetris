@@ -10,6 +10,9 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 
+import javax.sound.midi.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -40,6 +43,8 @@ public class TetrisGame
     private SimpleIntegerProperty levelProp;        // The level the player is in (10 lines = 1 level)
     private SimpleIntegerProperty linesClearedProp; // The total number of lines the player has cleared
     private SimpleIntegerProperty scoreProp;
+    //Music
+    Sequencer sequencer;
 
     // Constructors ***********************************************************
     public TetrisGame(TetrisController controller, Scene scene)
@@ -67,12 +72,14 @@ public class TetrisGame
         controller.initPreviewGrid(nextBlock.getDefaultState().getGrid());
         controller.initStats(this);
 
+
         generateNewBlock();
     }
 
     // Game loop **************************************************************
     public synchronized void start()
     {
+        startMusic();
         if(isRunning())
             return;
 
@@ -94,6 +101,7 @@ public class TetrisGame
         }, 1000, 10);
     }
 
+
     public void stop()
     {
         if(!isRunning())
@@ -103,6 +111,8 @@ public class TetrisGame
         pause();
 
         tickTimer.cancel();
+        sequencer.stop();
+        System.exit(0);
     }
 
     public void pause()
@@ -166,6 +176,25 @@ public class TetrisGame
         totalTickCount++;
         controller.updateTetrisGrid(tetrisGrid);
         controller.updateFallingBlock(currentBlock);
+    }
+    private void startMusic(){
+        try {
+            sequencer = MidiSystem.getSequencer(); // Get the default Sequencer
+            if (sequencer==null) {
+                System.err.println("Sequencer device not supported");
+                return;
+            }
+            sequencer.open(); // Open device
+            // Create sequence, the File must contain MIDI file data.
+            Sequence sequence = MidiSystem.getSequence(new File("./src/main/resources/at/htlhl/javafxtetris/Tetris.mid"));
+            sequencer.setSequence(sequence); // load it into sequencer
+            sequencer.setLoopCount(Sequencer.LOOP_CONTINUOUSLY);
+            sequencer.start();  // start the playback
+
+        } catch (MidiUnavailableException | InvalidMidiDataException | IOException ex) {
+            ex.printStackTrace();
+        }
+
     }
 
     /*
