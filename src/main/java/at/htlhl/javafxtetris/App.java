@@ -19,7 +19,7 @@ public class App extends Application {
     private Stage primaryStage;
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         App.instance = this;
         this.primaryStage = stage;
         primaryStage.initStyle(StageStyle.DECORATED);
@@ -49,6 +49,7 @@ public class App extends Application {
 
             primaryStage.setScene(scene);
             primaryStage.centerOnScreen();
+            primaryStage.setOnCloseRequest(e -> System.exit(0));
             primaryStage.setFullScreen(true);
         });
     }
@@ -61,6 +62,7 @@ public class App extends Application {
             try {
                 primaryStage.setScene(new Scene(loader.load()));
                 primaryStage.centerOnScreen();
+                primaryStage.setOnCloseRequest(e -> System.exit(0));
                 primaryStage.setFullScreen(true);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -75,6 +77,7 @@ public class App extends Application {
             try {
                 primaryStage.setScene(new Scene(loader.load()));
                 primaryStage.centerOnScreen();
+                primaryStage.setOnCloseRequest(e -> System.exit(0));
                 primaryStage.setFullScreen(true);
 
                 WinScreenController WinScreen = loader.getController();

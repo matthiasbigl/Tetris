@@ -4,20 +4,26 @@ package at.htlhl.javafxtetris;
 import at.htlhl.javafxtetris.graphics.SwitchBlock;
 import at.htlhl.javafxtetris.graphics.TetrisController;
 import at.htlhl.javafxtetris.grid.Grid;
-import at.htlhl.javafxtetris.grid.block.*;
 import at.htlhl.javafxtetris.grid.TetrisGrid;
+import at.htlhl.javafxtetris.grid.block.*;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.input.KeyCode;
 
 import javax.sound.midi.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class TetrisGame
-{
+import static javafx.scene.control.Alert.AlertType.ERROR;
+
+
+public class TetrisGame {
     // Constants **************************************************************
     public static final int GRID_WIDTH = 10;
     public static final int GRID_HEIGHT = 20;
@@ -45,10 +51,13 @@ public class TetrisGame
     private SimpleIntegerProperty scoreProp;
     //Music
     Sequencer sequencer;
+    int tempo = 120;
+    //Scene
+    Scene scene;
+
 
     // Constructors ***********************************************************
-    public TetrisGame(TetrisController controller, Scene scene)
-    {
+    public TetrisGame(TetrisController controller, Scene scene) {
         // Init loop variables
         this.isRunning = false;
         this.isPaused = true;
@@ -57,6 +66,8 @@ public class TetrisGame
         this.levelProp = new SimpleIntegerProperty(1);
         this.linesClearedProp = new SimpleIntegerProperty();
         this.scoreProp = new SimpleIntegerProperty();
+        //init scene
+        this.scene=scene;
 
         // User input
         initUserInput(scene);
@@ -77,10 +88,10 @@ public class TetrisGame
     }
 
     // Game loop **************************************************************
-    public synchronized void start()
-    {
+    public synchronized void start() {
+
         startMusic();
-        if(isRunning())
+        if (isRunning())
             return;
 
         this.isRunning = true;
@@ -88,23 +99,21 @@ public class TetrisGame
 
         this.totalTickCount = 1;
         this.tickTimer = new Timer();
-        tickTimer.scheduleAtFixedRate(new TimerTask()
-        {
+        tickTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
-            public void run()
-            {
-                if(!isPaused())
-                {
+            public void run() {
+                if (!isPaused()) {
                     tick();
                 }
             }
         }, 1000, 10);
+
+
     }
 
 
-    public void stop()
-    {
-        if(!isRunning())
+    public void stop() {
+        if (!isRunning())
             return;
 
         this.isRunning = false;
@@ -112,32 +121,28 @@ public class TetrisGame
 
         tickTimer.cancel();
         sequencer.stop();
-        System.exit(0);
+
     }
 
-    public void pause()
-    {
+    public void pause() {
         this.isPaused = true;
     }
 
-    public void unpause()
-    {
+    public void unpause() {
         this.isPaused = false;
     }
 
     /**
      * @return Whether the game is running
      */
-    public boolean isRunning()
-    {
+    public boolean isRunning() {
         return isRunning;
     }
 
     /**
      * @return Whether the game is paused
      */
-    public boolean isPaused()
-    {
+    public boolean isPaused() {
         return isPaused;
     }
 
@@ -146,29 +151,27 @@ public class TetrisGame
     /**
      * Is called x times per second
      */
-    public void tick()
-    {
+    public void tick() {
         // Pseudo code:
-/*      if ((can fall) & (should fall this tick))
- *          fall
- *          set lastBlockFall & lastBlockMove
- *
- *      if ((can't fall) & (should place this tick))
- *          place
- */
+        /*      if ((can fall) & (should fall this tick))
+         *          fall
+         *          set lastBlockFall & lastBlockMove
+         *
+         *      if ((can't fall) & (should place this tick))
+         *          place
+         */
 
         final boolean canFall = currentBlock.canMove(tetrisGrid, Direction.DOWN);
 
         // TODO: increase tick speed depending on level
         final int period = 30;
-        if(canFall && (lastBlockFall + period <= totalTickCount))
-        {
+        if (canFall && (lastBlockFall + period <= totalTickCount)) {
             currentBlock.move(Direction.DOWN);
             this.lastBlockFall = this.lastBlockMove = totalTickCount;
         }
 
         // This should always be the same delay
-        if(!canFall && (lastBlockMove + 30 <= totalTickCount)){
+        if (!canFall && (lastBlockMove + 30 <= totalTickCount)) {
             tryUpdateFallingBlock();
         }
 
@@ -177,10 +180,11 @@ public class TetrisGame
         controller.updateTetrisGrid(tetrisGrid);
         controller.updateFallingBlock(currentBlock);
     }
-    private void startMusic(){
+
+    private void startMusic() {
         try {
             sequencer = MidiSystem.getSequencer(); // Get the default Sequencer
-            if (sequencer==null) {
+            if (sequencer == null) {
                 System.err.println("Sequencer device not supported");
                 return;
             }
@@ -189,10 +193,28 @@ public class TetrisGame
             Sequence sequence = MidiSystem.getSequence(new File("./src/main/resources/at/htlhl/javafxtetris/Tetris.mid"));
             sequencer.setSequence(sequence); // load it into sequencer
             sequencer.setLoopCount(Sequencer.LOOP_CONTINUOUSLY);
+            sequencer.setTempoInBPM(tempo);
             sequencer.start();  // start the playback
 
         } catch (MidiUnavailableException | InvalidMidiDataException | IOException ex) {
-            ex.printStackTrace();
+            pause();
+            String message = ex.getLocalizedMessage();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Music Error");
+            alert.setHeaderText("Ein Fehler ist während der Musik wiedergabe aufgetreten!\n" +
+                                "Drücken Sie ok wenn ok um fortzufahren ");
+            alert.setContentText("Fehlernachricht: "+message);
+            alert.setResizable(false);
+            alert.initOwner(scene.getWindow());
+            Optional<ButtonType> result = alert.showAndWait();
+            if (!result.isPresent()) {
+                System.exit(0);
+            } else if (result.get() == ButtonType.OK) {
+                unpause();
+            } else if (result.get() == ButtonType.CANCEL) {
+                System.exit(0);
+            }
+
         }
 
     }
@@ -204,8 +226,7 @@ public class TetrisGame
      *
      * Terminates the Game when the new Block can't be placed
      */
-    private void tryUpdateFallingBlock()
-    {
+    private void tryUpdateFallingBlock() {
         this.lastBlockFall = this.lastBlockMove = totalTickCount;
         final FallingBlock fallingBlock = currentBlock;
         fallingBlock.tryPlaceBlockIn(tetrisGrid);
@@ -219,8 +240,7 @@ public class TetrisGame
         final int deletedLines = tetrisGrid.deleteFullLines();
         updateStats(deletedLines);
 
-        if(!currentBlock.canPlaceBlockIn(tetrisGrid))
-        {
+        if (!currentBlock.canPlaceBlockIn(tetrisGrid)) {
             // Lose
             this.stop();
             App.instance().loadLosingScreen();
@@ -231,8 +251,7 @@ public class TetrisGame
     /**
      * Generates a new Block that is different from nextBlock
      */
-    private void generateNewBlock()
-    {
+    private void generateNewBlock() {
         switchBlock.setSwitched(false);
         this.currentBlock = createFallingBlock(nextBlock.getDefaultState());
         this.nextBlock = Block.values()[(nextBlock.ordinal() +
@@ -243,10 +262,10 @@ public class TetrisGame
         controller.updatePreview(nextBlock.getDefaultState());
     }
 
-    private void setNewCurrentBlock(FallingBlock currentBlock){
+    private void setNewCurrentBlock(FallingBlock currentBlock) {
         final Grid grid = currentBlock.getBlockState().getGrid();
         final int centeredX = ((tetrisGrid.getWidth()) / 2) - ((grid.getWidth() + 1) / 2);
-        final int y = Math.max(- tetrisGrid.getYOffset(), - grid.getHighestCellY());
+        final int y = Math.max(-tetrisGrid.getYOffset(), -grid.getHighestCellY());
 
         currentBlock.setY(y);
         currentBlock.setX(centeredX);
@@ -257,11 +276,10 @@ public class TetrisGame
     /**
      * Creates a new FallingBlock that is centered in the Grid
      */
-    private FallingBlock createFallingBlock(final BlockState state)
-    {
+    private FallingBlock createFallingBlock(final BlockState state) {
         final Grid grid = state.getGrid();
         final int centeredX = ((tetrisGrid.getWidth()) / 2) - ((grid.getWidth() + 1) / 2);
-        final int y = Math.max(- tetrisGrid.getYOffset(), - grid.getHighestCellY());
+        final int y = Math.max(-tetrisGrid.getYOffset(), -grid.getHighestCellY());
         return state.falling(centeredX, y);
     }
 
@@ -270,8 +288,7 @@ public class TetrisGame
      *
      * @param amountOfLines The amount of lines cleared
      */
-    private void updateStats(int amountOfLines)
-    {
+    private void updateStats(int amountOfLines) {
         // Add amount of lines deleted to lines
         // .add() creates a new property and DOES NOT change the value
         linesClearedProp.set(linesClearedProp.get() + amountOfLines);
@@ -279,8 +296,7 @@ public class TetrisGame
         // add points to score depending on level
         // using the scoring system from https://tetris.fandom.com/wiki/Scoring
         int baseScore;
-        switch(amountOfLines)
-        {
+        switch (amountOfLines) {
             case 1:
                 baseScore = 40;
                 break;
@@ -304,8 +320,7 @@ public class TetrisGame
         levelProp.set(linesClearedProp.get() / 10 + 1);
     }
 
-    private void initUserInput(Scene scene)
-    {
+    private void initUserInput(Scene scene) {
         // TODO: user input per frame
         scene.setOnKeyPressed(e ->
         {
@@ -314,8 +329,7 @@ public class TetrisGame
 
             final Rotation rotation;
             // TODO: rotate
-            switch(code)
-            {
+            switch (code) {
                 case Q:
                     rotation = Rotation.ROTATE_LEFT_90;
                     break;
@@ -330,8 +344,7 @@ public class TetrisGame
                     rotation = null;
             }
 
-            if(rotation != null)
-            {
+            if (rotation != null) {
                 fallingBlock.tryRotate(tetrisGrid, rotation);
                 this.lastBlockMove = totalTickCount;
             }
@@ -339,8 +352,7 @@ public class TetrisGame
             // NOTE: Technically allows rotating and moving at the same time
 
             final Direction directionToMove;
-            switch(code)
-            {
+            switch (code) {
                 case A:
                 case LEFT:
                     directionToMove = Direction.LEFT;
@@ -356,7 +368,7 @@ public class TetrisGame
                     directionToMove = Direction.RIGHT;
                     break;
                 case C:
-                    if(controller.getHoldPaneMatrix()==null){
+                    if (controller.getHoldPaneMatrix() == null) {
                         //Initialisiert holdGrid
                         switchBlock.setHoldBlock(currentBlock);
                         switchBlock.setHoldBlockState(currentBlock.getBlockState());
@@ -365,7 +377,7 @@ public class TetrisGame
                         switchBlock.setSwitched(true);
                         switchBlock.setSwitchedNow(true);
 
-                    } else if(!switchBlock.isSwitched()){
+                    } else if (!switchBlock.isSwitched()) {
 
                         switchBlock.setSwitched(true);
                         BlockState blockState = currentBlock.getBlockState();
@@ -385,9 +397,8 @@ public class TetrisGame
                     final Grid cellsToPlace = fallingBlock.getBlockState().getGrid();
                     int lowestValidY = 0;
 
-                    for(int y = 0; y < tetrisGrid.getHeight() - fallingBlock.getY(); y++)
-                    {
-                        if(tetrisGrid.canPlaceCells(cellsToPlace, fallingBlock.getX(), fallingBlock.getY() + y))
+                    for (int y = 0; y < tetrisGrid.getHeight() - fallingBlock.getY(); y++) {
+                        if (tetrisGrid.canPlaceCells(cellsToPlace, fallingBlock.getX(), fallingBlock.getY() + y))
                             lowestValidY = y;
                         else
                             break;
@@ -401,27 +412,23 @@ public class TetrisGame
             }
 
             // If the block can move, set lastBlockMove, so the placement is delayed
-            if(fallingBlock.tryMove(tetrisGrid, directionToMove))
+            if (fallingBlock.tryMove(tetrisGrid, directionToMove))
                 this.lastBlockMove = totalTickCount;
         });
     }
 
     // Properties *************************************************************
-    public SimpleIntegerProperty scoreProperty()
-    {
+    public SimpleIntegerProperty scoreProperty() {
         return scoreProp;
     }
 
-    public SimpleIntegerProperty levelProperty()
-    {
+    public SimpleIntegerProperty levelProperty() {
         return levelProp;
     }
 
-    public SimpleIntegerProperty linesClearedProperty()
-    {
+    public SimpleIntegerProperty linesClearedProperty() {
         return linesClearedProp;
     }
-
 
 
 }
