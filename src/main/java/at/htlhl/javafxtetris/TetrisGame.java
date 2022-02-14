@@ -106,7 +106,7 @@ public class TetrisGame {
                     tick();
                 }
             }
-        }, 1000, 10);
+        }, 990, 20);
 
 
     }
