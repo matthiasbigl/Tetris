@@ -193,7 +193,7 @@ public class TetrisGame {
             Sequence sequence = MidiSystem.getSequence(new File("./src/main/resources/at/htlhl/javafxtetris/Tetris.mid"));
             sequencer.setSequence(sequence); // load it into sequencer
             sequencer.setLoopCount(Sequencer.LOOP_CONTINUOUSLY);
-            sequencer.setTempoInBPM(tempo);
+            sequencer.setTempoFactor(1);
             sequencer.start();  // start the playback
 
         } catch (MidiUnavailableException | InvalidMidiDataException | IOException ex) {
