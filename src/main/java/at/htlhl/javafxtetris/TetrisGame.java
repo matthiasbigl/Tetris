@@ -49,10 +49,11 @@ public class TetrisGame {
     private SimpleIntegerProperty levelProp;        // The level the player is in (10 lines = 1 level)
     private SimpleIntegerProperty linesClearedProp; // The total number of lines the player has cleared
     private SimpleIntegerProperty scoreProp;
-    private int period=100;
+    private int period=30;
+    private int oldLevelProp=1;
     //Music
     Sequencer sequencer;
-    int tempo = 120;
+    double tempo= 0.7;
     //Scene
     Scene scene;
 
@@ -317,11 +318,16 @@ public class TetrisGame {
         scoreProp.set(scoreProp.get() + (baseScore * levelProp.get()));
 
         // for every 10 lines removed increase the level by one
-        levelProp.set(linesClearedProp.get() / 10 + 1);
+        levelProp.set(linesClearedProp.get() / 5 + 1);
 
         //Update speed
-        period = period - (int) (period * ((levelProp.get() -oldLevelProp)*0.1));
+        period = period - (int) (period * ((levelProp.get() -oldLevelProp)*0.15));
+        System.out.println("Period "+period);
         oldLevelProp = levelProp.get();//Setzt oldLevel fest
+
+        tempo=2d-(period/100d)-0.7d;
+        System.out.println("MusicTempo "+tempo);
+        sequencer.setTempoFactor((float) tempo);
     }
 
     private void initUserInput(Scene scene) {
