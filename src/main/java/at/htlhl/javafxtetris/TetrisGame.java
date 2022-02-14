@@ -49,6 +49,7 @@ public class TetrisGame {
     private SimpleIntegerProperty levelProp;        // The level the player is in (10 lines = 1 level)
     private SimpleIntegerProperty linesClearedProp; // The total number of lines the player has cleared
     private SimpleIntegerProperty scoreProp;
+    private int period=100;
     //Music
     Sequencer sequencer;
     int tempo = 120;
@@ -164,7 +165,6 @@ public class TetrisGame {
         final boolean canFall = currentBlock.canMove(tetrisGrid, Direction.DOWN);
 
         // TODO: increase tick speed depending on level
-        final int period = 30;
         if (canFall && (lastBlockFall + period <= totalTickCount)) {
             currentBlock.move(Direction.DOWN);
             this.lastBlockFall = this.lastBlockMove = totalTickCount;
@@ -318,6 +318,10 @@ public class TetrisGame {
 
         // for every 10 lines removed increase the level by one
         levelProp.set(linesClearedProp.get() / 10 + 1);
+
+        //Update speed
+        period = period - (int) (period * ((levelProp.get() -oldLevelProp)*0.1));
+        oldLevelProp = levelProp.get();//Setzt oldLevel fest
     }
 
     private void initUserInput(Scene scene) {
