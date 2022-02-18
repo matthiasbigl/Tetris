@@ -3,14 +3,17 @@ package at.htlhl.javafxtetris.graphics;
 import at.htlhl.javafxtetris.TetrisGame;
 import at.htlhl.javafxtetris.grid.Cell;
 import at.htlhl.javafxtetris.grid.Grid;
+import at.htlhl.javafxtetris.grid.TetrisGrid;
 import at.htlhl.javafxtetris.grid.block.BlockState;
 import at.htlhl.javafxtetris.grid.block.FallingBlock;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
+import javafx.scene.effect.Glow;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import static java.lang.Thread.sleep;
 
 public class TetrisController
 {
@@ -158,6 +161,20 @@ public class TetrisController
         });
     }
 
+
+    public void flashGrid(){
+        Glow glow = new Glow();
+        glow.setLevel(10);
+
+        previewGridPane.setEffect(glow);
+        try {
+            sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        previewGridPane.setEffect(null);
+    }
+
     public Pane[][] getHoldPaneMatrix() {
         return holdPaneMatrix;
     }
@@ -174,4 +191,5 @@ public class TetrisController
         levelText.textProperty().bind(new SimpleStringProperty("Level: ").concat(game.levelProperty()));
         linesText.textProperty().bind(new SimpleStringProperty("Lines cleared: ").concat(game.linesClearedProperty()));
     }
+
 }

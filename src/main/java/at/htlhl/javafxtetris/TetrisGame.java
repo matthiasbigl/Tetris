@@ -7,7 +7,6 @@ import at.htlhl.javafxtetris.grid.Grid;
 import at.htlhl.javafxtetris.grid.TetrisGrid;
 import at.htlhl.javafxtetris.grid.block.*;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -19,8 +18,6 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import static javafx.scene.control.Alert.AlertType.ERROR;
 
 
 public class TetrisGame {
@@ -49,11 +46,11 @@ public class TetrisGame {
     private SimpleIntegerProperty levelProp;        // The level the player is in (10 lines = 1 level)
     private SimpleIntegerProperty linesClearedProp; // The total number of lines the player has cleared
     private SimpleIntegerProperty scoreProp;
-    private int period=30;
-    private int oldLevelProp=1;
+    private int period = 30;
+    private int oldLevelProp = 1;
     //Music
     Sequencer sequencer;
-    double tempo= 0.7;
+    double tempo = 0.7;
     //Scene
     Scene scene;
 
@@ -69,7 +66,7 @@ public class TetrisGame {
         this.linesClearedProp = new SimpleIntegerProperty();
         this.scoreProp = new SimpleIntegerProperty();
         //init scene
-        this.scene=scene;
+        this.scene = scene;
 
         // User input
         initUserInput(scene);
@@ -165,7 +162,7 @@ public class TetrisGame {
 
         final boolean canFall = currentBlock.canMove(tetrisGrid, Direction.DOWN);
 
-        // TODO: increase tick speed depending on level
+
         if (canFall && (lastBlockFall + period <= totalTickCount)) {
             currentBlock.move(Direction.DOWN);
             this.lastBlockFall = this.lastBlockMove = totalTickCount;
@@ -203,8 +200,8 @@ public class TetrisGame {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Music Error");
             alert.setHeaderText("Ein Fehler ist während der Musik wiedergabe aufgetreten!\n" +
-                                "Drücken Sie ok wenn ok um fortzufahren ");
-            alert.setContentText("Fehlernachricht: "+message);
+                    "Drücken Sie ok wenn ok um fortzufahren ");
+            alert.setContentText("Fehlernachricht: " + message);
             alert.setResizable(false);
             alert.initOwner(scene.getWindow());
             Optional<ButtonType> result = alert.showAndWait();
@@ -290,6 +287,11 @@ public class TetrisGame {
      * @param amountOfLines The amount of lines cleared
      */
     private void updateStats(int amountOfLines) {
+
+        if (amountOfLines > 0) {
+            System.err.println("hier");
+            controller.flashGrid();
+        }
         // Add amount of lines deleted to lines
         // .add() creates a new property and DOES NOT change the value
         linesClearedProp.set(linesClearedProp.get() + amountOfLines);
@@ -315,18 +317,19 @@ public class TetrisGame {
                 break;
         }
 
+
         scoreProp.set(scoreProp.get() + (baseScore * levelProp.get()));
 
         // for every 10 lines removed increase the level by one
         levelProp.set(linesClearedProp.get() / 5 + 1);
 
         //Update speed
-        period = period - (int) (period * ((levelProp.get() -oldLevelProp)*0.15));
-        System.out.println("Period "+period);
+        period = period - (int) (period * ((levelProp.get() - oldLevelProp) * 0.15));
+        System.out.println("Period " + period);
         oldLevelProp = levelProp.get();//Setzt oldLevel fest
 
-        tempo=2d-(period/100d)-0.7d;
-        System.out.println("MusicTempo "+tempo);
+        tempo = 2d - (period / 100d) - 0.7d;
+        System.out.println("MusicTempo " + tempo);
         sequencer.setTempoFactor((float) tempo);
     }
 
