@@ -8,4 +8,10 @@ public class LosingScreenController {
     public void retry(){
         App.instance().loadTetrisGame();
     }
+
+    @FXML
+    public void saveScore(){}
+
+    @FXML
+    public void backToMenuScreen(){}
 }

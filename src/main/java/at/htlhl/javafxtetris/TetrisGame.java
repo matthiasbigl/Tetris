@@ -1,6 +1,7 @@
 package at.htlhl.javafxtetris;
 
 
+import at.htlhl.javafxtetris.externLogic.Writer;
 import at.htlhl.javafxtetris.graphics.SwitchBlock;
 import at.htlhl.javafxtetris.graphics.TetrisController;
 import at.htlhl.javafxtetris.grid.Grid;
@@ -53,9 +54,11 @@ public class TetrisGame {
     private int oldLevelProp=1;
     //Music
     Sequencer sequencer;
-    double tempo= 0.7;
+    double tempo= 100;
     //Scene
     Scene scene;
+    //Classes
+    Writer writer = new Writer();
 
 
     // Constructors ***********************************************************
@@ -365,11 +368,13 @@ public class TetrisGame {
             switch (code) {
                 case A:
                 case LEFT:
+                    writer.writeFile("A","B","C");
                     directionToMove = Direction.LEFT;
                     break;
 
                 case S:
                 case DOWN:
+                    writer.readFile();
                     directionToMove = Direction.DOWN;
                     break;
 
@@ -420,6 +425,7 @@ public class TetrisGame {
                 default:
                     return;
             }
+
 
             // If the block can move, set lastBlockMove, so the placement is delayed
             if (fallingBlock.tryMove(tetrisGrid, directionToMove))
