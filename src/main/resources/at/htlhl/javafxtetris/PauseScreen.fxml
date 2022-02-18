@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="screen" stylesheets="@background.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.htlhl.javafxtetris.graphics.StartScreenController">
+    <children>
+        <VBox alignment="CENTER" layoutX="138.0" layoutY="81.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.3333333333333144" AnchorPane.leftAnchor="138.0" AnchorPane.rightAnchor="138.44444444444446" AnchorPane.topAnchor="81.0">
+            <children>
+                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="TETRIS" VBox.vgrow="ALWAYS">
+                    <font>
+                        <Font name="Rubik Bold Italic" size="96.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="30.0" />
+                    </VBox.margin>
+                    <effect>
+                        <DropShadow radius="15.285" width="42.14" />
+                    </effect>
+                </Text>
+                <Button fx:id="classic" maxWidth="-Infinity" mnemonicParsing="false" onAction="#StartClassic" prefWidth="240.0" styleClass="test" text=" PLAY CLASSIC" VBox.vgrow="NEVER">
+                    <VBox.margin>
+                        <Insets bottom="20.0" />
+                    </VBox.margin>
+                    <padding>
+                        <Insets bottom="10.0" top="10.0" />
+                    </padding>
+                    <effect>
+                        <DropShadow />
+                    </effect>
+                </Button>
+                <Button fx:id="fourtyLines" maxWidth="-Infinity" mnemonicParsing="false" onAction="#StartFourty" prefWidth="240.0" styleClass="test" text=" PLAY 40 LINES" VBox.vgrow="NEVER">
+                    <VBox.margin>
+                        <Insets bottom="20.0" />
+                    </VBox.margin>
+                    <padding>
+                        <Insets bottom="10.0" top="10.0" />
+                    </padding>
+                    <effect>
+                        <DropShadow />
+                    </effect>
+                </Button>
+                <Button fx:id="blitz" maxWidth="-Infinity" mnemonicParsing="false" onAction="#StartBlitz" prefWidth="240.0" styleClass="test" text=" PLAY BLITZ" VBox.vgrow="NEVER">
+                    <VBox.margin>
+                        <Insets bottom="40.0" />
+                    </VBox.margin>
+                    <padding>
+                        <Insets bottom="10.0" top="10.0" />
+                    </padding>
+                    <effect>
+                        <DropShadow />
+                    </effect>
+                </Button>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
+
