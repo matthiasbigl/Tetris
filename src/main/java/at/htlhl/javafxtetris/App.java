@@ -33,7 +33,7 @@ public class App extends Application {
     public void loadTetrisGame() {
         Platform.runLater(() ->
         {
-            FXMLLoader loader = new FXMLLoader(App.class.getResource("TitleScreen.fxml"));
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("PauseScreen.fxml"));
             
             Pane root;
             try {
