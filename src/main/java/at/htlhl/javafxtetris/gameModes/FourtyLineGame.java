@@ -49,6 +49,15 @@ public class FourtyLineGame extends TetrisGame {
 
     }
 
+    public void terminateGame(){
+
+        // Lose
+        this.stop();
+        App.instance().loadLosingScreen();
+        return;
+
+    }
+
     /**
      *Calls the winningScreen with the time it took to complete a game
      */

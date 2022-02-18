@@ -224,7 +224,7 @@ public class TetrisGame {
      *
      * Terminates the Game when the new Block can't be placed
      */
-    private void tryUpdateFallingBlock() {
+    public void tryUpdateFallingBlock() {
         this.lastBlockFall = this.lastBlockMove = totalTickCount;
         final FallingBlock fallingBlock = currentBlock;
         fallingBlock.tryPlaceBlockIn(tetrisGrid);
@@ -239,11 +239,15 @@ public class TetrisGame {
         updateStats(deletedLines);
 
         if (!currentBlock.canPlaceBlockIn(tetrisGrid)) {
-            // Lose
-            this.stop();
-            App.instance().loadLosingScreen();
-            return;
+           terminateGame();
         }
+    }
+    public void terminateGame(){
+        // Lose
+        this.stop();
+        App.instance().loadWinningScreen("Your Score: ",String.valueOf(scoreProp.get()));
+        return;
+
     }
 
     /**

@@ -48,6 +48,14 @@ public class BlitzGame extends TetrisGame {
         App.instance().loadWinningScreen("Lines Cleared:", String.valueOf(linesClearedProperty().get()));
         stop();
     }
+    public void terminateGame(){
+
+            // Lose
+            this.stop();
+            App.instance().loadLosingScreen();
+            return;
+
+    }
 
 
     private void startCounter() {
