@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -51,6 +52,7 @@ public class StartScreenController {
         primaryStage.setScene(scene);
         primaryStage.centerOnScreen();
         primaryStage.setFullScreen(true);
+        primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 
         game.start();
 
@@ -62,6 +64,7 @@ public class StartScreenController {
         primaryStage.setScene(scene);
         primaryStage.centerOnScreen();
         primaryStage.setFullScreen(true);
+        primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         game.start();
 
     }
@@ -72,6 +75,7 @@ public class StartScreenController {
         primaryStage.setScene(scene);
         primaryStage.centerOnScreen();
         primaryStage.setFullScreen(true);
+        primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 
         game.start();
 

@@ -125,10 +125,12 @@ public class TetrisGame {
 
     public void pause() {
         this.isPaused = true;
+        sequencer.stop();
     }
 
     public void unpause() {
         this.isPaused = false;
+        sequencer.start();
     }
 
     /**
@@ -239,13 +241,14 @@ public class TetrisGame {
         updateStats(deletedLines);
 
         if (!currentBlock.canPlaceBlockIn(tetrisGrid)) {
-           terminateGame();
+            terminateGame();
         }
     }
-    public void terminateGame(){
+
+    public void terminateGame() {
         // Lose
         this.stop();
-        App.instance().loadWinningScreen("Your Score: ",String.valueOf(scoreProp.get()));
+        App.instance().loadWinningScreen("Your Score: ", String.valueOf(scoreProp.get()));
         return;
 
     }
@@ -343,6 +346,15 @@ public class TetrisGame {
         {
             final FallingBlock fallingBlock = currentBlock;
             final KeyCode code = e.getCode();
+
+            //pauses the game on escape button being pressed
+            if(code == KeyCode.ESCAPE){
+                    if (!isPaused) {
+                        pause();
+                    } else {
+                        unpause();
+                    }
+            }
 
             final Rotation rotation;
             // TODO: rotate

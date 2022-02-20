@@ -1,17 +1,19 @@
 package at.htlhl.javafxtetris;
 
 import at.htlhl.javafxtetris.graphics.StartScreenController;
-import at.htlhl.javafxtetris.graphics.TetrisController;
 import at.htlhl.javafxtetris.graphics.WinScreenController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class App extends Application {
 
@@ -23,10 +25,10 @@ public class App extends Application {
         App.instance = this;
         this.primaryStage = stage;
         primaryStage.initStyle(StageStyle.DECORATED);
-        
         Platform.setImplicitExit(true);
         
         loadTetrisGame();
+        primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         primaryStage.show();
     }
 
