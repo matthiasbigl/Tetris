@@ -2,6 +2,7 @@ module at.htlhl {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.desktop;
+    requires com.fasterxml.jackson.databind;
 
     opens at.htlhl.javafxtetris to javafx.fxml, javafx.graphics;
     exports at.htlhl.javafxtetris.grid;

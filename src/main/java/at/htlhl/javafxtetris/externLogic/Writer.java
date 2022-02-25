@@ -1,102 +1,67 @@
 package at.htlhl.javafxtetris.externLogic;
 
+import at.htlhl.javafxtetris.TetrisGame;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import javax.security.auth.Subject;
 import java.io.*;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class Writer {
 
-    public static final String APP_NAME = "ScoreBoard";
+    public static final String APP_NAME = "ScoreData";
     public static final String CONFIG_DIR_PATH =
-            System.getProperty("user.home") + "/." + APP_NAME;
+            System.getProperty("src/main/java/resources") + "/." + APP_NAME;
     public static final String MODEL_FILE_PATH =
-            CONFIG_DIR_PATH + "/scores.txt";
+            CONFIG_DIR_PATH + "/scores.json";
 
-    private ArrayList<String> classicScores;
-    private ArrayList<String> fourtyLines;
-    private ArrayList<String> blitz;
+    public static final ObjectMapper JSON_MAPPER = new ObjectMapper();
+    private ArrayList<Scores> scores;
 
-    FileWriter path;
-    BufferedWriter writer;
-
+    File scoreFile;
 
     public Writer() {
-        classicScores = new ArrayList<>();
-        fourtyLines = new ArrayList<>();
-        blitz = new ArrayList<>();
-        classicScores.add("Hallo1");
-        fourtyLines.add("Hallo2");
-        blitz.add("Hallo3");
+        scores = new ArrayList<>();
+        writeScores();
 
+    }
+
+    public void writeScores(){
+        scores.add(new Scores(1, "Nico", "4302"));
+        scores.add(new Scores(1, "Paul", "4302"));
+        scores.add(new Scores(2, "Bigl", "4302"));
+        scores.add(new Scores(2, "Mario", "4302"));
+        scores.add(new Scores(3, "Yusuf", "10:02"));
+        scores.add(new Scores(3, "Alex", "5:46"));
     }
 
     public void writeFile(String cSData, String fLD, String bD){
 
         System.out.println("File wird geschrieben");
-        classicScores.add(cSData);
-        fourtyLines.add(fLD);
-        blitz.add(bD);
 
-        File configDir = new File(MODEL_FILE_PATH);
-        if(!configDir.exists()){
-            configDir.mkdir();
+
+        scoreFile = new File(MODEL_FILE_PATH);
+        if(!scoreFile.exists()){
+            scoreFile.mkdir();
         }
 
         try {
-            path = new FileWriter("C:/Users/ThinkPad/ScoreBoard/score.txt");
-            writer = new BufferedWriter(path);
+            JSON_MAPPER.writerWithDefaultPrettyPrinter().writeValue(scoreFile, scores);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        try {
-            writer.write(""+classicScores);
-            writer.newLine();
-            writer.write(""+fourtyLines);
-            writer.newLine();
-            writer.write(""+ blitz);
-            writer.close();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void readFile(){
 
-        try{
-            System.out.println("File wird gelesen");
-            BufferedReader reader = new BufferedReader(new FileReader("C:/Users/ThinkPad/ScoreBoard/score.txt"));
-            String line = reader.readLine();
-            String temp = reader.readLine();
-
-            while(line!= null){
-                temp += line;
-                line = reader.readLine();
+        if(scoreFile.exists())
+            try {
+                scores = JSON_MAPPER.readValue(scoreFile, ArrayList.class);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            reader.close();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    public void getData(String temp){
-
-        ArrayList<Integer> trenn = new ArrayList<>();
-
-        for(int i = 0; i<=temp.length()-1; i++){
-            if(temp.charAt(i)=='['){
-                trenn.add(i);
-            }
-        }
-
-        String classicScore = temp.substring(trenn.get(0), trenn.get(1)-1);
-        String fourtyLineScore = temp.substring(trenn.get(1), trenn.get(2)-1);
-        String blitzScore = temp.substring(trenn.get(2), trenn.get(3)-1);
-
 
     }
 }

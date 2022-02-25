@@ -368,13 +368,11 @@ public class TetrisGame {
             switch (code) {
                 case A:
                 case LEFT:
-                    writer.writeFile("A","B","C");
                     directionToMove = Direction.LEFT;
                     break;
 
                 case S:
                 case DOWN:
-                    writer.readFile();
                     directionToMove = Direction.DOWN;
                     break;
 
