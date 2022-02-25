@@ -8,9 +8,10 @@ import at.htlhl.javafxtetris.grid.TetrisGrid;
 import at.htlhl.javafxtetris.grid.block.*;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Color;
+import javafx.stage.StageStyle;
 
 import javax.sound.midi.*;
 import java.io.File;
@@ -105,7 +106,7 @@ public class TetrisGame {
                     tick();
                 }
             }
-        }, 990, 20);
+        }, 0, 30);
 
 
     }
@@ -116,16 +117,47 @@ public class TetrisGame {
             return;
 
         this.isRunning = false;
-        pause();
-
         tickTimer.cancel();
-        sequencer.stop();
+        sequencer.close();
 
     }
 
     public void pause() {
         this.isPaused = true;
         sequencer.stop();
+    }
+    public void pauseWithAlert(){
+        pause();
+        ButtonType close;
+        ButtonType resume;
+        ButtonType returnToStart;
+
+        Alert alert = new Alert(Alert.AlertType.NONE,"",close=new ButtonType("Close Game", ButtonBar.ButtonData.LEFT),
+                resume=new ButtonType("Resume", ButtonBar.ButtonData.LEFT), returnToStart=new ButtonType("Return to Start", ButtonBar.ButtonData.LEFT));
+        alert.setTitle("Pause");
+        alert.initOwner(scene.getWindow());
+
+        DialogPane alertPane = alert.getDialogPane();
+        alertPane.getScene().setFill(Color.TRANSPARENT);
+        alertPane.getStylesheets().add(getClass().getResource("Pause.css").toString());
+        alertPane.getStyleClass().add("pause");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.setContentText("PAUSE");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (!result.isPresent()) {
+            System.exit(0);
+        } else if (result.get() == resume) {
+            unpause();
+            alert.hide();
+        } else if (result.get() == close) {
+            System.exit(0);
+        }
+        else if (result.get()==returnToStart){
+            this.stop();
+            alert.hide();
+            App.instance().loadTetrisGame();
+        }
+
     }
 
     public void unpause() {
@@ -331,9 +363,9 @@ public class TetrisGame {
         levelProp.set(linesClearedProp.get() / 5 + 1);
 
         //Update speed
-        period = period - (int) (period * ((levelProp.get() - oldLevelProp) * 0.15));
+        period = period - (int) (period * ((levelProp.get() - oldLevelProp) * 0.20));
         System.out.println("Period " + period);
-        oldLevelProp = levelProp.get();//Setzt oldLevel fest
+        oldLevelProp = levelProp.get();     //Setzt oldLevel fest
 
         tempo = 2d - (period / 100d) - 0.7d;
         System.out.println("MusicTempo " + tempo);
@@ -350,7 +382,7 @@ public class TetrisGame {
             //pauses the game on escape button being pressed
             if(code == KeyCode.ESCAPE){
                     if (!isPaused) {
-                        pause();
+                        pauseWithAlert();
                     } else {
                         unpause();
                     }

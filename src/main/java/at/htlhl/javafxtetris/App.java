@@ -28,7 +28,8 @@ public class App extends Application {
         Platform.setImplicitExit(true);
         
         loadTetrisGame();
-        primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+        primaryStage.setFullScreenExitHint("Exit code is Ctrl+P");
+        primaryStage.setFullScreenExitKeyCombination(KeyCombination.valueOf("Ctrl+P"));
         primaryStage.show();
     }
 
