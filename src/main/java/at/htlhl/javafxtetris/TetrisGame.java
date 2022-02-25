@@ -139,7 +139,7 @@ public class TetrisGame {
 
         DialogPane alertPane = alert.getDialogPane();
         alertPane.getScene().setFill(Color.TRANSPARENT);
-        alertPane.getStylesheets().add(getClass().getResource("Pause.css").toString());
+        alertPane.getStylesheets().add(App.class.getResource("Pause.css").toString());
         alertPane.getStyleClass().add("pause");
         alert.initStyle(StageStyle.TRANSPARENT);
         alert.setContentText("PAUSE");
