@@ -1,9 +1,10 @@
 package at.htlhl.javafxtetris;
 
 
-import at.htlhl.javafxtetris.externLogic.Writer;
+import at.htlhl.javafxtetris.externLogic.Scores;
 import at.htlhl.javafxtetris.graphics.SwitchBlock;
 import at.htlhl.javafxtetris.graphics.TetrisController;
+import at.htlhl.javafxtetris.graphics.WinScreenController;
 import at.htlhl.javafxtetris.grid.Grid;
 import at.htlhl.javafxtetris.grid.TetrisGrid;
 import at.htlhl.javafxtetris.grid.block.*;
@@ -17,6 +18,7 @@ import javafx.scene.input.KeyCode;
 import javax.sound.midi.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -57,8 +59,6 @@ public class TetrisGame {
     double tempo= 100;
     //Scene
     Scene scene;
-    //Classes
-    Writer writer = new Writer();
 
 
     // Constructors ***********************************************************

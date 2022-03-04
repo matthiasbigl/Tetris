@@ -1,6 +1,7 @@
 package at.htlhl.javafxtetris.graphics;
 
-import at.htlhl.javafxtetris.App;
+import at.htlhl.javafxtetris.externLogic.*;
+import at.htlhl.javafxtetris.externLogic.FileManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
@@ -14,16 +15,20 @@ public class WinScreenController {
     private Text data;
     @FXML
     private Button StartScreen;
+    FileManager manager = new FileManager();
 
-
+    @FXML
     public void init(String titel,String data){
 
         this.titel.setText(titel);
         this.data.setText(data);
 
     }
+
+    @FXML
     public void start(){
-        App.instance().loadTetrisGame();
+        manager.writeFile();
+        //App.instance().loadTetrisGame();
     }
 
 

@@ -1,8 +1,10 @@
 package at.htlhl.javafxtetris;
 
+import at.htlhl.javafxtetris.externLogic.Scores;
 import at.htlhl.javafxtetris.graphics.StartScreenController;
 import at.htlhl.javafxtetris.graphics.TetrisController;
 import at.htlhl.javafxtetris.graphics.WinScreenController;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -12,11 +14,21 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.io.Writer;
+import java.util.ArrayList;
 
 public class App extends Application {
 
+    public static final String APP_NAME = "ScoreData";
+    public static final String CONFIG_DIR_PATH =
+            System.getProperty("user.home") + "/." + APP_NAME;
+    public static final String MODEL_FILE_PATH =
+            CONFIG_DIR_PATH + "/scores.json";
+    public static final ObjectMapper JSON_MAPPER = new ObjectMapper();
+
     private static App instance;
     private Stage primaryStage;
+    public static ArrayList<Scores> scores;
 
     @Override
     public void start(Stage stage) {

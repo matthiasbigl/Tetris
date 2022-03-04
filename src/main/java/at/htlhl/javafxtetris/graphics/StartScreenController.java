@@ -1,5 +1,6 @@
 package at.htlhl.javafxtetris.graphics;
 
+import at.htlhl.javafxtetris.externLogic.*;
 import at.htlhl.javafxtetris.App;
 import at.htlhl.javafxtetris.TetrisGame;
 import at.htlhl.javafxtetris.gameModes.BlitzGame;
@@ -27,6 +28,7 @@ public class StartScreenController {
     private TetrisController controller;
     private Scene scene;
     Stage primaryStage;
+    FileManager manager = new FileManager();
 
     public void init(Stage primaryStage){
         FXMLLoader loader = new FXMLLoader(App.class.getResource("TetrisView.fxml"));
@@ -67,13 +69,14 @@ public class StartScreenController {
     }
 
     public void StartFourty() {
-        FourtyLineGame game = new FourtyLineGame(controller,scene);
+        /*FourtyLineGame game = new FourtyLineGame(controller,scene);
         primaryStage.setOnCloseRequest(e -> game.stop());
         primaryStage.setScene(scene);
         primaryStage.centerOnScreen();
         primaryStage.setFullScreen(true);
 
-        game.start();
+        game.start();*/
+        manager.readFile();
 
 
     }

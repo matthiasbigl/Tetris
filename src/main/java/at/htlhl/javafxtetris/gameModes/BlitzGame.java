@@ -12,7 +12,8 @@ public class BlitzGame extends TetrisGame {
 
 
     private long start;
-    private final int StopingTime=120000;
+    //private final int StopingTime=120000;
+    private final int StopingTime=1;
 
 
     /**
