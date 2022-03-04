@@ -54,6 +54,7 @@ public class TetrisGame {
     double tempo = 0.7;
     //Scene
     Scene scene;
+    private ButtonType returnToStart;
 
 
     // Constructors ***********************************************************
@@ -132,11 +133,12 @@ public class TetrisGame {
         ButtonType resume;
         ButtonType returnToStart;
 
-        Alert alert = new Alert(Alert.AlertType.NONE,"",close=new ButtonType("Close Game", ButtonBar.ButtonData.LEFT),
-                resume=new ButtonType("Resume", ButtonBar.ButtonData.LEFT), returnToStart=new ButtonType("Return to Start", ButtonBar.ButtonData.LEFT));
+        Alert alert = new Alert(Alert.AlertType.NONE,"",
+                resume=new ButtonType("Resume", ButtonBar.ButtonData.LEFT),
+                returnToStart=new ButtonType("Return to Start", ButtonBar.ButtonData.LEFT),
+                close=new ButtonType("Close Game", ButtonBar.ButtonData.LEFT));
         alert.setTitle("Pause");
         alert.initOwner(scene.getWindow());
-
         DialogPane alertPane = alert.getDialogPane();
         alertPane.getScene().setFill(Color.TRANSPARENT);
         alertPane.getStylesheets().add(App.class.getResource("Pause.css").toString());
@@ -207,7 +209,6 @@ public class TetrisGame {
             tryUpdateFallingBlock();
         }
 
-
         totalTickCount++;
         controller.updateTetrisGrid(tetrisGrid);
         controller.updateFallingBlock(currentBlock);
@@ -222,7 +223,8 @@ public class TetrisGame {
             }
             sequencer.open(); // Open device
             // Create sequence, the File must contain MIDI file data.
-            Sequence sequence = MidiSystem.getSequence(new File("./src/main/resources/at/htlhl/javafxtetris/Tetris.mid"));
+            //Sequence sequence = MidiSystem.getSequence(new File("./src/main/resources/at/htlhl/javafxtetris/Tetris.mid"));
+            Sequence sequence = MidiSystem.getSequence(App.class.getResource("Tetris.mid"));
             sequencer.setSequence(sequence); // load it into sequencer
             sequencer.setLoopCount(Sequencer.LOOP_CONTINUOUSLY);
             sequencer.setTempoFactor(1);
